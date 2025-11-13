@@ -1,0 +1,7 @@
+.toastProvider {
+	position: fixed;
+	display: inline-block;
+	z-index: 999999999;
+	transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+	pointer-events: none;
+}
