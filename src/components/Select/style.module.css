@@ -1,0 +1,20 @@
+.selectTrigger {
+	cursor: pointer;
+	user-select: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 15px;
+	gap: 10px;
+	border: 2px solid var(--blue-accent);
+	transition: all 0.2s ease;
+	background: var(--blue);
+}
+
+.selectTrigger .arrow {
+	position: relative;
+	left: 0;
+	top: -2px;
+	transform: rotate(180deg);
+	color: #cccccc;
+}
