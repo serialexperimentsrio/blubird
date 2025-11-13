@@ -1,0 +1,41 @@
+.box {
+	background: var(--blue);
+	border: 2px solid var(--blue-accent);
+	padding: 20px;
+	position: relative;
+	overflow: hidden;
+}
+
+.box * {
+	position: relative;
+	z-index: 100;
+}
+
+.box .loadingAnimation {
+	position: absolute;
+}
+
+.iconbg {
+	position: absolute;
+	opacity: 0.2;
+	transform: translateY(-50%);
+	right: -10%;
+	top: 40%;
+	width: 90%;
+	filter: drop-shadow(0 0 70px #aaa);
+	pointer-events: none;
+}
+
+.bg {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	min-height: 100%;
+	z-index: 2;
+	object-fit: cover;
+	opacity: 0.05;
+	pointer-events: none;
+	position: absolute;
+}
+
