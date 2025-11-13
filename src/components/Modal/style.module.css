@@ -1,0 +1,15 @@
+.modalBackdrop {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0);
+	z-index: 9999;
+	pointer-events: none;
+}
+
+.modalBackdrop.active {
+	background: rgba(0, 0, 0, 0.3);
+	pointer-events: all;
+}

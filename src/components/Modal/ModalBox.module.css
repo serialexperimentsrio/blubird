@@ -1,0 +1,37 @@
+.outerModal {
+	position: fixed !important;
+	left: 50%;
+	top: clamp(100px, 40%, calc(100vh - 100px));
+	transform: translate(-50%, -50%);
+	max-width: calc(100vw - 70px);
+	max-height: calc(100vh - 70px);
+	overflow: hidden;
+	z-index: 9999;
+	padding: 0;
+}
+
+.outerModal > * {
+	max-width: calc(100vw - 110px);
+	max-height: calc(100vh - 110px);
+	text-align: center;
+	border: none !important;
+	position: absolute;
+	left: calc(50% + 0.5px);
+	top: 10%;
+	transform: translate(-50%, -10%);
+	overflow: auto;
+}
+
+.outerModal > * > h2 {
+	margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+	.outerModal {
+		max-width: calc(100vw - 10px);
+	}
+
+	.outerModal > * {
+		max-width: calc(100vw - 50px);
+	}
+}
