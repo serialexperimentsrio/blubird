@@ -1,5 +1,6 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
+import Image from 'next/image'
 import style from './style.module.css'
 
 type BoxProps = {
@@ -20,13 +21,14 @@ export const Box = forwardRef(
 				className={`${style.box} ${shadowless ? '' : 'shadow'} ${className || ''}`}
 			>
 				{image && (
-					<img src={image} className={`boxbg ${style.bg}`} alt="Background decoration" />
+					<Image src={image} className={`boxbg ${style.bg}`} alt="Background decoration" fill />
 				)}
 				{icon && (
-					<img
+					<Image
 						src={icon}
 						className={`boxiconbg ${style.iconbg}`}
 						alt="Icon background decoration"
+						fill
 					/>
 				)}
 				{children}

@@ -4,20 +4,27 @@ export const runtime = 'edge';
 
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import WithTooltip from '@/components/Tooltip'
 import Marquee from '@/components/Special/Marquee'
+import AnimatedContent from '@/components/Special/AnimatedContent'
 
 type Props = {
 	params: Promise<{ lang: 'en' | 'ja' }>
 }
+
 
 export default function Home({ params }: Props) {
 	const router = useRouter()
 	const [language, setLanguage] = useState<'en' | 'ja'>('ja')
 	const [hoveredNav, setHoveredNav] = useState<string | null>(null)
 	const [isFooterVisible, setIsFooterVisible] = useState(false)
+	const [isAnimating, setIsAnimating] = useState(false)
+	const [isFadingOut, setIsFadingOut] = useState(false)
 	const footerRef = useRef<HTMLDivElement>(null)
 	const scrollableRef = useRef<HTMLDivElement>(null)
+	const lastHoveredRef = useRef<string | null>(null)
+	const isTogglingRef = useRef(false)
 
 	// Initialize language from route params
 	useEffect(() => {
@@ -27,11 +34,38 @@ export default function Home({ params }: Props) {
 			setLanguage(lang)
 			// Save preference to cookie
 			document.cookie = `NEXT_LANGUAGE=${lang}; path=/; max-age=31536000`
+			// Reset toggle guard when page loads
+			isTogglingRef.current = false
+			// Restore lastHoveredRef from sessionStorage
+			const savedHovered = sessionStorage.getItem('lastHoveredNav')
+			if (savedHovered) {
+				lastHoveredRef.current = savedHovered
+			}
 		}
 		initializeLanguage()
 	}, [params])
 
+	// Trigger animation and restore hover state after language changes
 	useEffect(() => {
+		const timeoutId = setTimeout(() => {
+			// Start animation and restore hover state together
+			// They're in the same timeout so React batches them as one update
+			setIsAnimating(true)
+			setIsFadingOut(false)
+			if (lastHoveredRef.current) {
+				setHoveredNav(lastHoveredRef.current)
+			}
+		}, 100)
+
+		return () => {
+			clearTimeout(timeoutId)
+		}
+	}, [language])
+
+	useEffect(() => {
+		const el = footerRef.current
+		if (!el) return
+
 		const observer = new IntersectionObserver(
 			([entry]) => {
 				setIsFooterVisible(entry.isIntersecting)
@@ -39,14 +73,10 @@ export default function Home({ params }: Props) {
 			{ threshold: 0.1 }
 		)
 
-		if (footerRef.current) {
-			observer.observe(footerRef.current)
-		}
+		observer.observe(el)
 
 		return () => {
-			if (footerRef.current) {
-				observer.unobserve(footerRef.current)
-			}
+			observer.unobserve(el)
 		}
 	}, [])
 
@@ -55,7 +85,15 @@ export default function Home({ params }: Props) {
 	}
 
 	const handleLanguageToggle = async () => {
+		// Prevent rapid toggles
+		if (isTogglingRef.current) return
+		isTogglingRef.current = true
+
 		const newLang = language === 'ja' ? 'en' : 'ja'
+
+		// Start fade out animation for current language text
+		setIsFadingOut(true)
+		setHoveredNav(null)
 
 		// Smooth scroll to top
 		if (scrollableRef.current) {
@@ -68,8 +106,8 @@ export default function Home({ params }: Props) {
 		// Save preference
 		document.cookie = `NEXT_LANGUAGE=${newLang}; path=/; max-age=31536000`
 
-		// Navigate after scroll completes
-		await new Promise(resolve => setTimeout(resolve, 300))
+		// Wait for fade out animation to complete
+		await new Promise(resolve => setTimeout(resolve, 200))
 		router.push(`/${newLang}`)
 	}
 
@@ -95,6 +133,19 @@ export default function Home({ params }: Props) {
 
 			.footer-arrow {
 				animation: footerBounce 0.6s ease-in-out infinite;
+			}
+
+			@keyframes fadeOut {
+				from {
+					opacity: 1;
+				}
+				to {
+					opacity: 0;
+				}
+			}
+
+			.language-fade-out {
+				animation: fadeOut 0.2s ease-in-out forwards;
 			}
 
 			/* Hide scrollbar while keeping scroll functionality */
@@ -126,6 +177,7 @@ export default function Home({ params }: Props) {
 			>
 				{/* Logo */}
 				<div
+					data-nav-item="logo"
 					onClick={handleLogoClick}
 					style={{
 						position: 'absolute',
@@ -140,14 +192,26 @@ export default function Home({ params }: Props) {
 						alignItems: 'center',
 						gap: '0.4rem',
 					}}
-					onMouseEnter={() => setHoveredNav('logo')}
-					onMouseLeave={() => setHoveredNav(null)}
+					onMouseEnter={() => {
+						setHoveredNav('logo')
+						lastHoveredRef.current = 'logo'
+						sessionStorage.setItem('lastHoveredNav', 'logo')
+					}}
+					onMouseLeave={() => {
+					setHoveredNav(null)
+					lastHoveredRef.current = null
+					sessionStorage.removeItem('lastHoveredNav')
+				}}
 				>
-					<span>{language === 'ja' ? '理央の世界〜!' : "RIO'S WORLD!"}</span>
+					<div className={isFadingOut ? 'language-fade-out' : ''}>
+						<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+							<span>{language === 'ja' ? '理央の世界〜!' : "RIO'S WORLD!"}</span>
+						</AnimatedContent>
+					</div>
 					<span
 						className="nav-arrow"
 						style={{
-							opacity: hoveredNav === 'logo' ? 1 : 0,
+							opacity: hoveredNav === 'logo' && isAnimating ? 1 : 0,
 							fontSize: '1.5rem',
 							position: 'relative',
 							zIndex: 1,
@@ -168,6 +232,7 @@ export default function Home({ params }: Props) {
 					}}
 				>
 					<div
+						data-nav-item="diary"
 						style={{
 							cursor: 'pointer',
 							display: 'flex',
@@ -175,22 +240,35 @@ export default function Home({ params }: Props) {
 							gap: '0.2rem',
 							minHeight: '1.4rem',
 						}}
-						onMouseEnter={() => setHoveredNav('diary')}
-						onMouseLeave={() => setHoveredNav(null)}
+						onMouseEnter={() => {
+							setHoveredNav('diary')
+							lastHoveredRef.current = 'diary'
+							sessionStorage.setItem('lastHoveredNav', 'diary')
+						}}
+						onMouseLeave={() => {
+					setHoveredNav(null)
+					lastHoveredRef.current = null
+					sessionStorage.removeItem('lastHoveredNav')
+				}}
 					>
 						<span
 							className="nav-arrow"
 							style={{
-								opacity: hoveredNav === 'diary' ? 1 : 0,
+								opacity: hoveredNav === 'diary' && isAnimating ? 1 : 0,
 								position: 'relative',
 								zIndex: 1,
 							}}
 						>
 							▸
 						</span>
-						<span>{language === 'ja' ? '日記' : 'DIARY'}</span>
+						<div className={isFadingOut ? 'language-fade-out' : ''}>
+							<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+								<span>{language === 'ja' ? '日記' : 'DIARY'}</span>
+							</AnimatedContent>
+						</div>
 					</div>
 					<div
+						data-nav-item="memories"
 						style={{
 							cursor: 'pointer',
 							display: 'flex',
@@ -198,22 +276,35 @@ export default function Home({ params }: Props) {
 							gap: '0.2rem',
 							minHeight: '1.4rem',
 						}}
-						onMouseEnter={() => setHoveredNav('memories')}
-						onMouseLeave={() => setHoveredNav(null)}
+						onMouseEnter={() => {
+							setHoveredNav('memories')
+							lastHoveredRef.current = 'memories'
+							sessionStorage.setItem('lastHoveredNav', 'memories')
+						}}
+						onMouseLeave={() => {
+					setHoveredNav(null)
+					lastHoveredRef.current = null
+					sessionStorage.removeItem('lastHoveredNav')
+				}}
 					>
 						<span
 							className="nav-arrow"
 							style={{
-								opacity: hoveredNav === 'memories' ? 1 : 0,
+								opacity: hoveredNav === 'memories' && isAnimating ? 1 : 0,
 								position: 'relative',
 								zIndex: 1,
 							}}
 						>
 							▸
 						</span>
-						<span>{language === 'ja' ? '思い出' : 'MEMORIES'}</span>
+						<div className={isFadingOut ? 'language-fade-out' : ''}>
+							<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+								<span>{language === 'ja' ? '思い出' : 'MEMORIES'}</span>
+							</AnimatedContent>
+						</div>
 					</div>
 					<div
+						data-nav-item="school"
 						style={{
 							cursor: 'pointer',
 							display: 'flex',
@@ -221,25 +312,38 @@ export default function Home({ params }: Props) {
 							gap: '0.2rem',
 							minHeight: '1.4rem',
 						}}
-						onMouseEnter={() => setHoveredNav('school')}
-						onMouseLeave={() => setHoveredNav(null)}
+						onMouseEnter={() => {
+							setHoveredNav('school')
+							lastHoveredRef.current = 'school'
+							sessionStorage.setItem('lastHoveredNav', 'school')
+						}}
+						onMouseLeave={() => {
+					setHoveredNav(null)
+					lastHoveredRef.current = null
+					sessionStorage.removeItem('lastHoveredNav')
+				}}
 					>
 						<span
 							className="nav-arrow"
 							style={{
-								opacity: hoveredNav === 'school' ? 1 : 0,
+								opacity: hoveredNav === 'school' && isAnimating ? 1 : 0,
 								position: 'relative',
 								zIndex: 1,
 							}}
 						>
 							▸
 						</span>
-						<span>{language === 'ja' ? '学校' : 'SCHOOL'}</span>
+						<div className={isFadingOut ? 'language-fade-out' : ''}>
+							<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+								<span>{language === 'ja' ? '学校' : 'SCHOOL'}</span>
+							</AnimatedContent>
+						</div>
 					</div>
 				</div>
 
 				{/* Language Toggle */}
 				<div
+					data-nav-item="language"
 					onClick={handleLanguageToggle}
 					style={{
 						position: 'absolute',
@@ -253,20 +357,32 @@ export default function Home({ params }: Props) {
 						alignItems: 'center',
 						gap: '0.2rem',
 					}}
-					onMouseEnter={() => setHoveredNav('language')}
-					onMouseLeave={() => setHoveredNav(null)}
+					onMouseEnter={() => {
+						setHoveredNav('language')
+						lastHoveredRef.current = 'language'
+						sessionStorage.setItem('lastHoveredNav', 'language')
+					}}
+					onMouseLeave={() => {
+					setHoveredNav(null)
+					lastHoveredRef.current = null
+					sessionStorage.removeItem('lastHoveredNav')
+				}}
 				>
 					<span
 						className="nav-arrow"
 						style={{
-							opacity: hoveredNav === 'language' ? 1 : 0,
+							opacity: hoveredNav === 'language' && isAnimating ? 1 : 0,
 							position: 'relative',
 							zIndex: 1,
 						}}
 					>
 						▸
 					</span>
+					<div className={isFadingOut ? 'language-fade-out' : ''}>
+						<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
 					<span>{language === 'ja' ? 'ENGLISH' : '日本語'}</span>
+				</AnimatedContent>
+					</div>
 				</div>
 			</div>
 
@@ -357,11 +473,14 @@ export default function Home({ params }: Props) {
 								rel="noopener noreferrer"
 								style={{ textDecoration: 'none', display: 'inline-block' }}
 							>
-								<img
+								<Image
 									src="/flags/south_korea.png"
 									alt="South Korea"
+									width={28}
+									height={28}
 									style={{
 										height: '28px',
+										width: 'auto',
 										cursor: 'pointer',
 										transition: 'transform 0.2s ease',
 									}}
@@ -381,11 +500,14 @@ export default function Home({ params }: Props) {
 								rel="noopener noreferrer"
 								style={{ textDecoration: 'none', display: 'inline-block' }}
 							>
-								<img
+								<Image
 									src="/flags/bangladesh.png"
 									alt="Bangladesh"
+									width={28}
+									height={28}
 									style={{
 										height: '28px',
+										width: 'auto',
 										cursor: 'pointer',
 										transition: 'transform 0.2s ease',
 									}}
@@ -405,11 +527,14 @@ export default function Home({ params }: Props) {
 								rel="noopener noreferrer"
 								style={{ textDecoration: 'none', display: 'inline-block' }}
 							>
-								<img
+								<Image
 									src="/flags/japan.png"
 									alt="Japan"
+									width={28}
+									height={28}
 									style={{
 										height: '28px',
+										width: 'auto',
 										cursor: 'pointer',
 										transition: 'transform 0.2s ease',
 									}}
@@ -429,11 +554,14 @@ export default function Home({ params }: Props) {
 								rel="noopener noreferrer"
 								style={{ textDecoration: 'none', display: 'inline-block' }}
 							>
-								<img
+								<Image
 									src="/flags/palestine.png"
 									alt="Palestine"
+									width={28}
+									height={28}
 									style={{
 										height: '28px',
+										width: 'auto',
 										cursor: 'pointer',
 										transition: 'transform 0.2s ease',
 									}}
@@ -453,11 +581,14 @@ export default function Home({ params }: Props) {
 								rel="noopener noreferrer"
 								style={{ textDecoration: 'none', display: 'inline-block' }}
 							>
-								<img
+								<Image
 									src="/flags/sudan.png"
 									alt="Sudan"
+									width={28}
+									height={28}
 									style={{
 										height: '28px',
+										width: 'auto',
 										cursor: 'pointer',
 										transition: 'transform 0.2s ease',
 									}}
@@ -477,11 +608,14 @@ export default function Home({ params }: Props) {
 								rel="noopener noreferrer"
 								style={{ textDecoration: 'none', display: 'inline-block' }}
 							>
-								<img
+								<Image
 									src="/flags/peace_blue.png"
 									alt="Peace"
+									width={28}
+									height={28}
 									style={{
 										height: '28px',
+										width: 'auto',
 										cursor: 'pointer',
 										transition: 'transform 0.2s ease',
 									}}
@@ -512,13 +646,13 @@ export default function Home({ params }: Props) {
 						}}
 					>
 						<Marquee
-							text={
-								language === 'ja'
-									? '著作権 2025 RIO • 著作権 2025 Rio • 著作権 2025 Rio • '
-									: 'Copyright 2025 RIO • Copyright 2025 Rio • Copyright 2025 Rio • '
-							}
-							speed={12}
-						/>
+						text={
+							language === 'ja'
+								? '著作権 2025 RIO • 著作権 2025 Rio • 著作権 2025 Rio • '
+								: 'Copyright 2025 RIO • Copyright 2025 Rio • Copyright 2025 Rio • '
+						}
+						speed={12}
+					/>
 					</div>
 				</div>
 			</div>

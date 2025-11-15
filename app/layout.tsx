@@ -20,7 +20,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body style={{ margin: 0, padding: 0 }}>
+      <body>
         {/* Dithering background (representing clouds under a blue sky!) */}
         <DitherBackground />
 
