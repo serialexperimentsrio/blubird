@@ -1,0 +1,240 @@
+'use client'
+
+import { useRouter, usePathname } from 'next/navigation'
+import AnimatedContent from '@/components/Special/AnimatedContent'
+
+type HeaderProps = {
+	language: 'en' | 'ja'
+	hoveredNav: string | null
+	setHoveredNav: (nav: string | null) => void
+	lastHoveredRef: React.MutableRefObject<string | null>
+	isAnimating: boolean
+	isFadingOut: boolean
+	onLanguageToggle: () => void
+	onNavigate: (path: string) => Promise<void>
+}
+
+export default function Header({
+	language,
+	hoveredNav,
+	setHoveredNav,
+	lastHoveredRef,
+	isAnimating,
+	isFadingOut,
+	onLanguageToggle,
+	onNavigate
+}: HeaderProps) {
+	const router = useRouter()
+	const pathname = usePathname()
+
+	const handleLogoClick = async () => {
+		await onNavigate('')
+	}
+
+	const handleNavClick = async (path: string) => {
+		await onNavigate(path)
+	}
+
+	const handleNavHover = (navItem: string) => {
+		setHoveredNav(navItem)
+		lastHoveredRef.current = navItem
+		sessionStorage.setItem('lastHoveredNav', navItem)
+	}
+
+	const handleNavLeave = () => {
+		setHoveredNav(null)
+		lastHoveredRef.current = null
+		sessionStorage.removeItem('lastHoveredNav')
+	}
+
+	return (
+		<div
+			style={{
+				position: 'fixed',
+				top: 0,
+				left: 0,
+				width: '100%',
+				height: '84px',
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				background: 'var(--blue)',
+				zIndex: 10,
+				pointerEvents: 'auto',
+			}}
+		>
+			{/* Logo */}
+			<div
+				data-nav-item="logo"
+				onClick={handleLogoClick}
+				style={{
+					position: 'absolute',
+					left: '4rem',
+					fontSize: '2rem',
+					color: 'var(--white)',
+					cursor: 'pointer',
+					userSelect: 'none',
+					fontFamily: 'var(--font-maru-monica)',
+					fontWeight: 'bold',
+					display: 'flex',
+					alignItems: 'center',
+					gap: '0.4rem',
+				}}
+				onMouseEnter={() => handleNavHover('logo')}
+				onMouseLeave={handleNavLeave}
+			>
+				<div className={isFadingOut ? 'language-fade-out' : ''}>
+					<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+						<span>{language === 'ja' ? '理央の世界〜!' : "RIO'S WORLD!"}</span>
+					</AnimatedContent>
+				</div>
+				<span
+					className="nav-arrow"
+					style={{
+						opacity: hoveredNav === 'logo' && isAnimating ? 1 : 0,
+						fontSize: '1.5rem',
+						position: 'relative',
+						zIndex: 1,
+					}}
+				>
+					◂
+				</span>
+			</div>
+
+			{/* Page Navigation */}
+			<div
+				style={{
+					display: 'flex',
+					gap: '3rem',
+					fontSize: '1.4rem',
+					fontFamily: 'var(--font-maru-monica)',
+					color: 'var(--white)',
+				}}
+			>
+				<div
+					data-nav-item="diary"
+					onClick={() => handleNavClick('/diary')}
+					style={{
+						cursor: 'pointer',
+						display: 'flex',
+						alignItems: 'center',
+						gap: '0.2rem',
+						minHeight: '1.4rem',
+					}}
+					onMouseEnter={() => handleNavHover('diary')}
+					onMouseLeave={handleNavLeave}
+				>
+					<span
+						className="nav-arrow"
+						style={{
+							opacity: hoveredNav === 'diary' && isAnimating ? 1 : 0,
+							position: 'relative',
+							zIndex: 1,
+						}}
+					>
+						▸
+					</span>
+					<div className={isFadingOut ? 'language-fade-out' : ''}>
+						<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+							<span>{language === 'ja' ? '日記' : 'DIARY'}</span>
+						</AnimatedContent>
+					</div>
+				</div>
+				<div
+					data-nav-item="memories"
+					onClick={() => handleNavClick('/memories')}
+					style={{
+						cursor: 'pointer',
+						display: 'flex',
+						alignItems: 'center',
+						gap: '0.2rem',
+						minHeight: '1.4rem',
+					}}
+					onMouseEnter={() => handleNavHover('memories')}
+					onMouseLeave={handleNavLeave}
+				>
+					<span
+						className="nav-arrow"
+						style={{
+							opacity: hoveredNav === 'memories' && isAnimating ? 1 : 0,
+							position: 'relative',
+							zIndex: 1,
+						}}
+					>
+						▸
+					</span>
+					<div className={isFadingOut ? 'language-fade-out' : ''}>
+						<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+							<span>{language === 'ja' ? '思い出' : 'MEMORIES'}</span>
+						</AnimatedContent>
+					</div>
+				</div>
+				<div
+					data-nav-item="school"
+					onClick={() => handleNavClick('/school')}
+					style={{
+						cursor: 'pointer',
+						display: 'flex',
+						alignItems: 'center',
+						gap: '0.2rem',
+						minHeight: '1.4rem',
+					}}
+					onMouseEnter={() => handleNavHover('school')}
+					onMouseLeave={handleNavLeave}
+				>
+					<span
+						className="nav-arrow"
+						style={{
+							opacity: hoveredNav === 'school' && isAnimating ? 1 : 0,
+							position: 'relative',
+							zIndex: 1,
+						}}
+					>
+						▸
+					</span>
+					<div className={isFadingOut ? 'language-fade-out' : ''}>
+						<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+							<span>{language === 'ja' ? '学校' : 'SCHOOL'}</span>
+						</AnimatedContent>
+					</div>
+				</div>
+			</div>
+
+			{/* Language Toggle */}
+			<div
+				data-nav-item="language"
+				onClick={onLanguageToggle}
+				style={{
+					position: 'absolute',
+					right: '4rem',
+					fontSize: '1.4rem',
+					color: 'var(--white)',
+					cursor: 'pointer',
+					userSelect: 'none',
+					fontFamily: 'var(--font-maru-monica)',
+					display: 'flex',
+					alignItems: 'center',
+					gap: '0.2rem',
+				}}
+				onMouseEnter={() => handleNavHover('language')}
+				onMouseLeave={handleNavLeave}
+			>
+				<span
+					className="nav-arrow"
+					style={{
+						opacity: hoveredNav === 'language' && isAnimating ? 1 : 0,
+						position: 'relative',
+						zIndex: 1,
+					}}
+				>
+					▸
+				</span>
+				<div className={isFadingOut ? 'language-fade-out' : ''}>
+					<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+						<span>{language === 'ja' ? 'ENGLISH' : '日本語'}</span>
+					</AnimatedContent>
+				</div>
+			</div>
+		</div>
+	)
+}
