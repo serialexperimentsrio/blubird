@@ -1,5 +1,7 @@
 'use client'
 
+export const runtime = 'edge'
+
 import { useState, useEffect } from 'react'
 import PageFrame from '@/components/Layout/PageFrame'
 

@@ -1,5 +1,7 @@
 'use client'
 
+export const runtime = 'edge'
+
 import PageFrame from '@/components/Layout/PageFrame'
 
 type Props = {
