@@ -1,7 +1,5 @@
 'use client'
 
-export const runtime = 'edge';
-
 import PageFrame from '@/components/Layout/PageFrame'
 
 type Props = {
@@ -11,7 +9,7 @@ type Props = {
 export default function Home({ params }: Props) {
 	return (
 		<PageFrame params={params}>
-			{(isFadingOut) => (
+			{() => (
 				<>{/* TODO: Put some content here */}</>
 			)}
 		</PageFrame>

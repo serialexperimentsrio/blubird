@@ -31,8 +31,9 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 			setLanguage(lang)
 			// Save preference to cookie
 			document.cookie = `NEXT_LANGUAGE=${lang}; path=/; max-age=31536000`
-			// Reset toggle guard when page loads
+			// Reset all navigation states when page loads
 			isTogglingRef.current = false
+			setIsFadingOut(false)
 			// Restore lastHoveredRef from sessionStorage
 			const savedHovered = sessionStorage.getItem('lastHoveredNav')
 			if (savedHovered) {
@@ -109,6 +110,11 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 		// Get current path without language prefix
 		const currentPath = window.location.pathname.replace(/^\/(en|ja)/, '')
 		router.push(`/${newLang}${currentPath}`)
+		
+		// Reset toggle guard after navigation starts
+		setTimeout(() => {
+			isTogglingRef.current = false
+		}, 300)
 	}
 
 	const handleNavigate = async (path: string) => {
@@ -133,6 +139,12 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 		
 		// Navigate to new page
 		router.push(`/${language}${path}`)
+		
+		// Reset toggle guard after navigation starts
+		// This ensures it's ready for the next page load
+		setTimeout(() => {
+			isTogglingRef.current = false
+		}, 300)
 	}
 
 	return (

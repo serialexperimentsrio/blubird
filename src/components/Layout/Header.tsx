@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter, usePathname } from 'next/navigation'
 import AnimatedContent from '@/components/Special/AnimatedContent'
 
 type HeaderProps = {
@@ -24,8 +23,6 @@ export default function Header({
 	onLanguageToggle,
 	onNavigate
 }: HeaderProps) {
-	const router = useRouter()
-	const pathname = usePathname()
 
 	const handleLogoClick = async () => {
 		await onNavigate('')
