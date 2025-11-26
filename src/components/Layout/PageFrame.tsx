@@ -18,6 +18,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 	const [isAnimating, setIsAnimating] = useState(false)
 	const [isFadingOut, setIsFadingOut] = useState(false)
 	const [isArrowVisible, setIsArrowVisible] = useState(false)
+	const [currentPage, setCurrentPage] = useState<string>('')
 	const footerRef = useRef<HTMLDivElement>(null)
 	const scrollableRef = useRef<HTMLDivElement>(null)
 	const lastHoveredRef = useRef<string | null>(null)
@@ -39,6 +40,9 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 			if (savedHovered) {
 				lastHoveredRef.current = savedHovered
 			}
+			// Set current page from pathname
+			const currentPath = window.location.pathname.replace(/^\/(en|ja)/, '')
+			setCurrentPage(currentPath || '/')
 		}
 		initializeLanguage()
 	}, [params])
@@ -205,6 +209,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 				isFadingOut={isFadingOut}
 				onLanguageToggle={handleLanguageToggle}
 				onNavigate={handleNavigate}
+				currentPage={currentPage}
 			/>
 
 			{/* Scrollable Container */}

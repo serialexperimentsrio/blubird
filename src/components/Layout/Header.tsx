@@ -11,6 +11,7 @@ type HeaderProps = {
 	isFadingOut: boolean
 	onLanguageToggle: () => void
 	onNavigate: (path: string) => Promise<void>
+	currentPage: string
 }
 
 export default function Header({
@@ -21,7 +22,8 @@ export default function Header({
 	isAnimating,
 	isFadingOut,
 	onLanguageToggle,
-	onNavigate
+	onNavigate,
+	currentPage
 }: HeaderProps) {
 
 	const handleLogoClick = async () => {
@@ -190,6 +192,8 @@ export default function Header({
 						justifyContent: 'center',
 						minHeight: '1.4rem',
 						position: 'relative',
+						textDecoration: currentPage === '/diary' ? 'underline' : 'none',
+						textUnderlineOffset: '0.3em',
 					}}
 					onMouseEnter={() => handleNavHover('diary')}
 					onMouseLeave={handleNavLeave}
@@ -224,6 +228,8 @@ export default function Header({
 						justifyContent: 'center',
 						minHeight: '1.4rem',
 						position: 'relative',
+						textDecoration: currentPage === '/memories' ? 'underline' : 'none',
+						textUnderlineOffset: '0.3em',
 					}}
 					onMouseEnter={() => handleNavHover('memories')}
 					onMouseLeave={handleNavLeave}
@@ -258,6 +264,8 @@ export default function Header({
 						justifyContent: 'center',
 						minHeight: '1.4rem',
 						position: 'relative',
+						textDecoration: currentPage === '/school' ? 'underline' : 'none',
+						textUnderlineOffset: '0.3em',
 					}}
 					onMouseEnter={() => handleNavHover('school')}
 					onMouseLeave={handleNavLeave}
