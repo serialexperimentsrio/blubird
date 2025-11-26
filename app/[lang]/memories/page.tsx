@@ -11,11 +11,17 @@ type Props = {
 
 export default function MemoriesPage({ params }: Props) {
 	const [isVisible, setIsVisible] = useState(false)
+	const [lang, setLang] = useState<'en' | 'ja' | null>(null)
 
 	useEffect(() => {
+		params.then((resolvedParams) => {
+			setLang(resolvedParams.lang)
+		})
 		const timer = setTimeout(() => setIsVisible(true), 50)
 		return () => clearTimeout(timer)
-	}, [])
+	}, [params])
+
+	const comingSoonText = lang === 'ja' ? '[近日公開]' : '[COMING SOON]'
 
 	return (
 		<PageFrame params={params}>
@@ -30,7 +36,7 @@ export default function MemoriesPage({ params }: Props) {
 					}}
 				>
 					<p style={{ fontSize: '1.5rem' }}>
-						[Coming Soon...]
+						{comingSoonText}
 					</p>
 				</div>
 			)}

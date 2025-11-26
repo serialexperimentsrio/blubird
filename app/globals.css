@@ -40,7 +40,6 @@ body {
 
 .nav-arrow {
   display: inline-block;
-  width: 1em;
   animation: arrowBounce 0.6s ease-in-out infinite;
   vertical-align: middle;
   transition: opacity 0.2s ease-in-out;

@@ -45,8 +45,9 @@ export default function Footer({ language }: FooterProps) {
 						<Image
 							src="/flags/south_korea.png"
 							alt="South Korea"
-							width={28}
+							width={42}
 							height={28}
+							quality={100}
 							style={{
 								height: '28px',
 								width: 'auto',
@@ -72,8 +73,9 @@ export default function Footer({ language }: FooterProps) {
 						<Image
 							src="/flags/bangladesh.png"
 							alt="Bangladesh"
-							width={28}
+							width={42}
 							height={28}
+							quality={100}
 							style={{
 								height: '28px',
 								width: 'auto',
@@ -99,8 +101,9 @@ export default function Footer({ language }: FooterProps) {
 						<Image
 							src="/flags/japan.png"
 							alt="Japan"
-							width={28}
+							width={42}
 							height={28}
+							quality={100}
 							style={{
 								height: '28px',
 								width: 'auto',
@@ -126,8 +129,9 @@ export default function Footer({ language }: FooterProps) {
 						<Image
 							src="/flags/palestine.png"
 							alt="Palestine"
-							width={28}
+							width={42}
 							height={28}
+							quality={100}
 							style={{
 								height: '28px',
 								width: 'auto',
@@ -153,8 +157,9 @@ export default function Footer({ language }: FooterProps) {
 						<Image
 							src="/flags/sudan.png"
 							alt="Sudan"
-							width={28}
+							width={42}
 							height={28}
+							quality={100}
 							style={{
 								height: '28px',
 								width: 'auto',
@@ -180,8 +185,9 @@ export default function Footer({ language }: FooterProps) {
 						<Image
 							src="/flags/peace_blue.png"
 							alt="Peace"
-							width={28}
+							width={42}
 							height={28}
+							quality={100}
 							style={{
 								height: '28px',
 								width: 'auto',
@@ -217,8 +223,8 @@ export default function Footer({ language }: FooterProps) {
 				<Marquee
 					text={
 						language === 'ja'
-							? '著作権 2025 RIO • 著作権 2025 Rio • 著作権 2025 Rio • '
-							: 'Copyright 2025 RIO • Copyright 2025 Rio • Copyright 2025 Rio • '
+							? '著作権 2025 理央 • 著作権 2025 理央 • 著作権 2025 理央 • '
+							: 'Copyright 2025 RIO • Copyright 2025 RIO • Copyright 2025 RIO • '
 					}
 					speed={12}
 				/>

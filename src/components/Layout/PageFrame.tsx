@@ -169,6 +169,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 
 				.footer-arrow {
 					animation: footerBounce 0.6s ease-in-out infinite;
+					display: inline-block;
 				}
 
 				@keyframes fadeOut {
@@ -245,7 +246,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 					<div
 						style={{
 							position: 'absolute',
-							bottom: '1rem',
+							bottom: '0.5rem',
 							left: '50%',
 							transform: `translateX(-50%) rotate(${isFooterVisible ? 180 : 0}deg)`,
 							display: 'flex',
