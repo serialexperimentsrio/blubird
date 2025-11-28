@@ -224,7 +224,7 @@ export default function Footer({ language }: FooterProps) {
 					text={
 						language === 'ja'
 							? '著作権 2025 理央 • 著作権 2025 理央 • 著作権 2025 理央 • '
-							: 'Copyright 2025 RIO • Copyright 2025 RIO • Copyright 2025 RIO • '
+							: 'COPYRIGHT 2025 RIO • COPYRIGHT 2025 RIO • COPYRIGHT 2025 RIO • '
 					}
 					speed={12}
 				/>
