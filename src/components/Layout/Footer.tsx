@@ -57,27 +57,16 @@ export default function Footer({ language }: FooterProps) {
 						href="https://en.wikipedia.org/wiki/South_Korea"
 						target="_blank"
 						rel="noopener noreferrer"
-						style={{ textDecoration: 'none', display: 'inline-block' }}
 					>
 						<Image
 							src="/flags/south_korea.png"
 							alt="South Korea"
 							width={42}
 							height={28}
-							quality={100}
-							style={{
-								height: '28px',
-								width: 'auto',
-								cursor: 'pointer',
-								transition: 'transform 0.2s ease',
-								imageRendering: 'pixelated',
-							}}
-							onMouseEnter={(e) => {
-								e.currentTarget.style.transform = 'scale(1.2)'
-							}}
-							onMouseLeave={(e) => {
-								e.currentTarget.style.transform = 'scale(1)'
-							}}
+							unoptimized
+							style={{ height: '28px', width: 'auto', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 						/>
 					</a>
 				</WithTooltip>
@@ -86,27 +75,16 @@ export default function Footer({ language }: FooterProps) {
 						href="https://en.wikipedia.org/wiki/Bangladesh"
 						target="_blank"
 						rel="noopener noreferrer"
-						style={{ textDecoration: 'none', display: 'inline-block' }}
 					>
 						<Image
 							src="/flags/bangladesh.png"
 							alt="Bangladesh"
 							width={42}
 							height={28}
-							quality={100}
-							style={{
-								height: '28px',
-								width: 'auto',
-								cursor: 'pointer',
-								transition: 'transform 0.2s ease',
-								imageRendering: 'pixelated',
-							}}
-							onMouseEnter={(e) => {
-								e.currentTarget.style.transform = 'scale(1.2)'
-							}}
-							onMouseLeave={(e) => {
-								e.currentTarget.style.transform = 'scale(1)'
-							}}
+							unoptimized
+							style={{ height: '28px', width: 'auto', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 						/>
 					</a>
 				</WithTooltip>
@@ -115,27 +93,16 @@ export default function Footer({ language }: FooterProps) {
 						href="https://en.wikipedia.org/wiki/Japan"
 						target="_blank"
 						rel="noopener noreferrer"
-						style={{ textDecoration: 'none', display: 'inline-block' }}
 					>
 						<Image
 							src="/flags/japan.png"
 							alt="Japan"
 							width={42}
 							height={28}
-							quality={100}
-							style={{
-								height: '28px',
-								width: 'auto',
-								cursor: 'pointer',
-								transition: 'transform 0.2s ease',
-								imageRendering: 'pixelated',
-							}}
-							onMouseEnter={(e) => {
-								e.currentTarget.style.transform = 'scale(1.2)'
-							}}
-							onMouseLeave={(e) => {
-								e.currentTarget.style.transform = 'scale(1)'
-							}}
+							unoptimized
+							style={{ height: '28px', width: 'auto', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 						/>
 					</a>
 				</WithTooltip>
@@ -144,27 +111,16 @@ export default function Footer({ language }: FooterProps) {
 						href="https://en.wikipedia.org/wiki/Palestine"
 						target="_blank"
 						rel="noopener noreferrer"
-						style={{ textDecoration: 'none', display: 'inline-block' }}
 					>
 						<Image
 							src="/flags/palestine.png"
 							alt="Palestine"
 							width={42}
 							height={28}
-							quality={100}
-							style={{
-								height: '28px',
-								width: 'auto',
-								cursor: 'pointer',
-								transition: 'transform 0.2s ease',
-								imageRendering: 'pixelated',
-							}}
-							onMouseEnter={(e) => {
-								e.currentTarget.style.transform = 'scale(1.2)'
-							}}
-							onMouseLeave={(e) => {
-								e.currentTarget.style.transform = 'scale(1)'
-							}}
+							unoptimized
+							style={{ height: '28px', width: 'auto', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 						/>
 					</a>
 				</WithTooltip>
@@ -173,27 +129,16 @@ export default function Footer({ language }: FooterProps) {
 						href="https://en.wikipedia.org/wiki/Sudan"
 						target="_blank"
 						rel="noopener noreferrer"
-						style={{ textDecoration: 'none', display: 'inline-block' }}
 					>
 						<Image
 							src="/flags/sudan.png"
 							alt="Sudan"
 							width={42}
 							height={28}
-							quality={100}
-							style={{
-								height: '28px',
-								width: 'auto',
-								cursor: 'pointer',
-								transition: 'transform 0.2s ease',
-								imageRendering: 'pixelated',
-							}}
-							onMouseEnter={(e) => {
-								e.currentTarget.style.transform = 'scale(1.2)'
-							}}
-							onMouseLeave={(e) => {
-								e.currentTarget.style.transform = 'scale(1)'
-							}}
+							unoptimized
+							style={{ height: '28px', width: 'auto', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 						/>
 					</a>
 				</WithTooltip>
@@ -202,27 +147,16 @@ export default function Footer({ language }: FooterProps) {
 						href="https://en.wikipedia.org/wiki/Give_Peace_a_Chance"
 						target="_blank"
 						rel="noopener noreferrer"
-						style={{ textDecoration: 'none', display: 'inline-block' }}
 					>
 						<Image
 							src="/flags/peace_blue.png"
 							alt="Peace"
 							width={42}
 							height={28}
-							quality={100}
-							style={{
-								height: '28px',
-								width: 'auto',
-								cursor: 'pointer',
-								transition: 'transform 0.2s ease',
-								imageRendering: 'pixelated',
-							}}
-							onMouseEnter={(e) => {
-								e.currentTarget.style.transform = 'scale(1.2)'
-							}}
-							onMouseLeave={(e) => {
-								e.currentTarget.style.transform = 'scale(1)'
-							}}
+							unoptimized
+							style={{ height: '28px', width: 'auto', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 						/>
 					</a>
 				</WithTooltip>
