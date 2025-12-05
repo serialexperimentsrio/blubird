@@ -177,23 +177,23 @@ export default function Header({
 				onMouseLeave={handleNavLeave}
 			>
 				<div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+					<div className={isFadingOut ? 'language-fade-out' : ''}>
+						<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+							<span>{language === 'ja' ? '理央の世界〜!' : "RIO'S WORLD!"}</span>
+						</AnimatedContent>
+					</div>
 					<span
 						className="nav-arrow"
 						style={{
 							opacity: hoveredNav === 'logo' && isAnimating ? 1 : 0,
 							fontSize: '1.5rem',
 							position: 'absolute',
-							right: 'calc(100% + 0.5rem)',
+							left: 'calc(100% + 0.5rem)',
 							zIndex: 1,
 						}}
 					>
-						▸
+						◂
 					</span>
-					<div className={isFadingOut ? 'language-fade-out' : ''}>
-						<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
-							<span>{language === 'ja' ? '理央の世界〜!' : "RIO'S WORLD!"}</span>
-						</AnimatedContent>
-					</div>
 				</div>
 			</div>
 
