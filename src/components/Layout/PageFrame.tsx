@@ -72,11 +72,12 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 		const el = footerRef.current
 		if (!el) return
 
+		// Use threshold of 0.5 to detect when footer is meaningfully visible
 		const observer = new IntersectionObserver(
 			([entry]) => {
 				setIsFooterVisible(entry.isIntersecting)
 			},
-			{ threshold: 0.1 }
+			{ threshold: 0.5 }
 		)
 
 		observer.observe(el)
@@ -215,35 +216,11 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 			{/* Scrollable Container */}
 			<div
 				ref={scrollableRef}
-				className="scrollable-container"
-				style={{
-					position: 'fixed',
-					top: '84px',
-					left: 0,
-					width: '100%',
-					height: 'calc(100vh - 84px)',
-					overflowY: 'scroll',
-					scrollSnapType: 'y mandatory',
-					scrollBehavior: 'smooth',
-					zIndex: 1,
-					pointerEvents: 'auto',
-				}}
+				className="scrollable-container fixed left-0 w-full z-[1] pointer-events-auto overflow-y-scroll snap-y snap-mandatory scroll-smooth top-[84px] h-[calc(100vh-84px)]"
 			>
 				{/* Main Content Area */}
 				<div
-					style={{
-						width: '100%',
-						minHeight: 'calc(100vh - 84px)',
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						justifyContent: 'center',
-						padding: '0 4rem',
-						pointerEvents: 'auto',
-						scrollSnapAlign: 'start',
-						scrollSnapStop: 'always',
-						position: 'relative',
-					}}
+					className="page-content w-full flex flex-col items-center justify-center pointer-events-auto snap-start snap-always relative flex-shrink-0 box-border min-h-[calc(100vh-84px)] px-16"
 				>
 					{children(isFadingOut)}
 

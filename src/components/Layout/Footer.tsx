@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import WithTooltip from '@/components/Tooltip'
 import Marquee from '@/components/Special/Marquee'
@@ -9,6 +10,17 @@ type FooterProps = {
 }
 
 export default function Footer({ language }: FooterProps) {
+	const [isMobile, setIsMobile] = useState(false)
+
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 1270)
+		}
+
+		handleResize()
+		window.addEventListener('resize', handleResize)
+		return () => window.removeEventListener('resize', handleResize)
+	}, [])
 	return (
 		<div
 			style={{
@@ -17,22 +29,27 @@ export default function Footer({ language }: FooterProps) {
 				pointerEvents: 'auto',
 				scrollSnapAlign: 'start',
 				scrollSnapStop: 'always',
-				height: '126px',
-				overflow: 'hidden',
+				height: isMobile ? 'auto' : '126px',
+				minHeight: isMobile ? 'auto' : undefined,
+				overflow: isMobile ? 'visible' : 'hidden',
 				position: 'relative',
+				padding: isMobile ? '1.5rem clamp(1rem, 5vw, 4rem)' : '0 clamp(1rem, 5vw, 4rem)',
+				display: isMobile ? 'flex' : 'block',
+				flexDirection: isMobile ? 'column' : undefined,
+				alignItems: isMobile ? 'center' : undefined,
+				gap: isMobile ? '1.5rem' : undefined,
 			}}
 		>
-			{/* Flags */}
 			<div
 				style={{
 					display: 'grid',
 					gridTemplateColumns: 'repeat(3, 1fr)',
 					gap: '1.2rem',
 					alignItems: 'center',
-					position: 'absolute',
-					left: '4rem',
-					top: '50%',
-					transform: 'translateY(-50%)',
+					position: isMobile ? 'relative' : 'absolute',
+					left: isMobile ? 0 : '4rem',
+					top: isMobile ? 0 : '50%',
+					transform: isMobile ? 'none' : 'translateY(-50%)',
 				}}
 			>
 				<WithTooltip text={language === 'ja' ? 'ここで生まれ' : 'I WAS BORN HERE'} above>
@@ -53,6 +70,7 @@ export default function Footer({ language }: FooterProps) {
 								width: 'auto',
 								cursor: 'pointer',
 								transition: 'transform 0.2s ease',
+								imageRendering: 'pixelated',
 							}}
 							onMouseEnter={(e) => {
 								e.currentTarget.style.transform = 'scale(1.2)'
@@ -81,6 +99,7 @@ export default function Footer({ language }: FooterProps) {
 								width: 'auto',
 								cursor: 'pointer',
 								transition: 'transform 0.2s ease',
+								imageRendering: 'pixelated',
 							}}
 							onMouseEnter={(e) => {
 								e.currentTarget.style.transform = 'scale(1.2)'
@@ -109,6 +128,7 @@ export default function Footer({ language }: FooterProps) {
 								width: 'auto',
 								cursor: 'pointer',
 								transition: 'transform 0.2s ease',
+								imageRendering: 'pixelated',
 							}}
 							onMouseEnter={(e) => {
 								e.currentTarget.style.transform = 'scale(1.2)'
@@ -137,6 +157,7 @@ export default function Footer({ language }: FooterProps) {
 								width: 'auto',
 								cursor: 'pointer',
 								transition: 'transform 0.2s ease',
+								imageRendering: 'pixelated',
 							}}
 							onMouseEnter={(e) => {
 								e.currentTarget.style.transform = 'scale(1.2)'
@@ -165,6 +186,7 @@ export default function Footer({ language }: FooterProps) {
 								width: 'auto',
 								cursor: 'pointer',
 								transition: 'transform 0.2s ease',
+								imageRendering: 'pixelated',
 							}}
 							onMouseEnter={(e) => {
 								e.currentTarget.style.transform = 'scale(1.2)'
@@ -193,6 +215,7 @@ export default function Footer({ language }: FooterProps) {
 								width: 'auto',
 								cursor: 'pointer',
 								transition: 'transform 0.2s ease',
+								imageRendering: 'pixelated',
 							}}
 							onMouseEnter={(e) => {
 								e.currentTarget.style.transform = 'scale(1.2)'
@@ -204,18 +227,18 @@ export default function Footer({ language }: FooterProps) {
 					</a>
 				</WithTooltip>
 			</div>
-			{/* Marquee */}
+
 			<div
 				style={{
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
-					position: 'absolute',
-					left: '50%',
-					top: '50%',
-					transform: 'translate(-50%, -50%)',
-					width: '60%',
-					height: '100%',
+					position: isMobile ? 'relative' : 'absolute',
+					left: isMobile ? 0 : '50%',
+					top: isMobile ? 0 : '50%',
+					transform: isMobile ? 'none' : 'translate(-50%, -50%)',
+					width: isMobile ? '100%' : '60%',
+					height: isMobile ? 'auto' : '100%',
 					color: 'var(--white)',
 					fontSize: '1.2rem',
 				}}
