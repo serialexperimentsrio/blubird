@@ -47,6 +47,11 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 		initializeLanguage()
 	}, [params])
 
+	// Update document title based on language
+	useEffect(() => {
+		document.title = language === 'ja' ? '理央の世界〜!' : "RIO'S WORLD!"
+	}, [language])
+
 	// Trigger animation and restore hover state after language changes
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
