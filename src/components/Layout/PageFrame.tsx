@@ -30,6 +30,8 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 			const resolvedParams = await params
 			const lang = (resolvedParams.lang as 'en' | 'ja') || 'ja'
 			setLanguage(lang)
+			// Update document title immediately based on language
+			document.title = lang === 'ja' ? '理央の世界〜!' : "RIO'S WORLD!"
 			// Save preference to cookie
 			document.cookie = `NEXT_LANGUAGE=${lang}; path=/; max-age=31536000`
 			// Reset all navigation states when page loads
@@ -47,7 +49,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 		initializeLanguage()
 	}, [params])
 
-	// Update document title based on language
+	// Update document title based on language (for toggle)
 	useEffect(() => {
 		document.title = language === 'ja' ? '理央の世界〜!' : "RIO'S WORLD!"
 	}, [language])
