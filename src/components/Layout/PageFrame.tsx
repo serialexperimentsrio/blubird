@@ -20,10 +20,12 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 	const [isFadingOut, setIsFadingOut] = useState(false)
 	const [isArrowVisible, setIsArrowVisible] = useState(false)
 	const [currentPage, setCurrentPage] = useState<string>('')
+	const [hideSupportTooltip, setHideSupportTooltip] = useState(false)
 	const footerRef = useRef<HTMLDivElement>(null)
 	const scrollableRef = useRef<HTMLDivElement>(null)
 	const lastHoveredRef = useRef<string | null>(null)
 	const isTogglingRef = useRef(false)
+	const hideTooltipTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	// Initialize language from route params
 	useEffect(() => {
@@ -92,6 +94,31 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 
 		return () => {
 			observer.unobserve(el)
+		}
+	}, [])
+
+	useEffect(() => {
+		const scrollEl = scrollableRef.current
+		if (!scrollEl) return
+
+		const handleScroll = () => {
+			setHideSupportTooltip(true)
+			if (hideTooltipTimeoutRef.current) {
+				clearTimeout(hideTooltipTimeoutRef.current)
+			}
+			hideTooltipTimeoutRef.current = setTimeout(() => {
+				setHideSupportTooltip(false)
+				hideTooltipTimeoutRef.current = null
+			}, 800)
+		}
+
+		scrollEl.addEventListener('scroll', handleScroll, { passive: true })
+
+		return () => {
+			scrollEl.removeEventListener('scroll', handleScroll)
+			if (hideTooltipTimeoutRef.current) {
+				clearTimeout(hideTooltipTimeoutRef.current)
+			}
 		}
 	}, [])
 
@@ -264,22 +291,33 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 							width: '160px',
 						}}
 					>
-						<WithTooltip text={language === 'ja' ? 'サポートして！' : 'SUPPORT ME!'} above>
-							<img
-								src="/support.gif"
-								alt="Support"
-								style={{
-									height: '40px',
-									width: 'auto',
-									imageRendering: 'pixelated',
-									display: 'block',
-									transition: 'transform 0.2s ease',
-									cursor: 'pointer'
-								}}
-								onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-								onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-							/>
-						</WithTooltip>
+					<WithTooltip text={language === 'ja' ? 'サポートして！' : 'SUPPORT ME!'} above forceHide={hideSupportTooltip}>
+						<img
+							src="/support.gif"
+							alt="Support"
+							style={{
+								height: '40px',
+								width: 'auto',
+								imageRendering: 'pixelated',
+								display: 'block',
+								transition: 'transform 0.2s ease',
+								cursor: 'pointer'
+							}}
+						onClick={() => {
+							setHideSupportTooltip(true)
+							if (hideTooltipTimeoutRef.current) {
+								clearTimeout(hideTooltipTimeoutRef.current)
+							}
+							footerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+							hideTooltipTimeoutRef.current = setTimeout(() => {
+								setHideSupportTooltip(false)
+								hideTooltipTimeoutRef.current = null
+							}, 1000)
+						}}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+						/>
+					</WithTooltip>
 					</div>
 				</div>
 

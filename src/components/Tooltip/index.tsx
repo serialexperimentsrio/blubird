@@ -8,7 +8,6 @@ type MouseEventHandler = (event: React.MouseEvent) => void
 type ChildProps = {
 	onMouseEnter?: MouseEventHandler
 	onMouseLeave?: MouseEventHandler
-	onMouseDown?: MouseEventHandler
 	[key: string]: unknown // use unknown instead of any
 }
 
@@ -19,6 +18,7 @@ type TooltipProps = {
 	left?: boolean
 	right?: boolean
 	forceShow?: boolean
+	forceHide?: boolean
 }
 
 export default function WithTooltip({
@@ -27,7 +27,8 @@ export default function WithTooltip({
 	above,
 	left,
 	right,
-	forceShow
+	forceShow,
+	forceHide
 }: TooltipProps) {
 	// validate that only one direction prop is set
 	useEffect(() => {
@@ -48,6 +49,7 @@ export default function WithTooltip({
 	const childRef = useRef<HTMLElement>(null)
 	const boxRef = useRef<HTMLDivElement>(null)
 	const tooltipSize = useRef({ width: 0, height: 0 })
+	const lastForceHideRef = useRef(forceHide)
 
 	// handle initial tooltip setup as soon as component mounts
 	useEffect(() => {
@@ -66,6 +68,20 @@ export default function WithTooltip({
 
 	// main effect for handling animations & scroll positioning
 	useEffect(() => {
+		// Track if forceHide just changed from false to true
+		const wasJustForceHidden = !lastForceHideRef.current && forceHide
+		lastForceHideRef.current = forceHide
+
+		// If just force hidden, immediately hide and skip this render
+		if (wasJustForceHidden) {
+			setVisible(false)
+		}
+
+		// Don't show tooltip if force hidden
+		if (forceHide) {
+			return
+		}
+
 		// Determine if we should show the tooltip
 		const shouldShow = hovered || forceShow
 
@@ -225,7 +241,7 @@ export default function WithTooltip({
 			animation.cancel()
 			window.removeEventListener('scroll', updateOnScroll)
 		}
-	}, [hovered, forceShow, above, left, right])
+	}, [hovered, forceShow, forceHide, above, left, right])
 
 	// show tooltip content
 	const tooltipContent =
