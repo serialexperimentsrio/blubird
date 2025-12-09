@@ -18,6 +18,7 @@ type TooltipProps = {
 	above?: boolean
 	left?: boolean
 	right?: boolean
+	forceShow?: boolean
 }
 
 export default function WithTooltip({
@@ -25,7 +26,8 @@ export default function WithTooltip({
 	children,
 	above,
 	left,
-	right
+	right,
+	forceShow
 }: TooltipProps) {
 	// validate that only one direction prop is set
 	useEffect(() => {
@@ -64,9 +66,10 @@ export default function WithTooltip({
 
 	// main effect for handling animations & scroll positioning
 	useEffect(() => {
-		// always run this effect when hover changes
-		// prepare for animation if hovered
-		if (hovered) {
+		// Determine if we should show the tooltip
+		const shouldShow = hovered || forceShow
+
+		if (shouldShow) {
 			setVisible(true)
 		}
 
@@ -177,12 +180,12 @@ export default function WithTooltip({
 		}
 
 		// reverse animation when hiding
-		if (!hovered) keyframes.reverse()
+		if (!shouldShow) keyframes.reverse()
 
 		// animate the tooltip with appropriate timing
 		const animation = boxRef.current.animate(
 			keyframes,
-			hovered
+			shouldShow
 				? {
 						duration: 200,
 						easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
@@ -196,7 +199,7 @@ export default function WithTooltip({
 		)
 
 		// handle hide animation complete
-		if (!hovered) {
+		if (!shouldShow) {
 			animation.onfinish = () => setVisible(false)
 		}
 
@@ -212,8 +215,8 @@ export default function WithTooltip({
 			setTimeout(() => setVisible((v) => !v), 0)
 		}
 
-		// only add scroll listener when hovered
-		if (hovered) {
+		// only add scroll listener when hovered or forceShow
+		if (shouldShow) {
 			window.addEventListener('scroll', updateOnScroll, { passive: true })
 		}
 
@@ -222,7 +225,7 @@ export default function WithTooltip({
 			animation.cancel()
 			window.removeEventListener('scroll', updateOnScroll)
 		}
-	}, [hovered, above, left, right])
+	}, [hovered, forceShow, above, left, right])
 
 	// show tooltip content
 	const tooltipContent =
@@ -317,14 +320,6 @@ export default function WithTooltip({
 
 			if (children.props.onMouseLeave) {
 				children.props.onMouseLeave(e)
-			}
-		},
-
-		onMouseDown: (e: React.MouseEvent) => {
-			setHovered(false)
-
-			if (children.props.onMouseDown) {
-				children.props.onMouseDown(e)
 			}
 		}
 	})
