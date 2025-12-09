@@ -211,27 +211,13 @@ export default function Footer({ language }: FooterProps) {
 				style={{
 					position: isMobile ? 'relative' : 'absolute',
 					right: isMobile ? 0 : 'clamp(1rem, 5vw, 4rem)',
-					left: isMobile ? 0 : '80%',
 					top: isMobile ? 0 : '50%',
 					transform: isMobile ? 'none' : 'translateY(-50%)',
 					display: 'flex',
 					alignItems: 'center',
-					justifyContent: isMobile ? 'center' : 'flex-start',
-					gap: '0',
+					justifyContent: isMobile ? 'center' : 'flex-end',
 				}}
 			>
-				<div style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
-					<WithTooltip text={language === 'ja' ? 'サポートして！' : 'SUPPORT ME!'} above>
-						<img
-							src="/support.gif"
-							alt="Support"
-							style={{ height: '48px', width: 'auto', imageRendering: 'pixelated', display: 'block', transition: 'transform 0.2s ease' }}
-							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-						/>
-					</WithTooltip>
-				</div>
-
 				<div
 					style={{
 						display: 'flex',

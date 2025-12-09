@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import Header from './Header'
 import Footer from './Footer'
+import WithTooltip from '@/components/Tooltip'
 
 type PageFrameProps = {
 	params: Promise<{ lang: 'en' | 'ja' }>
@@ -247,6 +248,38 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 						}}
 					>
 						<span className="footer-arrow">▾</span>
+					</div>
+
+					{/* Support GIF */}
+					<div
+						style={{
+							position: 'absolute',
+							bottom: '1rem',
+							right: 'clamp(1rem, 5vw, 4rem)',
+							opacity: isFadingOut ? 0 : (isArrowVisible ? 1 : 0),
+							transition: 'opacity 0.3s ease-in-out',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							width: '160px',
+						}}
+					>
+						<WithTooltip text={language === 'ja' ? 'サポートして！' : 'SUPPORT ME!'} above>
+							<img
+								src="/support.gif"
+								alt="Support"
+								style={{
+									height: '40px',
+									width: 'auto',
+									imageRendering: 'pixelated',
+									display: 'block',
+									transition: 'transform 0.2s ease',
+									cursor: 'pointer'
+								}}
+								onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+								onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+							/>
+						</WithTooltip>
 					</div>
 				</div>
 
