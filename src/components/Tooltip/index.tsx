@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-// define types for mouse events we care about
 type MouseEventHandler = (event: React.MouseEvent) => void
 
-// define props for child elements
 type ChildProps = {
 	onMouseEnter?: MouseEventHandler
 	onMouseLeave?: MouseEventHandler
@@ -41,61 +39,47 @@ export default function WithTooltip({
 		}
 	}, [above, left, right])
 
-	// state
 	const [hovered, setHovered] = useState(false)
 	const [visible, setVisible] = useState(false)
 
-	// refs
 	const childRef = useRef<HTMLElement>(null)
 	const boxRef = useRef<HTMLDivElement>(null)
 	const tooltipSize = useRef({ width: 0, height: 0 })
 	const lastForceHideRef = useRef(forceHide)
 
-	// handle initial tooltip setup as soon as component mounts
 	useEffect(() => {
-		// this will prepare the tooltip before first hover
-		// so that the animation works immediately
 		setVisible(true)
 		setTimeout(() => {
 			setVisible(false)
 		}, 0)
 	}, [])
 
-	// reset tooltip size cache when text changes
 	useEffect(() => {
 		tooltipSize.current = { width: 0, height: 0 }
 	}, [text])
 
-	// main effect for handling animations & scroll positioning
 	useEffect(() => {
-		// Track if forceHide just changed from false to true
 		const wasJustForceHidden = !lastForceHideRef.current && forceHide
 		lastForceHideRef.current = forceHide
 
-		// If just force hidden, immediately hide and skip this render
 		if (wasJustForceHidden) {
 			setVisible(false)
 		}
 
-		// Don't show tooltip if force hidden
 		if (forceHide) {
 			return
 		}
 
-		// Determine if we should show the tooltip
 		const shouldShow = hovered || forceShow
 
 		if (shouldShow) {
 			setVisible(true)
 		}
 
-		// don't continue if no refs available
 		if (!childRef.current || !boxRef.current) return
 
-		// get current child position
 		const childRect = childRef.current.getBoundingClientRect()
 
-		// set up tooltip size if needed
 		if (tooltipSize.current.width === 0 && boxRef.current) {
 			const tooltip = boxRef.current.querySelector(
 				'div'
@@ -111,7 +95,6 @@ export default function WithTooltip({
 
 		boxRef.current.style.position = 'absolute'
 
-		// set up animation keyframes
 		const keyframes = [
 			{
 				opacity: 0,
@@ -142,13 +125,11 @@ export default function WithTooltip({
 			}
 		]
 
-		// handle above positioning
 		if (above) {
 			keyframes[0].top = `${Math.round(childRect.top + window.scrollY + 10)}px`
 			keyframes[1].top = `${Math.round(childRect.top - 40 + window.scrollY)}px`
 		}
 
-		// handle left positioning
 		if (left) {
 			keyframes[0].top = `${Math.round(
 				childRect.top + childRect.height / 2 + window.scrollY
@@ -173,7 +154,6 @@ export default function WithTooltip({
 			)}px`
 		}
 
-		// handle right positioning
 		if (right) {
 			keyframes[0].top = `${Math.round(
 				childRect.top + childRect.height / 2 + window.scrollY
@@ -195,10 +175,8 @@ export default function WithTooltip({
 			)}px`
 		}
 
-		// reverse animation when hiding
 		if (!shouldShow) keyframes.reverse()
 
-		// animate the tooltip with appropriate timing
 		const animation = boxRef.current.animate(
 			keyframes,
 			shouldShow
