@@ -49,18 +49,18 @@ body {
 /* Coin Jump Animation */
 @keyframes coinJump {
   0% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
   30% {
-    transform: translateY(-20px) scale(1.1);
+    transform: translateY(-16px);
   }
   50% {
-    transform: translateY(-25px) scale(1.15);
+    transform: translateY(-20px);
   }
   70% {
-    transform: translateY(-20px) scale(1.1);
+    transform: translateY(-16px);
   }
   100% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }

@@ -20,12 +20,10 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 	const [isFadingOut, setIsFadingOut] = useState(false)
 	const [isArrowVisible, setIsArrowVisible] = useState(false)
 	const [currentPage, setCurrentPage] = useState<string>('')
-	const [hideSupportTooltip, setHideSupportTooltip] = useState(false)
 	const footerRef = useRef<HTMLDivElement>(null)
 	const scrollableRef = useRef<HTMLDivElement>(null)
 	const lastHoveredRef = useRef<string | null>(null)
 	const isTogglingRef = useRef(false)
-	const hideTooltipTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	// Initialize language from route params
 	useEffect(() => {
@@ -94,31 +92,6 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 
 		return () => {
 			observer.unobserve(el)
-		}
-	}, [])
-
-	useEffect(() => {
-		const scrollEl = scrollableRef.current
-		if (!scrollEl) return
-
-		const handleScroll = () => {
-			setHideSupportTooltip(true)
-			if (hideTooltipTimeoutRef.current) {
-				clearTimeout(hideTooltipTimeoutRef.current)
-			}
-			hideTooltipTimeoutRef.current = setTimeout(() => {
-				setHideSupportTooltip(false)
-				hideTooltipTimeoutRef.current = null
-			}, 800)
-		}
-
-		scrollEl.addEventListener('scroll', handleScroll, { passive: true })
-
-		return () => {
-			scrollEl.removeEventListener('scroll', handleScroll)
-			if (hideTooltipTimeoutRef.current) {
-				clearTimeout(hideTooltipTimeoutRef.current)
-			}
 		}
 	}, [])
 
@@ -251,7 +224,8 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 			{/* Scrollable Container */}
 			<div
 				ref={scrollableRef}
-				className="scrollable-container fixed left-0 w-full z-[1] pointer-events-auto overflow-y-scroll snap-y snap-mandatory scroll-smooth top-[84px] h-[calc(100vh-84px)]"
+				className="scrollable-container fixed left-0 w-full z-[1] pointer-events-auto snap-y snap-mandatory scroll-smooth top-[84px] h-[calc(100vh-84px)]"
+				style={{ overflowX: 'clip', overflowY: 'scroll' }}
 			>
 				{/* Main Content Area */}
 				<div

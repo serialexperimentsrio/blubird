@@ -16,13 +16,23 @@ const QR_CODES = [
 	{ coin: 'USDT', image: '/qr/USDT.png', address: '0xDC45c831D436b39FD91d20773e02bC190A474314' },
 ]
 
+const HOVER_SCALE_STYLE = { height: '28px', width: '50px', imageRendering: 'pixelated' as const, transition: 'transform 0.2s ease' }
+const COIN_CONTAINER_STYLE = { height: '60px', display: 'flex' as const, alignItems: 'center' as const, overflow: 'hidden' as const }
+const COIN_BASE_STYLE = {
+	height: '40px',
+	width: 'auto' as const,
+	imageRendering: 'pixelated' as const,
+	cursor: 'pointer' as const,
+	display: 'block' as const,
+}
+
 export default function Footer({ language }: FooterProps) {
 	const [isMobile, setIsMobile] = useState(false)
 	const [currentQRIndex, setCurrentQRIndex] = useState(0)
 	const [copied, setCopied] = useState(false)
 	const [tooltipText, setTooltipText] = useState('')
 	const [isJumping, setIsJumping] = useState(false)
-	const [coinTooltipHidden, setCoinTooltipHidden] = useState(false)
+	const [coinGifKey, setCoinGifKey] = useState(0)
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -32,6 +42,17 @@ export default function Footer({ language }: FooterProps) {
 		handleResize()
 		window.addEventListener('resize', handleResize)
 		return () => window.removeEventListener('resize', handleResize)
+	}, [])
+
+	useEffect(() => {
+		const handleVisibilityChange = () => {
+			if (!document.hidden) {
+				setCoinGifKey(prev => prev + 1)
+			}
+		}
+
+		document.addEventListener('visibilitychange', handleVisibilityChange)
+		return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
 	}, [])
 
 	const handleNextQR = () => {
@@ -57,7 +78,7 @@ export default function Footer({ language }: FooterProps) {
 
 	const handleQRMouseLeave = () => {
 		setCopied(false)
-							setTimeout(() => {
+		setTimeout(() => {
 			setTooltipText(language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')
 		}, 400)
 	}
@@ -70,8 +91,8 @@ export default function Footer({ language }: FooterProps) {
 				scrollSnapAlign: 'start',
 				scrollSnapStop: 'always',
 				height: isMobile ? 'auto' : '126px',
-				minHeight: isMobile ? 'auto' : undefined,
-				overflow: isMobile ? 'visible' : 'hidden',
+				minHeight: isMobile ? 'auto' : '126px',
+				overflow: 'hidden',
 				position: 'relative',
 				padding: isMobile ? '1.5rem clamp(1rem, 5vw, 4rem)' : '0 clamp(1rem, 5vw, 4rem)',
 				display: isMobile ? 'flex' : 'block',
@@ -84,8 +105,8 @@ export default function Footer({ language }: FooterProps) {
 				style={{
 					display: 'grid',
 					gridTemplateColumns: 'repeat(3, 1fr)',
-			rowGap: '24px',
-			columnGap: '20px',
+					rowGap: '24px',
+					columnGap: '20px',
 					alignItems: 'center',
 					position: isMobile ? 'relative' : 'absolute',
 					left: isMobile ? 0 : '4rem',
@@ -102,82 +123,62 @@ export default function Footer({ language }: FooterProps) {
 						<img
 							src="/flags/south_korea.png"
 							alt="South Korea"
-						style={{ height: '28px', width: '50px', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
-						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-					/>
-				</a>
-			</WithTooltip>
+							style={HOVER_SCALE_STYLE}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+						/>
+					</a>
+				</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'ここに生き' : 'I LIVE HERE'} above>
-					<a
-						href="https://en.wikipedia.org/wiki/Bangladesh"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<img
-							src="/flags/bangladesh.png"
-							alt="Bangladesh"
-						style={{ height: '28px', width: '50px', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+				<a href="https://en.wikipedia.org/wiki/Bangladesh" target="_blank" rel="noopener noreferrer">
+					<img
+						src="/flags/bangladesh.png"
+						alt="Bangladesh"
+						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
 						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 					/>
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'ここにいたい' : 'I WANT TO BE HERE'} above>
-					<a
-						href="https://en.wikipedia.org/wiki/Japan"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<img
-							src="/flags/japan.png"
-							alt="Japan"
-						style={{ height: '28px', width: '50px', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+				<a href="https://en.wikipedia.org/wiki/Japan" target="_blank" rel="noopener noreferrer">
+					<img
+						src="/flags/japan.png"
+						alt="Japan"
+						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
 						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 					/>
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'パレスチナを解放せよ' : 'FREE PALESTINE'} above>
-					<a
-						href="https://en.wikipedia.org/wiki/Palestine"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<img
-							src="/flags/palestine.png"
-							alt="Palestine"
-						style={{ height: '28px', width: '50px', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+				<a href="https://en.wikipedia.org/wiki/Palestine" target="_blank" rel="noopener noreferrer">
+					<img
+						src="/flags/palestine.png"
+						alt="Palestine"
+						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
 						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 					/>
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'スーダンに目を向けよう' : 'EYES ON SUDAN'} above>
-					<a
-						href="https://en.wikipedia.org/wiki/Sudan"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<img
-							src="/flags/sudan.png"
-							alt="Sudan"
-						style={{ height: '28px', width: '50px', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+				<a href="https://en.wikipedia.org/wiki/Sudan" target="_blank" rel="noopener noreferrer">
+					<img
+						src="/flags/sudan.png"
+						alt="Sudan"
+						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
 						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 					/>
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? '✌' : '✌'} above>
-					<a
-						href="https://en.wikipedia.org/wiki/Give_Peace_a_Chance"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<img
-							src="/flags/peace_blue.png"
-							alt="Peace"
-						style={{ height: '28px', width: '50px', imageRendering: 'pixelated', transition: 'transform 0.2s ease' }}
+				<a href="https://en.wikipedia.org/wiki/Give_Peace_a_Chance" target="_blank" rel="noopener noreferrer">
+					<img
+						src="/flags/peace_blue.png"
+						alt="Peace"
+						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
 						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
 					/>
@@ -219,106 +220,113 @@ export default function Footer({ language }: FooterProps) {
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: isMobile ? 'center' : 'flex-end',
-				gap: '1rem',
-			}}
-		>
-		<WithTooltip text={language === 'ja' ? '理央をサポート！コインを送って！' : 'SUPPORT RIO! SEND COINS!'} above forceHide={coinTooltipHidden}>
-			<img
-				src="/coin.gif?v=3"
-				alt="Coin"
-				style={{
-					height: '40px',
-					width: 'auto',
-					imageRendering: 'pixelated',
-					cursor: 'pointer',
-					transition: 'transform 0.2s ease',
-					animation: isJumping ? 'coinJump 0.5s ease' : 'none',
-				}}
-				onClick={() => {
-					const audio = new Audio('/coin.flac')
-					audio.play().catch(err => console.error('Failed to play audio:', err))
-					setIsJumping(true)
-					setCoinTooltipHidden(true)
-					setTimeout(() => {
-						setIsJumping(false)
-						setCoinTooltipHidden(false)
-					}, 500)
-			}}
-			onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-			onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-		/>
-	</WithTooltip>
-
-	<div
-		style={{
-			display: 'flex',
-			flexDirection: 'row',
-			alignItems: 'center',
-			gap: '0',
-		}}
-	>
-		<WithTooltip text={language === 'ja' ? '次のコイン' : 'NEXT COIN'} above>
-			<div
-				onClick={handleNextQR}
-				style={{
-					color: 'var(--white)',
-					fontSize: '1.2rem',
-					fontFamily: 'var(--font-maru-monica)',
-					userSelect: 'none',
-					height: '80px',
-					minWidth: '80px',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					padding: '0 1rem',
-					border: '2px solid var(--blue-accent)',
-					borderRight: 'none',
-					cursor: 'pointer',
-					position: 'relative',
-				}}
-			>
-				<div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-				<div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-				<div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-				<div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-				{QR_CODES[currentQRIndex].coin}
-			</div>
-		</WithTooltip>
-
-		<WithTooltip text={tooltipText || (language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')} above forceShow={copied}>
-			<div
-				onClick={handleCopyAddress}
-				onMouseEnter={handleQRMouseEnter}
-				onMouseLeave={handleQRMouseLeave}
-				style={{
-					height: '80px',
-					width: '80px',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
+					gap: '1rem',
 					overflow: 'hidden',
-					border: '2px solid var(--blue-accent)',
-					cursor: 'pointer',
 				}}
 			>
-				<img
-					src={QR_CODES[currentQRIndex].image}
-					alt={`${QR_CODES[currentQRIndex].coin} QR Code`}
-					style={{
-						height: '100%',
-						width: '100%',
-						objectFit: 'cover',
-						display: 'block',
-					}}
-					onError={(e) => {
-						console.error('Failed to load QR code:', QR_CODES[currentQRIndex].image)
-						e.currentTarget.style.display = 'none'
-					}}
-				/>
+			{!isJumping && (
+				<WithTooltip text={language === 'ja' ? '理央をサポート！コインを送って！' : 'SUPPORT RIO! SEND COINS!'} above>
+					<div style={COIN_CONTAINER_STYLE}>
+						<img
+							key={coinGifKey}
+							src={`/coin.gif?v=${coinGifKey}`}
+							alt="Coin"
+							style={{ ...COIN_BASE_STYLE, transition: 'transform 0.2s ease' }}
+							onClick={() => {
+								const audio = new Audio('/coin.flac')
+								audio.play().catch(err => console.error('Failed to play audio:', err))
+								setIsJumping(true)
+								setTimeout(() => {
+									setIsJumping(false)
+								}, 500)
+							}}
+							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+						/>
+					</div>
+				</WithTooltip>
+			)}
+			{isJumping && (
+				<div style={COIN_CONTAINER_STYLE}>
+					<img
+						key={coinGifKey}
+						src={`/coin.gif?v=${coinGifKey}`}
+						alt="Coin"
+						style={{ ...COIN_BASE_STYLE, animation: 'coinJump 0.5s ease' }}
+					/>
+				</div>
+			)}
+
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					alignItems: 'center',
+					gap: '0',
+				}}
+			>
+				<WithTooltip text={language === 'ja' ? '次のコイン' : 'NEXT COIN'} above>
+					<div
+						onClick={handleNextQR}
+						style={{
+							color: 'var(--white)',
+							fontSize: '1.2rem',
+							fontFamily: 'var(--font-maru-monica)',
+							userSelect: 'none',
+							height: '80px',
+							minWidth: '80px',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							padding: '0 1rem',
+							border: '2px solid var(--blue-accent)',
+							borderRight: 'none',
+							cursor: 'pointer',
+							position: 'relative',
+						}}
+					>
+						<div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+						<div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+						<div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+						<div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+						{QR_CODES[currentQRIndex].coin}
+					</div>
+				</WithTooltip>
+
+				<WithTooltip text={tooltipText || (language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')} above forceShow={copied}>
+					<div
+						onClick={handleCopyAddress}
+						onMouseEnter={handleQRMouseEnter}
+						onMouseLeave={handleQRMouseLeave}
+						style={{
+							height: '80px',
+							width: '80px',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							overflow: 'hidden',
+							border: '2px solid var(--blue-accent)',
+							cursor: 'pointer',
+						}}
+					>
+						<img
+							src={QR_CODES[currentQRIndex].image}
+							alt={`${QR_CODES[currentQRIndex].coin} QR Code`}
+							style={{
+								height: '100%',
+								width: '100%',
+								objectFit: 'cover',
+								display: 'block',
+							}}
+							onError={(e) => {
+								console.error('Failed to load QR code:', QR_CODES[currentQRIndex].image)
+								e.currentTarget.style.display = 'none'
+							}}
+						/>
+					</div>
+				</WithTooltip>
 			</div>
-		</WithTooltip>
-	</div>
-</div>
+		</div>
 </div>
 )
 }
