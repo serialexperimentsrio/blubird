@@ -33,6 +33,7 @@ export default function Footer({ language }: FooterProps) {
 	const [tooltipText, setTooltipText] = useState('')
 	const [isJumping, setIsJumping] = useState(false)
 	const [coinGifKey, setCoinGifKey] = useState(0)
+	const [isFadingQR, setIsFadingQR] = useState(false)
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -55,8 +56,14 @@ export default function Footer({ language }: FooterProps) {
 		return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
 	}, [])
 
-	const handleNextQR = () => {
+	const handleNextQR = async () => {
+		setIsFadingQR(true)
+
+		// Wait for fade out animation to complete
+		await new Promise(resolve => setTimeout(resolve, 200))
+
 		setCurrentQRIndex((prev) => (prev + 1) % QR_CODES.length)
+		setIsFadingQR(false)
 	}
 
 	const handleCopyAddress = async (e: React.MouseEvent) => {
@@ -83,24 +90,41 @@ export default function Footer({ language }: FooterProps) {
 		}, 400)
 	}
 	return (
-		<div
-			style={{
-				width: '100%',
-				background: 'var(--blue)',
-				pointerEvents: 'auto',
-				scrollSnapAlign: 'start',
-				scrollSnapStop: 'always',
-				height: isMobile ? 'auto' : '126px',
-				minHeight: isMobile ? 'auto' : '126px',
-				overflow: 'hidden',
-				position: 'relative',
-				padding: isMobile ? '1.5rem clamp(1rem, 5vw, 4rem)' : '0 clamp(1rem, 5vw, 4rem)',
-				display: isMobile ? 'flex' : 'block',
-				flexDirection: isMobile ? 'column' : undefined,
-				alignItems: isMobile ? 'center' : undefined,
-				gap: isMobile ? '1.5rem' : undefined,
-			}}
-		>
+		<>
+			<style>{`
+				@keyframes qrFadeOut {
+					from { opacity: 1; }
+					to { opacity: 0; }
+				}
+				@keyframes qrFadeIn {
+					from { opacity: 0; }
+					to { opacity: 1; }
+				}
+				.qr-fade-out {
+					animation: qrFadeOut 0.2s ease-in-out forwards;
+				}
+				.qr-fade-in {
+					animation: qrFadeIn 0.2s ease-in-out forwards;
+				}
+			`}</style>
+			<div
+				style={{
+					width: '100%',
+					background: 'var(--blue)',
+					pointerEvents: 'auto',
+					scrollSnapAlign: 'start',
+					scrollSnapStop: 'always',
+					height: isMobile ? 'auto' : '126px',
+					minHeight: isMobile ? 'auto' : '126px',
+					overflow: 'hidden',
+					position: 'relative',
+					padding: isMobile ? '1.5rem clamp(1rem, 5vw, 4rem)' : '0 clamp(1rem, 5vw, 4rem)',
+					display: isMobile ? 'flex' : 'block',
+					flexDirection: isMobile ? 'column' : undefined,
+					alignItems: isMobile ? 'center' : undefined,
+					gap: isMobile ? '1.5rem' : undefined,
+				}}
+			>
 			<div
 				style={{
 					display: 'grid',
@@ -289,7 +313,9 @@ export default function Footer({ language }: FooterProps) {
 						<div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
 						<div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
 						<div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-						{QR_CODES[currentQRIndex].coin}
+						<span className={isFadingQR ? 'qr-fade-out' : 'qr-fade-in'}>
+							{QR_CODES[currentQRIndex].coin}
+						</span>
 					</div>
 				</WithTooltip>
 
@@ -327,6 +353,7 @@ export default function Footer({ language }: FooterProps) {
 				</WithTooltip>
 			</div>
 		</div>
-</div>
-)
+		</div>
+		</>
+	)
 }
