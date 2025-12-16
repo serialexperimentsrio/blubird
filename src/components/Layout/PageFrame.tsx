@@ -235,6 +235,17 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 
 					{/* Footer Arrow Indicator */}
 					<div
+						onClick={() => {
+							if (scrollableRef.current) {
+								if (isFooterVisible) {
+									// Scroll back to top
+									scrollableRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+								} else if (footerRef.current) {
+									// Scroll to footer
+									footerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+								}
+							}
+						}}
 						style={{
 							position: 'absolute',
 							bottom: '0.5rem',
@@ -246,6 +257,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 							fontSize: '1.5rem',
 							opacity: isFadingOut ? 0 : (isArrowVisible ? 1 : 0),
 							transition: 'transform 0.6s ease-in-out, opacity 0.3s ease-in-out',
+							cursor: 'pointer',
 						}}
 					>
 						<span className="footer-arrow">▾</span>
