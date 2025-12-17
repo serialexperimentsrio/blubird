@@ -10,10 +10,10 @@ type FooterProps = {
 }
 
 const QR_CODES = [
-	{ coin: 'BTC', image: '/qr/BTC.png', address: 'bc1q70vfcrf9x8hdu9vw9k2tcsz2qn9pm0a6nmxkvf' },
-	{ coin: 'ETH', image: '/qr/ETH.png', address: '0xDC45c831D436b39FD91d20773e02bC190A474314' },
-	{ coin: 'SOL', image: '/qr/SOL.png', address: 'DSUCtPUcXsiH2xsSpNmMQP9Vv97qbQM1eF1ha4KeSkNn' },
-	{ coin: 'USDT', image: '/qr/USDT.png', address: '0xDC45c831D436b39FD91d20773e02bC190A474314' },
+	{ coin: 'BTC', image: '/icons/qr/BTC.png', address: 'bc1q70vfcrf9x8hdu9vw9k2tcsz2qn9pm0a6nmxkvf' },
+	{ coin: 'ETH', image: '/icons/qr/ETH.png', address: '0xDC45c831D436b39FD91d20773e02bC190A474314' },
+	{ coin: 'SOL', image: '/icons/qr/SOL.png', address: 'DSUCtPUcXsiH2xsSpNmMQP9Vv97qbQM1eF1ha4KeSkNn' },
+	{ coin: 'USDT', image: '/icons/qr/USDT.png', address: '0xDC45c831D436b39FD91d20773e02bC190A474314' },
 ]
 
 const HOVER_SCALE_STYLE = { height: '28px', width: '50px', imageRendering: 'pixelated' as const, transition: 'transform 0.2s ease' }
@@ -145,7 +145,7 @@ export default function Footer({ language }: FooterProps) {
 						rel="noopener noreferrer"
 					>
 						<img
-							src="/flags/south_korea.png"
+							src="/icons/flags/south_korea.png"
 							alt="South Korea"
 							style={HOVER_SCALE_STYLE}
 							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
@@ -156,7 +156,7 @@ export default function Footer({ language }: FooterProps) {
 			<WithTooltip text={language === 'ja' ? 'ここに生き' : 'I LIVE HERE'} above>
 				<a href="https://en.wikipedia.org/wiki/Bangladesh" target="_blank" rel="noopener noreferrer">
 					<img
-						src="/flags/bangladesh.png"
+						src="/icons/flags/bangladesh.png"
 						alt="Bangladesh"
 						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
@@ -167,7 +167,7 @@ export default function Footer({ language }: FooterProps) {
 			<WithTooltip text={language === 'ja' ? 'ここにいたい' : 'I WANT TO BE HERE'} above>
 				<a href="https://en.wikipedia.org/wiki/Japan" target="_blank" rel="noopener noreferrer">
 					<img
-						src="/flags/japan.png"
+						src="/icons/flags/japan.png"
 						alt="Japan"
 						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
@@ -178,7 +178,7 @@ export default function Footer({ language }: FooterProps) {
 			<WithTooltip text={language === 'ja' ? 'パレスチナを解放せよ' : 'FREE PALESTINE'} above>
 				<a href="https://en.wikipedia.org/wiki/Palestine" target="_blank" rel="noopener noreferrer">
 					<img
-						src="/flags/palestine.png"
+						src="/icons/flags/palestine.png"
 						alt="Palestine"
 						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
@@ -189,7 +189,7 @@ export default function Footer({ language }: FooterProps) {
 			<WithTooltip text={language === 'ja' ? 'スーダンに目を向けよう' : 'EYES ON SUDAN'} above>
 				<a href="https://en.wikipedia.org/wiki/Sudan" target="_blank" rel="noopener noreferrer">
 					<img
-						src="/flags/sudan.png"
+						src="/icons/flags/sudan.png"
 						alt="Sudan"
 						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
@@ -200,7 +200,7 @@ export default function Footer({ language }: FooterProps) {
 			<WithTooltip text={language === 'ja' ? '✌' : '✌'} above>
 				<a href="https://en.wikipedia.org/wiki/Give_Peace_a_Chance" target="_blank" rel="noopener noreferrer">
 					<img
-						src="/flags/peace_blue.png"
+						src="/icons/flags/peace_blue.png"
 						alt="Peace"
 						style={HOVER_SCALE_STYLE}
 						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
@@ -253,11 +253,11 @@ export default function Footer({ language }: FooterProps) {
 					<div style={COIN_CONTAINER_STYLE}>
 						<img
 							key={coinGifKey}
-							src={`/coin.gif?v=${coinGifKey}`}
+							src={`/icons/coin/coin.gif?v=${coinGifKey}`}
 							alt="Coin"
 							style={{ ...COIN_BASE_STYLE, transition: 'transform 0.2s ease' }}
 							onClick={() => {
-								const audio = new Audio('/coin.flac')
+								const audio = new Audio('/icons/coin/coin.flac')
 								audio.play().catch(err => console.error('Failed to play audio:', err))
 								setIsJumping(true)
 								setTimeout(() => {
@@ -274,7 +274,7 @@ export default function Footer({ language }: FooterProps) {
 				<div style={COIN_CONTAINER_STYLE}>
 					<img
 						key={coinGifKey}
-						src={`/coin.gif?v=${coinGifKey}`}
+						src={`/icons/coin/coin.gif?v=${coinGifKey}`}
 						alt="Coin"
 						style={{ ...COIN_BASE_STYLE, animation: 'coinJump 0.5s ease' }}
 					/>
