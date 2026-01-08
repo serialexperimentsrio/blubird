@@ -151,7 +151,7 @@ const ModalBox = ({
 
 		// register close animation with provider
 		registerCloseAnimation((isNested?: boolean) => {
-			// close animation - will be interrupted if a new modal opens
+			// close animation, will be interrupted if a new modal opens
 			closeModal(isNested)
 
 			// we don't need the timeout check anymore since

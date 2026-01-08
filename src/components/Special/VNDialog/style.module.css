@@ -1,0 +1,75 @@
+.container {
+  position: absolute;
+  bottom: 15vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90vw, 800px);
+  z-index: 5;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.container.visible {
+  opacity: 1;
+}
+
+.dialogBox {
+  background: var(--blue);
+  border: 2px solid var(--blue-accent);
+  padding: 2rem;
+  position: relative;
+  cursor: pointer;
+  min-height: 120px;
+}
+
+.text {
+  font-family: var(--font-maru-monica);
+  color: var(--white);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.continueIndicator {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.continueIndicator.visible {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.dismissButton {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  background: var(--blue);
+  border: 2px solid var(--blue-accent);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-maru-monica);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dismissButton:hover {
+  background: var(--blue-accent);
+}

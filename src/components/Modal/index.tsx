@@ -84,7 +84,7 @@ export const setModal = (content: React.ReactNode, onClose?: () => void) => {
 		closeInnerModalFn(true) // pass true to indicate this is a nested modal transition
 	}
 
-	// DON'T mark modal as inactive - keep backdrop active during transition
+	// DON'T mark modal as inactive, keep backdrop active during transition
 	// modalActive = false // <-- removed this to keep backdrop visible
 
 	// update UI but backdrop stays active

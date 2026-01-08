@@ -56,7 +56,7 @@ function PopoverContent({
 		let currentSize = { width: 0, height: 0 }
 
 		if (open) {
-			// opening animation - use pre-measured size from parent
+			// opening animation, use pre-measured size from parent
 			currentSize = openSizeRef.current || { width: 0, height: 0 }
 
 			// setup for height animation
@@ -88,7 +88,7 @@ function PopoverContent({
 				}
 			})
 		} else {
-			// closing animation - use stored size from opening
+			// closing animation, use stored size from opening
 			currentSize = openSizeRef.current || { width: 0, height: 0 }
 
 			// create closing animation keyframes
@@ -430,7 +430,7 @@ export default function WithPopover({
 			clearTimeout(timer)
 			document.removeEventListener('mousedown', handleClickOutside)
 		}
-		// closePopover is intentionally not in dependencies - it's a stable function
+		// closePopover is intentionally not in dependencies, it's a stable function
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isVisible, noCloseOnClickOutside])
 
@@ -440,7 +440,7 @@ export default function WithPopover({
 			const frameId = requestAnimationFrame(openPopover)
 			return () => cancelAnimationFrame(frameId)
 		}
-		// This effect intentionally only runs once on mount - defaultOpen, isVisible, openPopover, childrenRef should not be dependencies
+		// This effect intentionally only runs once on mount, defaultOpen, isVisible, openPopover, childrenRef should not be dependencies
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 

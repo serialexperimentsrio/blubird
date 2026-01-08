@@ -17,22 +17,12 @@ const QR_CODES = [
 ]
 
 const HOVER_SCALE_STYLE = { height: '28px', width: '50px', imageRendering: 'pixelated' as const, transition: 'transform 0.2s ease' }
-const COIN_CONTAINER_STYLE = { height: '60px', display: 'flex' as const, alignItems: 'center' as const, overflow: 'hidden' as const }
-const COIN_BASE_STYLE = {
-	height: '40px',
-	width: 'auto' as const,
-	imageRendering: 'pixelated' as const,
-	cursor: 'pointer' as const,
-	display: 'block' as const,
-}
 
 export default function Footer({ language }: FooterProps) {
 	const [isMobile, setIsMobile] = useState(false)
 	const [currentQRIndex, setCurrentQRIndex] = useState(0)
 	const [copied, setCopied] = useState(false)
 	const [tooltipText, setTooltipText] = useState('')
-	const [isJumping, setIsJumping] = useState(false)
-	const [coinGifKey, setCoinGifKey] = useState(0)
 	const [isFadingQR, setIsFadingQR] = useState(false)
 
 	useEffect(() => {
@@ -43,17 +33,6 @@ export default function Footer({ language }: FooterProps) {
 		handleResize()
 		window.addEventListener('resize', handleResize)
 		return () => window.removeEventListener('resize', handleResize)
-	}, [])
-
-	useEffect(() => {
-		const handleVisibilityChange = () => {
-			if (!document.hidden) {
-				setCoinGifKey(prev => prev + 1)
-			}
-		}
-
-		document.addEventListener('visibilitychange', handleVisibilityChange)
-		return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
 	}, [])
 
 	const handleNextQR = async () => {
@@ -244,49 +223,17 @@ export default function Footer({ language }: FooterProps) {
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: isMobile ? 'center' : 'flex-end',
-					gap: '1rem',
-					overflow: 'hidden',
+					gap: '0',
+					overflow: 'visible',
 				}}
 			>
-			{!isJumping && (
-				<WithTooltip text={language === 'ja' ? '理央をサポート！コインを送って！' : 'SUPPORT RIO! SEND COINS!'} above>
-					<div style={COIN_CONTAINER_STYLE}>
-						<img
-							key={coinGifKey}
-							src={`/icons/coin/coin.gif?v=${coinGifKey}`}
-							alt="Coin"
-							style={{ ...COIN_BASE_STYLE, transition: 'transform 0.2s ease' }}
-							onClick={() => {
-								const audio = new Audio('/icons/coin/coin.flac')
-								audio.play().catch(err => console.error('Failed to play audio:', err))
-								setIsJumping(true)
-								setTimeout(() => {
-									setIsJumping(false)
-								}, 500)
-							}}
-							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-						/>
-					</div>
-				</WithTooltip>
-			)}
-			{isJumping && (
-				<div style={COIN_CONTAINER_STYLE}>
-					<img
-						key={coinGifKey}
-						src={`/icons/coin/coin.gif?v=${coinGifKey}`}
-						alt="Coin"
-						style={{ ...COIN_BASE_STYLE, animation: 'coinJump 0.5s ease' }}
-					/>
-				</div>
-			)}
-
 			<div
 				style={{
 					display: 'flex',
 					flexDirection: 'row',
 					alignItems: 'center',
 					gap: '0',
+					position: 'relative',
 				}}
 			>
 				<WithTooltip text={language === 'ja' ? '次のコイン' : 'NEXT COIN'} above>

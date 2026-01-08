@@ -47,7 +47,7 @@ export const measurePopoverSize = (
 		// store original styles
 		const original = element.style.cssText
 
-		// apply measurement styles in a single batch - keep on-screen for accurate constraint calculation
+		// apply measurement styles in a single batch, keep on-screen for accurate constraint calculation
 		element.style.cssText = [
 			'opacity: 0 !important',
 			'position: fixed !important',

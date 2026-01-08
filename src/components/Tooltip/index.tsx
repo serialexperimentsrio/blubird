@@ -274,7 +274,7 @@ export default function WithTooltip({
 			childRef.current = node
 
 			// typescript don't let us access ref directly from ReactElement
-			// so we gotta be tricky - cast to unknown first then to RefObject
+			// so we gotta be tricky, cast to unknown first then to RefObject
 			type RefType =
 				| ((instance: HTMLElement | null) => void)
 				| { current: HTMLElement | null }
@@ -293,7 +293,7 @@ export default function WithTooltip({
 				typeof originalRef === 'object' &&
 				'current' in originalRef
 			) {
-				// ref object - forward the ref
+				// ref object, forward the ref
 				// eslint-disable-next-line react-hooks/immutability
 				;(originalRef as { current: HTMLElement | null }).current = node
 			}

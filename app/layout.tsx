@@ -11,15 +11,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="preload"
-          href="/fonts/x12y16pxMaruMonica.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body>
         {/* Dithering background (representing clouds under a blue sky!) */}
         <DitherBackground />

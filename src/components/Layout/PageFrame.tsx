@@ -102,6 +102,9 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 
 		const newLang = language === 'ja' ? 'en' : 'ja'
 
+		// Mark that we're toggling language (not a fresh page load)
+		sessionStorage.setItem('language-toggling', 'true')
+
 		// Start fade out animation for current language text
 		setIsFadingOut(true)
 		setHoveredNav(null)
@@ -119,11 +122,11 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 
 		// Wait for fade out animation to complete
 		await new Promise(resolve => setTimeout(resolve, 200))
-		
+
 		// Get current path without language prefix
 		const currentPath = window.location.pathname.replace(/^\/(en|ja)/, '')
 		router.push(`/${newLang}${currentPath}`)
-		
+
 		// Reset toggle guard after navigation starts
 		setTimeout(() => {
 			isTogglingRef.current = false
@@ -149,10 +152,13 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 
 		// Wait for fade out animation to complete
 		await new Promise(resolve => setTimeout(resolve, 200))
-		
+
+		// Mark that we're navigating (not a fresh page load)
+		sessionStorage.setItem('is-navigating', 'true')
+
 		// Navigate to new page
 		router.push(`/${language}${path}`)
-		
+
 		// Reset toggle guard after navigation starts
 		// This ensures it's ready for the next page load
 		setTimeout(() => {

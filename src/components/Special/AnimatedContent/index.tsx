@@ -79,7 +79,7 @@ const AnimatedContent: React.FC<AnimatedContentProps> = ({
       composite: 'replace'
     };
 
-    // Start animation - browser's Web Animations API handles the timing better than requestAnimationFrame
+    // Start animation, browser's Web Animations API handles the timing better than requestAnimationFrame
     const animation = el.animate(keyframes, animationOptions);
 
     animation.onfinish = () => {
