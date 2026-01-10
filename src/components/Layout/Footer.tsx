@@ -85,6 +85,31 @@ export default function Footer({ language }: FooterProps) {
 				.qr-fade-in {
 					animation: qrFadeIn 0.2s ease-in-out forwards;
 				}
+				@keyframes pulse {
+					0%, 100% {
+						opacity: 0.4;
+					}
+					50% {
+						opacity: 1;
+					}
+				}
+				.tip-me {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					font-family: var(--font-maru-monica);
+					font-size: 1.2rem;
+					color: var(--white);
+					background-color: var(--blue);
+					padding: 8px;
+					border: none; /* Removed border */
+					animation: pulse 1.5s ease-in-out infinite;
+					gap: 4px; /* Adjusted gap for better spacing */
+				}
+				.tip-me span {
+					writing-mode: horizontal-tb;
+					text-orientation: mixed;
+				}
 			`}</style>
 			<div
 				style={{
@@ -232,10 +257,14 @@ export default function Footer({ language }: FooterProps) {
 					display: 'flex',
 					flexDirection: 'row',
 					alignItems: 'center',
-					gap: '0',
+					gap: '16px', // Increased gap for more spacing
 					position: 'relative',
 				}}
 			>
+				<div className="tip-me">
+					<span>{language === 'ja' ? 'チップ' : 'TIPS'}</span>
+					<span>{language === 'ja' ? 'お願い!' : 'PLEASE!'}</span>
+				</div>
 				<WithTooltip text={language === 'ja' ? '次のコイン' : 'NEXT COIN'} above>
 					<div
 						onClick={handleNextQR}
@@ -265,6 +294,7 @@ export default function Footer({ language }: FooterProps) {
 						</span>
 					</div>
 				</WithTooltip>
+			</div>
 
 				<WithTooltip text={tooltipText || (language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')} above forceShow={copied}>
 					<div
@@ -299,7 +329,6 @@ export default function Footer({ language }: FooterProps) {
 					</div>
 				</WithTooltip>
 			</div>
-		</div>
 		</div>
 		</>
 	)
