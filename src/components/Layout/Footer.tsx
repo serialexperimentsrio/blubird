@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useViewport } from '@/hooks/useViewport'
 import WithTooltip from '@/components/Tooltip'
 import Marquee from '@/components/Special/Marquee'
 
@@ -19,26 +20,18 @@ const QR_CODES = [
 const HOVER_SCALE_STYLE = { height: '28px', width: '50px', imageRendering: 'pixelated' as const, transition: 'transform 0.2s ease' }
 
 export default function Footer({ language }: FooterProps) {
-	const [isMobile, setIsMobile] = useState(false)
+    
 	const [currentQRIndex, setCurrentQRIndex] = useState(0)
 	const [copied, setCopied] = useState(false)
 	const [tooltipText, setTooltipText] = useState('')
 	const [isFadingQR, setIsFadingQR] = useState(false)
-
-	useEffect(() => {
-		const handleResize = () => {
-			setIsMobile(window.innerWidth < 1270)
-		}
-
-		handleResize()
-		window.addEventListener('resize', handleResize)
-		return () => window.removeEventListener('resize', handleResize)
-	}, [])
+	const { isPortrait, isSquarish } = useViewport(500, 1270)
+	const isSmall = isPortrait || isSquarish
 
 	const handleNextQR = async () => {
 		setIsFadingQR(true)
 
-		// Wait for fade out animation to complete
+		// Pause briefly so the fade out can finish
 		await new Promise(resolve => setTimeout(resolve, 200))
 
 		setCurrentQRIndex((prev) => (prev + 1) % QR_CODES.length)
@@ -68,6 +61,88 @@ export default function Footer({ language }: FooterProps) {
 			setTooltipText(language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')
 		}, 400)
 	}
+
+	// Prepare sections so we can reorder for squarish widths without modifying internals
+	const flagsGrid = (
+		<div
+			style={{
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				rowGap: '24px',
+				columnGap: '20px',
+				alignItems: 'center',
+				position: isSmall ? 'relative' : 'absolute',
+				left: isSmall ? 0 : '4rem',
+				top: isSmall ? 0 : '50%',
+				transform: isSmall ? 'none' : 'translateY(-50%)',
+			}}
+		>
+			<WithTooltip text={language === 'ja' ? 'ここで生まれ' : 'I WAS BORN HERE'} above>
+				<a href="https://en.wikipedia.org/wiki/South_Korea" target="_blank" rel="noopener noreferrer">
+					<img src="/icons/flags/south_korea.png" alt="South Korea" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+				</a>
+			</WithTooltip>
+			<WithTooltip text={language === 'ja' ? 'ここに生き' : 'I LIVE HERE'} above>
+				<a href="https://en.wikipedia.org/wiki/Bangladesh" target="_blank" rel="noopener noreferrer">
+					<img src="/icons/flags/bangladesh.png" alt="Bangladesh" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+				</a>
+			</WithTooltip>
+			<WithTooltip text={language === 'ja' ? 'ここにいたい' : 'I WANT TO BE HERE'} above>
+				<a href="https://en.wikipedia.org/wiki/Japan" target="_blank" rel="noopener noreferrer">
+					<img src="/icons/flags/japan.png" alt="Japan" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+				</a>
+			</WithTooltip>
+			<WithTooltip text={language === 'ja' ? 'パレスチナを解放せよ' : 'FREE PALESTINE'} above>
+				<a href="https://en.wikipedia.org/wiki/Palestine" target="_blank" rel="noopener noreferrer">
+					<img src="/icons/flags/palestine.png" alt="Palestine" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+				</a>
+			</WithTooltip>
+			<WithTooltip text={language === 'ja' ? 'スーダンに目を向けよう' : 'EYES ON SUDAN'} above>
+				<a href="https://en.wikipedia.org/wiki/Sudan" target="_blank" rel="noopener noreferrer">
+					<img src="/icons/flags/sudan.png" alt="Sudan" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+				</a>
+			</WithTooltip>
+			<WithTooltip text={language === 'ja' ? '✌' : '✌'} above>
+				<a href="https://en.wikipedia.org/wiki/Give_Peace_a_Chance" target="_blank" rel="noopener noreferrer">
+					<img src="/icons/flags/peace_blue.png" alt="Peace" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+				</a>
+			</WithTooltip>
+		</div>
+	)
+
+	const marqueeBlock = (
+		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: isSmall ? 'relative' : 'absolute', left: isSmall ? 0 : '50%', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translate(-50%, -50%)', width: isSmall ? '100%' : '60%', height: isSmall ? 'auto' : '100%', color: 'var(--white)', fontSize: '1.2rem' }}>
+			<Marquee text={language === 'ja' ? '著作権 2025 理央 • 著作権 2025 理央 • 著作権 2025 理央 • ' : 'COPYRIGHT 2025 RIO • COPYRIGHT 2025 RIO • COPYRIGHT 2025 RIO • '} speed={12} />
+		</div>
+	)
+
+	const tipsBlock = (
+		<div style={{ position: isSmall ? 'relative' : 'absolute', right: isSmall ? 0 : 'clamp(1rem, 5vw, 4rem)', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translateY(-50%)', display: 'flex', alignItems: 'center', justifyContent: isSmall ? 'center' : 'flex-end', gap: '0', overflow: 'visible' }}>
+			<div style={{ display: 'flex', flexDirection: isPortrait ? 'column' : 'row', alignItems: 'center', gap: isPortrait ? '8px' : '16px', position: 'relative' }}>
+				<div className="tip-me" style={{ alignSelf: isPortrait ? 'center' : 'auto' }}>
+					<span>{language === 'ja' ? 'チップ' : 'TIPS'}</span>
+					<span>{language === 'ja' ? 'お願い!' : 'PLEASE!'}</span>
+				</div>
+				<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0' }}>
+					<WithTooltip text={language === 'ja' ? '次のコイン' : 'NEXT COIN'} above>
+						<div onClick={handleNextQR} style={{ color: 'var(--white)', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--blue-accent)', borderRight: 'none', cursor: 'pointer', position: 'relative' }}>
+							<div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+							<div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+							<div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+							<div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+							<span className={isFadingQR ? 'qr-fade-out' : 'qr-fade-in'}>{QR_CODES[currentQRIndex].coin}</span>
+						</div>
+					</WithTooltip>
+					<WithTooltip text={tooltipText || (language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')} above forceShow={copied}>
+						<div onClick={handleCopyAddress} onMouseEnter={handleQRMouseEnter} onMouseLeave={handleQRMouseLeave} style={{ height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--blue-accent)', cursor: 'pointer' }}>
+							<img src={QR_CODES[currentQRIndex].image} alt={`${QR_CODES[currentQRIndex].coin} QR Code`} style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { console.error('Failed to load QR code:', QR_CODES[currentQRIndex].image); e.currentTarget.style.display = 'none' }} />
+						</div>
+					</WithTooltip>
+				</div>
+			</div>
+		</div>
+	)
+
 	return (
 		<>
 			<style>{`
@@ -118,217 +193,38 @@ export default function Footer({ language }: FooterProps) {
 					pointerEvents: 'auto',
 					scrollSnapAlign: 'start',
 					scrollSnapStop: 'always',
-					height: isMobile ? 'auto' : '126px',
-					minHeight: isMobile ? 'auto' : '126px',
+					height: isSmall ? 'auto' : '126px',
+					minHeight: isSmall ? 'auto' : '126px',
 					overflow: 'hidden',
 					position: 'relative',
-					padding: isMobile ? '1.5rem clamp(1rem, 5vw, 4rem)' : '0 clamp(1rem, 5vw, 4rem)',
-					display: isMobile ? 'flex' : 'block',
-					flexDirection: isMobile ? 'column' : undefined,
-					alignItems: isMobile ? 'center' : undefined,
-					gap: isMobile ? '1.5rem' : undefined,
+					padding: isSmall ? '1.5rem clamp(1rem, 5vw, 4rem)' : '0 clamp(1rem, 5vw, 4rem)',
+					display: isSmall ? 'flex' : 'block',
+					flexDirection: isSmall ? 'column' : undefined,
+					alignItems: isSmall ? 'center' : undefined,
+					gap: isSmall ? '1.5rem' : undefined,
 				}}
 			>
-			<div
-				style={{
-					display: 'grid',
-					gridTemplateColumns: 'repeat(3, 1fr)',
-					rowGap: '24px',
-					columnGap: '20px',
-					alignItems: 'center',
-					position: isMobile ? 'relative' : 'absolute',
-					left: isMobile ? 0 : '4rem',
-					top: isMobile ? 0 : '50%',
-					transform: isMobile ? 'none' : 'translateY(-50%)',
-				}}
-			>
-				<WithTooltip text={language === 'ja' ? 'ここで生まれ' : 'I WAS BORN HERE'} above>
-					<a
-						href="https://en.wikipedia.org/wiki/South_Korea"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<img
-							src="/icons/flags/south_korea.png"
-							alt="South Korea"
-							style={HOVER_SCALE_STYLE}
-							onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-							onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-						/>
-					</a>
-				</WithTooltip>
-			<WithTooltip text={language === 'ja' ? 'ここに生き' : 'I LIVE HERE'} above>
-				<a href="https://en.wikipedia.org/wiki/Bangladesh" target="_blank" rel="noopener noreferrer">
-					<img
-						src="/icons/flags/bangladesh.png"
-						alt="Bangladesh"
-						style={HOVER_SCALE_STYLE}
-						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-					/>
-				</a>
-			</WithTooltip>
-			<WithTooltip text={language === 'ja' ? 'ここにいたい' : 'I WANT TO BE HERE'} above>
-				<a href="https://en.wikipedia.org/wiki/Japan" target="_blank" rel="noopener noreferrer">
-					<img
-						src="/icons/flags/japan.png"
-						alt="Japan"
-						style={HOVER_SCALE_STYLE}
-						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-					/>
-				</a>
-			</WithTooltip>
-			<WithTooltip text={language === 'ja' ? 'パレスチナを解放せよ' : 'FREE PALESTINE'} above>
-				<a href="https://en.wikipedia.org/wiki/Palestine" target="_blank" rel="noopener noreferrer">
-					<img
-						src="/icons/flags/palestine.png"
-						alt="Palestine"
-						style={HOVER_SCALE_STYLE}
-						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-					/>
-				</a>
-			</WithTooltip>
-			<WithTooltip text={language === 'ja' ? 'スーダンに目を向けよう' : 'EYES ON SUDAN'} above>
-				<a href="https://en.wikipedia.org/wiki/Sudan" target="_blank" rel="noopener noreferrer">
-					<img
-						src="/icons/flags/sudan.png"
-						alt="Sudan"
-						style={HOVER_SCALE_STYLE}
-						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-					/>
-				</a>
-			</WithTooltip>
-			<WithTooltip text={language === 'ja' ? '✌' : '✌'} above>
-				<a href="https://en.wikipedia.org/wiki/Give_Peace_a_Chance" target="_blank" rel="noopener noreferrer">
-					<img
-						src="/icons/flags/peace_blue.png"
-						alt="Peace"
-						style={HOVER_SCALE_STYLE}
-						onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-						onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-					/>
-				</a>
-			</WithTooltip>
-		</div>
-
-			<div
-				style={{
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					position: isMobile ? 'relative' : 'absolute',
-					left: isMobile ? 0 : '50%',
-					top: isMobile ? 0 : '50%',
-					transform: isMobile ? 'none' : 'translate(-50%, -50%)',
-					width: isMobile ? '100%' : '60%',
-					height: isMobile ? 'auto' : '100%',
-					color: 'var(--white)',
-					fontSize: '1.2rem',
-				}}
-			>
-				<Marquee
-					text={
-						language === 'ja'
-							? '著作権 2025 理央 • 著作権 2025 理央 • 著作権 2025 理央 • '
-							: 'COPYRIGHT 2025 RIO • COPYRIGHT 2025 RIO • COPYRIGHT 2025 RIO • '
-					}
-					speed={12}
-				/>
-			</div>
-
-			<div
-				style={{
-					position: isMobile ? 'relative' : 'absolute',
-					right: isMobile ? 0 : 'clamp(1rem, 5vw, 4rem)',
-					top: isMobile ? 0 : '50%',
-					transform: isMobile ? 'none' : 'translateY(-50%)',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: isMobile ? 'center' : 'flex-end',
-					gap: '0',
-					overflow: 'visible',
-				}}
-			>
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'row',
-					alignItems: 'center',
-					gap: '16px', // Increased gap for more spacing
-					position: 'relative',
-				}}
-			>
-				<div className="tip-me">
-					<span>{language === 'ja' ? 'チップ' : 'TIPS'}</span>
-					<span>{language === 'ja' ? 'お願い!' : 'PLEASE!'}</span>
-				</div>
-				<WithTooltip text={language === 'ja' ? '次のコイン' : 'NEXT COIN'} above>
-					<div
-						onClick={handleNextQR}
-						style={{
-							color: 'var(--white)',
-							fontSize: '1.2rem',
-							fontFamily: 'var(--font-maru-monica)',
-							userSelect: 'none',
-							height: '80px',
-							minWidth: '80px',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							padding: '0 1rem',
-							border: '2px solid var(--blue-accent)',
-							borderRight: 'none',
-							cursor: 'pointer',
-							position: 'relative',
-						}}
-					>
-						<div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-						<div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-						<div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-						<div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-						<span className={isFadingQR ? 'qr-fade-out' : 'qr-fade-in'}>
-							{QR_CODES[currentQRIndex].coin}
-						</span>
+			{isSquarish ? (
+				<>
+					<div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', gap: '2rem' }}>
+						{flagsGrid}
+						{tipsBlock}
 					</div>
-				</WithTooltip>
-			</div>
-
-				<WithTooltip text={tooltipText || (language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')} above forceShow={copied}>
-					<div
-						onClick={handleCopyAddress}
-						onMouseEnter={handleQRMouseEnter}
-						onMouseLeave={handleQRMouseLeave}
-						style={{
-							height: '80px',
-							width: '80px',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							overflow: 'hidden',
-							border: '2px solid var(--blue-accent)',
-							cursor: 'pointer',
-						}}
-					>
-						<img
-							src={QR_CODES[currentQRIndex].image}
-							alt={`${QR_CODES[currentQRIndex].coin} QR Code`}
-							style={{
-								height: '100%',
-								width: '100%',
-								objectFit: 'cover',
-								display: 'block',
-							}}
-							onError={(e) => {
-								console.error('Failed to load QR code:', QR_CODES[currentQRIndex].image)
-								e.currentTarget.style.display = 'none'
-							}}
-						/>
-					</div>
-				</WithTooltip>
-			</div>
+					{marqueeBlock}
+				</>
+			) : isPortrait ? (
+				<>
+					{flagsGrid}
+					{tipsBlock}
+					{marqueeBlock}
+				</>
+			) : (
+				<>
+					{flagsGrid}
+					{marqueeBlock}
+					{tipsBlock}
+				</>
+			)}
 		</div>
 		</>
 	)

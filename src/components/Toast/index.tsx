@@ -37,15 +37,15 @@ const ToastPortalContent = ({
 	xLocation: XLocation
 	yLocation: YLocation
 }) => {
-	// extend ToastBoxProps to include placeholder flag
+	// Add a placeholder flag to toast props
 	type ExtendedToastBoxProps = ToastBoxProps & {
 		isPlaceholder?: boolean
 	}
 
-	// create a combined list of all toasts (visible and placeholders)
+	// Build a list that includes visible toasts and placeholders
 	const allToasts: ExtendedToastBoxProps[] = [...toasts]
 
-	// add placeholder entries for removed toasts
+	// Insert placeholder entries for toasts that were removed
 	Object.entries(removedToasts).forEach(([id, height]) => {
 		// only add if not already in the list
 		if (!allToasts.some((t) => t.id === id)) {
@@ -82,7 +82,7 @@ const ToastPortalContent = ({
 	return (
 		<div className={style.toastProvider} style={providerStyle}>
 			{toastList.map((toast) => {
-				// if it's a placeholder or a faded toast, render an invisible placeholder
+				// Render an invisible placeholder for placeholders or faded toasts
 				if (
 					(toast as ExtendedToastBoxProps).isPlaceholder ||
 					fadedToasts[toast.id]

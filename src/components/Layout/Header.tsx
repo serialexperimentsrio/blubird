@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useViewport } from '@/hooks/useViewport'
 import AnimatedContent from '@/components/Special/AnimatedContent'
 
 type HeaderProps = {
@@ -28,23 +29,14 @@ export default function Header({
 }: HeaderProps) {
 
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
-	const [isMobile, setIsMobile] = useState(false)
+	const { isPortrait, isSquarish } = useViewport(500, 1270)
+	const isSmall = isPortrait || isSquarish
 
 	useEffect(() => {
-		const handleResize = () => {
-			const mobile = window.innerWidth < 1270
-			setIsMobile(mobile)
-
-			if (!mobile && isMenuOpen) {
-				setIsMenuOpen(false)
-			}
+		if (!isSmall && isMenuOpen) {
+			setIsMenuOpen(false)
 		}
-
-		handleResize()
-
-		window.addEventListener('resize', handleResize)
-		return () => window.removeEventListener('resize', handleResize)
-	}, [isMenuOpen])
+	}, [isSmall, isMenuOpen])
 
 	const handleLogoClick = async () => {
 		await onNavigate('')
@@ -197,7 +189,7 @@ export default function Header({
 				</div>
 			</div>
 
-				{!isMobile && (
+				{!isSmall && (
 					<div
 						data-nav-item="language"
 						onClick={onLanguageToggle}
@@ -237,7 +229,7 @@ export default function Header({
 				</div>
 			)}
 
-			{isMobile && (
+			{isSmall && (
 				<div
 					data-nav-hamburger="true"
 					onClick={toggleMenu}
@@ -271,7 +263,7 @@ export default function Header({
 			)}
 			</div>
 
-			{!isMobile && (
+			{!isSmall && (
 				<div
 					data-nav-desktop="true"
 				style={{
