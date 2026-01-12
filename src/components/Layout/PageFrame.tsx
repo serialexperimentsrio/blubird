@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import Header from './Header'
 import Footer from './Footer'
-import WithTooltip from '@/components/Tooltip'
+// Removed unused import: WithTooltip
 
 type PageFrameProps = {
 	params: Promise<{ lang: 'en' | 'ja' }>

@@ -9,10 +9,18 @@ export function useViewport(portraitBp = 500, landscapeBp = 1270) {
 
   useEffect(() => {
     const onResize = () => setWidth(window.innerWidth)
-    setMounted(true)
-    onResize()
+    // Schedule the initial mount and width update asynchronously to avoid
+    // calling setState synchronously inside the effect (prevents cascading renders)
+    const id = window.setTimeout(() => {
+      setMounted(true)
+      onResize()
+    }, 0)
+
     window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
+    return () => {
+      window.clearTimeout(id)
+      window.removeEventListener('resize', onResize)
+    }
   }, [])
 
   const w = mounted ? width : landscapeBp

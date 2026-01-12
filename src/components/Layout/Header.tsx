@@ -34,7 +34,9 @@ export default function Header({
 
 	useEffect(() => {
 		if (!isSmall && isMenuOpen) {
-			setIsMenuOpen(false)
+			// Avoid synchronous setState inside the effect; schedule it asynchronously
+			const id = setTimeout(() => setIsMenuOpen(false), 0)
+			return () => clearTimeout(id)
 		}
 	}, [isSmall, isMenuOpen])
 
