@@ -29,8 +29,50 @@ export default function Header({
 }: HeaderProps) {
 
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const [isToggleHovered, setIsToggleHovered] = useState(false)
 	const { isPortrait, isSquarish } = useViewport(500, 1270)
 	const isSmall = isPortrait || isSquarish
+
+	// Reusable styles to reduce duplication
+	const mobileNavItemBase: React.CSSProperties = {
+		fontSize: '1.4rem',
+		color: 'var(--white)',
+		cursor: 'pointer',
+		padding: '1rem 1rem',
+		fontFamily: 'var(--font-maru-monica)',
+		transition: 'background 0.15s ease',
+	}
+
+	const mobileLangBox: React.CSSProperties = {
+		fontSize: '1.4rem',
+		color: 'var(--white)',
+		cursor: 'pointer',
+		userSelect: 'none',
+		fontFamily: 'var(--font-maru-monica)',
+		display: 'inline-flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		pointerEvents: 'auto',
+	}
+
+	const toggleButtonBox: React.CSSProperties = {
+		background: isToggleHovered ? 'var(--blue-accent)' : 'var(--blue)',
+		border: '2px solid var(--blue-accent)',
+		color: 'var(--white)',
+		width: '2.8rem',
+		height: '2.8rem',
+		padding: '0',
+		boxSizing: 'border-box',
+		borderRadius: '0',
+		fontFamily: 'var(--font-maru-monica)',
+		fontSize: '1.2rem',
+		transition: 'background 0.15s ease',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		cursor: 'pointer',
+		userSelect: 'none',
+	}
 
 	useEffect(() => {
 		if (!isSmall && isMenuOpen) {
@@ -98,38 +140,35 @@ export default function Header({
 				>
 						<div
 							onClick={() => handleNavClick('/diary')}
+							onMouseEnter={() => handleNavHover('diary')}
+							onMouseLeave={handleNavLeave}
 							style={{
-								fontSize: '1.4rem',
-								color: 'var(--white)',
-								cursor: 'pointer',
-								padding: '1rem 0',
+								...mobileNavItemBase,
 								borderBottom: '2px solid var(--blue-accent)',
-								fontFamily: 'var(--font-maru-monica)',
+								background: hoveredNav === 'diary' ? 'var(--blue-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '日記' : 'DIARY'}
 						</div>
 						<div
 							onClick={() => handleNavClick('/memories')}
+							onMouseEnter={() => handleNavHover('memories')}
+							onMouseLeave={handleNavLeave}
 							style={{
-								fontSize: '1.4rem',
-								color: 'var(--white)',
-								cursor: 'pointer',
-								padding: '1rem 0',
+								...mobileNavItemBase,
 								borderBottom: '2px solid var(--blue-accent)',
-								fontFamily: 'var(--font-maru-monica)',
+								background: hoveredNav === 'memories' ? 'var(--blue-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '思い出' : 'MEMORIES'}
 						</div>
 						<div
 							onClick={() => handleNavClick('/school')}
+							onMouseEnter={() => handleNavHover('school')}
+							onMouseLeave={handleNavLeave}
 							style={{
-								fontSize: '1.4rem',
-								color: 'var(--white)',
-								cursor: 'pointer',
-								padding: '1rem 0',
-								fontFamily: 'var(--font-maru-monica)',
+								...mobileNavItemBase,
+								background: hoveredNav === 'school' ? 'var(--blue-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '学校' : 'SCHOOL'}
@@ -246,22 +285,49 @@ export default function Header({
 						zIndex: 11,
 						cursor: 'pointer',
 					}}
-			>
-				<div
-					style={{
-						fontSize: '2rem',
-						color: 'var(--white)',
-						transition: 'transform 0.3s ease',
-						transform: isMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						userSelect: 'none',
-					}}
 				>
-					▾
+					<div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+						<div
+							data-nav-item="language"
+							onClick={(e: any) => { e.stopPropagation(); onLanguageToggle(); }}
+							onMouseEnter={() => handleNavHover('language')}
+							onMouseLeave={handleNavLeave}
+							style={{
+								...mobileLangBox,
+							}}
+						>
+							<div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+								<span
+									className="nav-arrow"
+									style={{
+										opacity: hoveredNav === 'language' && isAnimating ? 1 : 0,
+										position: 'absolute',
+										right: 'calc(100% + 0.5rem)',
+										zIndex: 1,
+									}}
+								>
+									▸
+								</span>
+								<div className={isFadingOut ? 'language-fade-out' : ''}>
+									<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+										<span>{language === 'ja' ? 'ENGLISH' : '日本語'}</span>
+									</AnimatedContent>
+								</div>
+							</div>
+						</div>
+							<button
+								type="button"
+								aria-label="Toggle menu"
+								onMouseEnter={() => setIsToggleHovered(true)}
+								onMouseLeave={() => setIsToggleHovered(false)}
+								style={toggleButtonBox}
+							>
+								<span style={{ display: 'inline-block', transition: 'transform 0.3s ease', transform: isMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+									▾
+								</span>
+							</button>
+					</div>
 				</div>
-			</div>
 			)}
 			</div>
 

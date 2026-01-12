@@ -30,6 +30,10 @@
   line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-word;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 @keyframes pulse {
