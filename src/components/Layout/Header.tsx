@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type MouseEvent } from 'react'
 import { useViewport } from '@/hooks/useViewport'
 import AnimatedContent from '@/components/Special/AnimatedContent'
 
@@ -289,7 +289,7 @@ export default function Header({
 					<div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
 						<div
 							data-nav-item="language"
-							onClick={(e: any) => { e.stopPropagation(); onLanguageToggle(); }}
+							onClick={(e: MouseEvent) => { e.stopPropagation(); onLanguageToggle(); }}
 							onMouseEnter={() => handleNavHover('language')}
 							onMouseLeave={handleNavLeave}
 							style={{
