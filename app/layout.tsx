@@ -11,6 +11,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/x12y16pxMaruMonica.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        {/* Font is preloaded and uses `font-display: swap` in globals.css to avoid FOIT. */}
+      </head>
       <body>
         {/* Dithering background (representing clouds under a blue sky!) */}
         <DitherBackground />

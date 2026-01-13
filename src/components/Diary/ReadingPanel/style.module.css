@@ -1,0 +1,145 @@
+.container {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.list {
+  width: 520px;
+  max-height: 640px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background: transparent;
+  color: var(--white);
+  padding: 1rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  border-radius: 0;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, opacity 200ms ease, transform 200ms ease, background-color 200ms ease, color 200ms ease;
+  box-sizing: border-box;
+  /* reserve border space to avoid layout shift on hover */
+  border: 3px solid transparent;
+  font-family: var(--font-maru-monica);
+}
+
+/* Show only border on hover; do not change background for inactive tabs */
+.card:not(.active):hover {
+  background: rgba(var(--blue-rgb), 0.2);
+  border-color: var(--blue-accent);
+}
+
+.active {
+  background: rgba(var(--blue-rgb), 0.8);
+  color: var(--white);
+}
+
+.card.active:hover {
+  border-color: var(--blue-accent);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.panel {
+  width: 640px;
+  height: 640px; /* larger square */
+  background: var(--white);
+  border-radius: 0; /* no rounded corners */
+  box-shadow: 0 6px 30px rgba(0,0,0,0.12);
+  opacity: 0.8;
+  border: 2px solid var(--blue-accent);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+.inner {
+  padding: 16px;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.empty {
+  color: var(--white);
+  padding: 12px;
+}
+
+.content {
+  white-space: pre-wrap;
+  color: var(--blue);
+  font-family: var(--font-maru-monica);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.placeholder {
+  color: var(--blue-accent);
+  font-size: 1.2rem;
+  font-family: var(--font-maru-monica);
+  font-weight: 700;
+}
+
+/* Fade/transform transition rules
+   - The list and panel container only animate opacity to remain layout-stable.
+   - Only `.panel .content` and `.panel .placeholder` translate vertically
+     to create the subtle motion when switching files. */
+.withTransitions .list,
+.withTransitions .panel .inner {
+  transition: opacity 200ms ease;
+  will-change: opacity;
+}
+
+.withTransitions.switching .list,
+.withTransitions.switching .panel .inner {
+  opacity: 0.6;
+}
+
+.withTransitions.switching .card {
+  opacity: 0.6;
+  transform: translateY(0);
+}
+
+/* Panel content/placeholder get the vertical motion only. */
+.withTransitions .panel .content,
+.withTransitions .panel .placeholder {
+  transition: opacity 200ms ease;
+  will-change: opacity;
+}
+
+.withTransitions.switching .panel .content,
+.withTransitions.switching .panel .placeholder {
+  opacity: 0.6;
+  /* Do not apply translate here; translation is controlled by the
+     `.hidden` class on the content/placeholder to avoid moving the
+     currently visible text when a switch begins. */
+}
+
+.visible {
+  opacity: 1;
+}
+
+/* When content is hidden, move only the content/placeholder to avoid moving
+   the panel container. */
+.panel .content.hidden,
+.panel .placeholder.hidden {
+  /* No vertical translation — use opacity-only transitions to avoid
+     any perceived layout movement when switching files. */
+}
+
+/* Utility to temporarily disable transitions on first mount */
+
+/* Links inside the reading panel content should be underlined by default */
+.content a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: inherit;
+}
+

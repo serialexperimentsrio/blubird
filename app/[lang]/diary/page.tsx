@@ -1,45 +1,54 @@
-'use client'
+"use client"
 
 export const runtime = 'edge'
 
-import { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageFrame from '@/components/Layout/PageFrame'
+import ReadingPanel from '@/components/Diary/ReadingPanel'
 
-type Props = {
-	params: Promise<{ lang: 'en' | 'ja' }>
+type Params = {
+	lang: 'en' | 'ja'
 }
 
-export default function DiaryPage({ params }: Props) {
+export default function DiaryPage({ params }: { params: Promise<Params> }) {
 	const [isVisible, setIsVisible] = useState(false)
 	const [lang, setLang] = useState<'en' | 'ja' | null>(null)
+	const [files, setFiles] = useState<string[] | null>(null)
 
 	useEffect(() => {
-		params.then((resolvedParams) => {
-			setLang(resolvedParams.lang)
+		params.then((resolved) => {
+			setLang(resolved.lang)
 		})
 		const timer = setTimeout(() => setIsVisible(true), 50)
 		return () => clearTimeout(timer)
 	}, [params])
 
-	const comingSoonText = lang === 'ja' ? '[近日公開]' : '[COMING SOON]'
+	useEffect(() => {
+		if (!lang) return
+		let cancelled = false
+		fetch(`/api/diary/list?lang=${encodeURIComponent(lang)}`)
+			.then((r) => r.json())
+				.then((data) => {
+					if (!cancelled && Array.isArray(data.files)) {
+						setFiles(data.files.slice().sort().reverse())
+					}
+			})
+			.catch(() => {
+					if (!cancelled) setFiles([])
+			})
+		return () => {
+			cancelled = true
+		}
+	}, [lang])
 
 	return (
 		<PageFrame params={params}>
 			{(isFadingOut) => (
-				<div
-					style={{
-						color: 'var(--white)',
-						fontFamily: 'var(--font-maru-monica)',
-						textAlign: 'center',
-						opacity: isFadingOut ? 0 : (isVisible ? 1 : 0),
-						transition: 'opacity 0.3s ease-in-out',
-					}}
-				>
-					<p style={{ fontSize: '1.5rem' }}>
-						{comingSoonText}
-					</p>
+				<div style={{ opacity: isFadingOut ? 0 : (isVisible ? 1 : 0), transition: 'opacity 0.3s ease-in-out' }}>
+					<ReadingPanel files={files} lang={lang ?? 'en'} />
 				</div>
 			)}
 		</PageFrame>
 	)
 }
+

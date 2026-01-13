@@ -6,17 +6,20 @@
   src: url("/fonts/x12y16pxMaruMonica.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }
 
 :root {
   /* Primary Colors */
   --blue: #0021f5;
+  --blue-rgb: 0,33,245;
   --blue-accent: #4d64f8;
   --white: #ffffff;
 
-  /* Fonts */
-  --font-maru-monica: "MaruMonica", sans-serif;
+    /* Fonts */
+    /* Provide a system font fallback stack that closely matches metrics to reduce layout shift
+      while the custom font loads. */
+    --font-maru-monica: "MaruMonica", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 body {

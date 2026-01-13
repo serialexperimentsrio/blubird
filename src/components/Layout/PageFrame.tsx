@@ -8,7 +8,7 @@ import Footer from './Footer'
 
 type PageFrameProps = {
 	params: Promise<{ lang: 'en' | 'ja' }>
-	children: (isFadingOut: boolean) => ReactNode
+	children: ReactNode | ((isFadingOut: boolean) => ReactNode)
 }
 
 export default function PageFrame({ params, children }: PageFrameProps) {
@@ -237,7 +237,16 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 				<div
 					className="page-content w-full flex flex-col items-center justify-center pointer-events-auto snap-start snap-always relative flex-shrink-0 box-border min-h-[calc(100vh-84px)] px-16"
 				>
-					{children(isFadingOut)}
+					{typeof children === 'function' ? (
+						// If a render-prop function was provided (client pages), call it.
+						(children as (isFadingOut: boolean) => ReactNode)(isFadingOut)
+					) : (
+						// If a normal ReactNode was provided (server pages), wrap it so PageFrame
+						// can still control fade using its internal `isFadingOut` state.
+						<div style={{ opacity: isFadingOut ? 0 : 1, transition: 'opacity 0.3s ease-in-out' }}>
+							{children}
+						</div>
+					)}
 
 					{/* Footer Arrow Indicator */}
 					<div
