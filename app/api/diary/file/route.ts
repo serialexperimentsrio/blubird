@@ -1,6 +1,8 @@
 import fs from 'fs/promises'
 import path from 'path'
 
+export const runtime = 'edge'
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
