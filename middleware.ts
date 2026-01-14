@@ -28,5 +28,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ['/((?!_next/static|_next/image|api|favicon.ico|fonts|icons|cdn-cgi).*)'],
+	// Exclude Next internals, APIs, static assets and the `diary` public
+	// folder so requests for `/diary/*` are served directly and not
+	// redirected to a language-prefixed route.
+	matcher: ['/((?!_next/static|_next/image|api|favicon.ico|fonts|icons|cdn-cgi|diary).*)'],
 }

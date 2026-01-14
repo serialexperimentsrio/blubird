@@ -26,16 +26,29 @@ export default function DiaryPage({ params }: { params: Promise<Params> }) {
 	useEffect(() => {
 		if (!lang) return
 		let cancelled = false
-		fetch(`/api/diary/list?lang=${encodeURIComponent(lang)}`)
-			.then((r) => r.json())
-				.then((data) => {
+		// Try a few manifest locations and log failures to help diagnose
+		const tryFetch = async () => {
+			const candidates = [
+				`/diary/${encodeURIComponent(lang)}/manifest.json`,
+				`/diary/${encodeURIComponent(lang)}/manifest.json?ts=${Date.now()}`,
+				`/diary/manifest.json`,
+			]
+			for (const url of candidates) {
+				try {
+					const r = await fetch(url)
+					if (!r.ok) throw new Error(`${url} -> ${r.status}`)
+					const data = await r.json()
 					if (!cancelled && Array.isArray(data.files)) {
 						setFiles(data.files.slice().sort().reverse())
+						return
 					}
-			})
-			.catch(() => {
-					if (!cancelled) setFiles([])
-			})
+				} catch (err) {
+					console.error('Manifest fetch failed for', url, err)
+				}
+			}
+			if (!cancelled) setFiles([])
+		}
+		tryFetch()
 		return () => {
 			cancelled = true
 		}

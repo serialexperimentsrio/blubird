@@ -116,7 +116,7 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
       // stale/duplicate text while a new fetch is in-flight.
       setContentReady(false)
       try {
-        const url = `/api/diary/file?lang=${encodeURIComponent(lang)}&file=${encodeURIComponent(selected)}`
+        const url = `/diary/${encodeURIComponent(lang)}/${encodeURIComponent(selected)}`
         const r = await fetch(url)
         if (!r.ok) throw new Error('failed')
         const t = await r.text()
