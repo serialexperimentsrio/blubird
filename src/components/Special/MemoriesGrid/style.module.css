@@ -1,0 +1,121 @@
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(12px, 2vw, 24px);
+	width: min(980px, 92vw);
+	margin: 0 auto;
+	perspective: 1200px;
+}
+
+.card {
+	display: block;
+	height: clamp(160px, 24vw, 220px);
+	text-decoration: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 0;
+}
+
+.card:focus-visible {
+	outline: 3px solid var(--white, #ffffff);
+	outline-offset: 3px;
+}
+
+.cardInner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: transform 0.6s ease;
+}
+
+.card:hover .cardInner,
+.card:focus-within .cardInner,
+.card:focus-visible .cardInner {
+	transform: rotateY(180deg);
+}
+
+.cardFront,
+.cardBack {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	padding: 16px;
+	border-radius: 0;
+	backface-visibility: hidden;
+	border: 1px solid var(--blue-accent, #4d64f8);
+	background: var(--blue, #0021f5);
+	box-shadow: 0 8px 24px rgba(var(--blue-rgb, 0, 33, 245), 0.2);
+	color: var(--white, #ffffff);
+}
+
+.cardFront h3 {
+	margin: 0;
+	font-size: 1.4rem;
+	letter-spacing: 0.06em;
+	text-align: center;
+}
+
+.cardBack {
+	transform: rotateY(180deg);
+	background: var(--blue, #0021f5);
+	color: var(--white, #ffffff);
+}
+
+.cardBack p {
+	margin: 0;
+	font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+	line-height: 1.45;
+	text-align: center;
+}
+
+.icon {
+	width: clamp(18px, 3.2vw, 28px);
+	height: clamp(18px, 3.2vw, 28px);
+	object-fit: contain;
+}
+
+@media (max-width: 900px) {
+	.grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 620px) {
+	.grid {
+		grid-template-columns: 1fr;
+		width: min(540px, 92vw);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cardInner {
+		transition: none;
+	}
+
+	.cardFront,
+	.cardBack {
+		transform: none;
+		transition: opacity 0.2s ease;
+	}
+
+	.cardBack {
+		opacity: 0;
+	}
+
+	.card:hover .cardFront,
+	.card:focus-within .cardFront,
+	.card:focus-visible .cardFront {
+		opacity: 0;
+	}
+
+	.card:hover .cardBack,
+	.card:focus-within .cardBack,
+	.card:focus-visible .cardBack {
+		opacity: 1;
+	}
+}
