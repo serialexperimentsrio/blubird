@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import styles from './style.module.css'
+import { useViewport } from '@/hooks/useViewport'
 
 type Props = {
   files: string[] | null
@@ -98,6 +99,32 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
   const isLoading = files === null
   const displayFiles = (files || []).filter((f) => !f.startsWith('.'))
 
+  const { isPortrait, isSquarish } = useViewport(500, 1270)
+  const isSmall = isPortrait || isSquarish
+
+  // Touch swipe handling for mobile: detect horizontal swipes on the panel
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
+  const SWIPE_THRESHOLD = 50
+
+  const selectPrev = () => {
+    if (!selected) return
+    const i = displayFiles.indexOf(selected)
+    if (i < displayFiles.length - 1) {
+      setVisualSelected(displayFiles[i + 1])
+      requestAnimationFrame(() => setSelected(displayFiles[i + 1]))
+    }
+  }
+
+  const selectNext = () => {
+    if (!selected) return
+    const i = displayFiles.indexOf(selected)
+    if (i > 0) {
+      setVisualSelected(displayFiles[i - 1])
+      requestAnimationFrame(() => setSelected(displayFiles[i - 1]))
+    }
+  }
+
   // Reveal only after transitions are enabled and files have finished loading
   useEffect(() => {
     if (!withTransitions) return
@@ -183,7 +210,7 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
   }, [displayFiles, selected])
 
   return (
-    <div className={`${styles.container} ${withTransitions ? styles.withTransitions : ''} ${isSwitching ? styles.switching : ''}`}>
+    <div className={`${styles.container} ${isSmall ? styles.isSmall : ''} ${withTransitions ? styles.withTransitions : ''} ${isSwitching ? styles.switching : ''}`}>
       <div className={`${styles.list} ${visible ? styles.visible : styles.hidden}`}>
         {displayFiles.length === 0 ? (
           // If files are still loading, don't show the empty placeholder —
@@ -206,6 +233,7 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
                 setVisualSelected(f)
                 requestAnimationFrame(() => setSelected(f))
               }}
+              aria-label={`Open ${label}`}
             >
               {label}
             </button>
@@ -214,7 +242,30 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
         )}
       </div>
 
-      <div className={styles.panel}>
+      <div
+        className={styles.panel}
+        onTouchStart={(e) => {
+          if (!isSmall) return
+          touchStartX.current = e.touches[0].clientX
+          touchEndX.current = null
+        }}
+        onTouchMove={(e) => {
+          if (!isSmall) return
+          touchEndX.current = e.touches[0].clientX
+        }}
+        onTouchEnd={() => {
+          if (!isSmall) return
+          if (touchStartX.current === null || touchEndX.current === null) return
+          const dx = touchEndX.current - touchStartX.current
+          if (dx > SWIPE_THRESHOLD) {
+            selectPrev()
+          } else if (dx < -SWIPE_THRESHOLD) {
+            selectNext()
+          }
+          touchStartX.current = null
+          touchEndX.current = null
+        }}
+      >
         <div className={styles.inner}>
           {selected && contentReady ? (
             <div className={`${styles.content} ${visible ? styles.visible : styles.hidden}`} style={{ whiteSpace: 'pre-wrap' }}>

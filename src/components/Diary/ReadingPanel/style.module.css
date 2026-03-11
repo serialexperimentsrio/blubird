@@ -134,7 +134,59 @@
      any perceived layout movement when switching files. */
 }
 
-/* Utility to temporarily disable transitions on first mount */
+/* Mobile: when the container element also has the `mobile` class,
+   stack the list above the panel and make the list a horizontal timeline. */
+.container.isSmall {
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  /* Provide vertical breathing room so the panel can center visually */
+  padding-top: 20px;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.container.isSmall .list {
+  width: 100%;
+  max-height: none;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 6px;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  align-items: center;
+}
+
+/* Compact timeline chips: don't stretch to full width like desktop list */
+.container.isSmall .card {
+  flex: 0 0 auto;
+  min-width: 88px;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  scroll-snap-align: center;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+}
+
+.container.isSmall .panel {
+  width: 100%;
+  max-width: 680px;
+  min-height: 360px;
+  margin: 0 auto;
+}
+
+.container.isSmall .inner {
+  /* Limit inner height to avoid pushing footer offscreen; preserves breathing room */
+  max-height: calc(100vh - 84px - 160px);
+  overflow: auto;
+}
 
 /* Links inside the reading panel content should be underlined by default */
 .content a {
