@@ -2,6 +2,8 @@
   display: flex;
   gap: 24px;
   align-items: flex-start;
+  justify-content: center;
+  width: 100%;
 }
 
 .list {
@@ -48,7 +50,7 @@
 
 .panel {
   width: 640px;
-  height: 640px; /* larger square */
+  height: clamp(200px, calc(100dvh - 84px - 6rem), 640px);
   background: var(--white);
   border-radius: 0; /* no rounded corners */
   box-shadow: 0 6px 30px rgba(0,0,0,0.12);
@@ -139,7 +141,7 @@
 .container.isSmall {
   width: 100%;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 12px;
   /* Provide vertical breathing room so the panel can center visually */
   padding-top: 20px;
@@ -149,6 +151,8 @@
 
 .container.isSmall .list {
   width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
   max-height: none;
   display: flex;
   flex-direction: row;
@@ -170,7 +174,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   scroll-snap-align: center;
-  border-radius: 6px;
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
 }
@@ -178,13 +181,14 @@
 .container.isSmall .panel {
   width: 100%;
   max-width: 680px;
-  min-height: 360px;
+  height: clamp(200px, calc(100dvh - 84px - 12rem), 640px);
   margin: 0 auto;
 }
 
 .container.isSmall .inner {
-  /* Limit inner height to avoid pushing footer offscreen; preserves breathing room */
-  max-height: calc(100vh - 84px - 160px);
+  /* Limit inner height to avoid pushing footer offscreen; preserves breathing room.
+     Use dvh so the calculation is correct on mobile browsers with dynamic toolbars. */
+  max-height: calc(100dvh - 84px - 12rem);
   overflow: auto;
 }
 

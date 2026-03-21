@@ -26,7 +26,6 @@ export default function DiaryPage({ params }: { params: Promise<Params> }) {
 	useEffect(() => {
 		if (!lang) return
 		let cancelled = false
-		// Try a few manifest locations and log failures to help diagnose
 		const tryFetch = async () => {
 			const candidates = [
 				`/diary/${encodeURIComponent(lang)}/manifest.json`,
@@ -57,11 +56,16 @@ export default function DiaryPage({ params }: { params: Promise<Params> }) {
 	return (
 		<PageFrame params={params}>
 			{(isFadingOut) => (
-				<div style={{ opacity: isFadingOut ? 0 : (isVisible ? 1 : 0), transition: 'opacity 0.3s ease-in-out' }}>
+				<div style={{
+					opacity: isFadingOut ? 0 : (isVisible ? 1 : 0),
+					transition: 'opacity 0.3s ease-in-out',
+					width: '100%',
+					maxHeight: 'calc(100dvh - 84px - 3rem)',
+					overflow: 'visible',
+				}}>
 					<ReadingPanel files={files} lang={lang ?? 'en'} />
 				</div>
 			)}
 		</PageFrame>
 	)
 }
-

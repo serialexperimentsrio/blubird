@@ -235,7 +235,8 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 			>
 				{/* Main Content Area */}
 				<div
-					className="page-content w-full flex flex-col items-center justify-center pointer-events-auto snap-start snap-always relative flex-shrink-0 box-border min-h-[calc(100vh-84px)] px-16"
+					className="page-content w-full flex flex-col items-center justify-center pointer-events-auto snap-start snap-always relative flex-shrink-0 box-border min-h-[calc(100vh-84px)]"
+				style={{ paddingLeft: 'clamp(1rem, 5vw, 4rem)', paddingRight: 'clamp(1rem, 5vw, 4rem)' }}
 				>
 					{typeof children === 'function' ? (
 						// If a render-prop function was provided (client pages), call it.
