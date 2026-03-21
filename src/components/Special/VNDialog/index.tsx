@@ -11,16 +11,20 @@ interface VNDialogProps {
 
 const dialogStrings = {
   en: [
-    "OH<pause> HEY THERE,<pause> INTERNET PEOPLE!<pause> THIS IS UH...<pause> WELL,<pause> THIS.",
-    "I GUESS THE USUAL APPROACH IS TO JUST<pause> OVERLOAD THE FRONT PAGE WITH STUFF.<pause> THIS ISN'T...<pause> QUITE<pause> THAT.",
-    "SO,<pause> THAT'S PROBABLY ENOUGH TALKING.<pause> FEEL FREE TO ROAM AROUND.",
-    "ENJOY THIS LOVELY SKY,<pause> TAKE CARE<pause> AND HEY,<pause> REMEMBER TO DRINK!<pause> MORE!!<pause> WATER!!!"
+    "I THOUGHT ABOUT<pause> WHAT TO SAY HERE.",
+    ".<pause>.<pause>.",
+    "NOTHING CAME TO MIND.",
+    "BUT YOU'RE HERE ANYWAY.",
+    ".<pause>.<pause>.",
+    "MAYBE LET THIS SKY<pause> TAKE IT FROM HERE."
   ],
   ja: [
-    "あ<pause>どうも、<pause>ネット民の皆さん！<pause>これは．．．<pause>まあ、<pause>これです。",
-    "普通は<pause>トップページに色々詰め込むものですが、<pause>これは．．．<pause>ちょっと<pause>違います。",
-    "じゃあ、<pause>話はこれくらいで。<pause>自由に見て回ってください。",
-    "この青空を楽しんで、<pause>お元気で、<pause>そして！<pause>ちゃんと<pause>水飲んでね！！！"
+    "ここで<pause>何を言おうか<pause>考えてみた。",
+    "・<pause>・<pause>・",
+    "何も浮かばなかった。",
+    "でも、<pause>あなたはここにいる。",
+    "・<pause>・<pause>・",
+    "あとは<pause>この空に<pause>お任せします。"
   ]
 }
 
