@@ -47,7 +47,7 @@
 	padding: 16px;
 	border-radius: 0;
 	backface-visibility: hidden;
-	border: 1px solid var(--blue-accent, #4d64f8);
+	border: 2px solid var(--blue-accent, #4d64f8);
 	background: var(--blue, #0021f5);
 	box-shadow: 0 8px 24px rgba(var(--blue-rgb, 0, 33, 245), 0.2);
 	color: var(--white, #ffffff);
@@ -55,7 +55,9 @@
 
 .cardFront h3 {
 	margin: 0;
+	font-family: var(--font-maru-monica);
 	font-size: 1.4rem;
+	font-weight: 700;
 	letter-spacing: 0.06em;
 	text-align: center;
 }
@@ -68,7 +70,8 @@
 
 .cardBack p {
 	margin: 0;
-	font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+	font-family: var(--font-maru-monica);
+	font-size: 1.2rem;
 	line-height: 1.45;
 	text-align: center;
 }
