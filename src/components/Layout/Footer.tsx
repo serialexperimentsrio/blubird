@@ -17,7 +17,7 @@ const QR_CODES = [
 	{ coin: 'USDT', image: '/icons/qr/USDT.png', address: '0xDC45c831D436b39FD91d20773e02bC190A474314' },
 ]
 
-const HOVER_SCALE_STYLE = { height: '28px', width: '50px', imageRendering: 'pixelated' as const, transition: 'transform 0.2s ease' }
+const HOVER_SCALE_STYLE = { height: '28px', width: '50px', imageRendering: 'pixelated' as const }
 
 export default function Footer({ language }: FooterProps) {
     
@@ -79,32 +79,32 @@ export default function Footer({ language }: FooterProps) {
 		>
 			<WithTooltip text={language === 'ja' ? 'ここで生まれ' : 'I WAS BORN HERE'} above>
 				<a href="https://en.wikipedia.org/wiki/South_Korea" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/south_korea.png" alt="South Korea" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+					<img src="/icons/flags/south_korea.png" alt="South Korea" style={HOVER_SCALE_STYLE} className="flag-img" />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'ここに生き' : 'I LIVE HERE'} above>
 				<a href="https://en.wikipedia.org/wiki/Bangladesh" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/bangladesh.png" alt="Bangladesh" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+					<img src="/icons/flags/bangladesh.png" alt="Bangladesh" style={HOVER_SCALE_STYLE} className="flag-img" />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'ここにいたい' : 'I WANT TO BE HERE'} above>
 				<a href="https://en.wikipedia.org/wiki/Japan" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/japan.png" alt="Japan" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+					<img src="/icons/flags/japan.png" alt="Japan" style={HOVER_SCALE_STYLE} className="flag-img" />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'パレスチナを解放せよ' : 'FREE PALESTINE'} above>
 				<a href="https://en.wikipedia.org/wiki/Palestine" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/palestine.png" alt="Palestine" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+					<img src="/icons/flags/palestine.png" alt="Palestine" style={HOVER_SCALE_STYLE} className="flag-img" />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'スーダンに目を向けよう' : 'EYES ON SUDAN'} above>
 				<a href="https://en.wikipedia.org/wiki/Sudan" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/sudan.png" alt="Sudan" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+					<img src="/icons/flags/sudan.png" alt="Sudan" style={HOVER_SCALE_STYLE} className="flag-img" />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? '✌' : '✌'} above>
 				<a href="https://en.wikipedia.org/wiki/Give_Peace_a_Chance" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/peace_blue.png" alt="Peace" style={HOVER_SCALE_STYLE} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+					<img src="/icons/flags/peace_blue.png" alt="Peace" style={HOVER_SCALE_STYLE} className="flag-img" />
 				</a>
 			</WithTooltip>
 		</div>
@@ -184,6 +184,12 @@ export default function Footer({ language }: FooterProps) {
 				.tip-me span {
 					writing-mode: horizontal-tb;
 					text-orientation: mixed;
+				}
+				.flag-img {
+					transition: transform 0.2s ease;
+				}
+				.flag-img:hover {
+					transform: scale(1.2);
 				}
 			`}</style>
 			<div

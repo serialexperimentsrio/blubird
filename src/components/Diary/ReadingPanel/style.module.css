@@ -113,7 +113,6 @@
 .withTransitions .panel .content,
 .withTransitions .panel .placeholder {
   transition: opacity 200ms ease;
-  will-change: opacity;
 }
 
 .withTransitions.switching .panel .content,

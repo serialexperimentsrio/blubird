@@ -31,6 +31,7 @@ const Marquee: FC<MarqueeProps> = ({ text, speed = 50 }) => {
         .marquee-text {
           animation: marquee ${duration} linear infinite;
           display: inline-block;
+          will-change: transform;
         }
       `}</style>
       <div className="marquee-text">

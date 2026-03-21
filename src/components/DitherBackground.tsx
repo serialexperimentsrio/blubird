@@ -1,6 +1,8 @@
 'use client'
 
-import Dither from '@/components/Special/Dither'
+import dynamic from 'next/dynamic'
+
+const Dither = dynamic(() => import('@/components/Special/Dither'), { ssr: false })
 
 export default function DitherBackground() {
   return (
