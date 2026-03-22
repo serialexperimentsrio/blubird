@@ -16,6 +16,26 @@
   --blue-accent: #4d64f8;
   --white: #ffffff;
 
+  /* Blue opacity variants */
+  --blue-hover: rgba(var(--blue-rgb), 0.2);
+  --blue-muted: rgba(var(--blue-rgb), 0.45);
+  --blue-active: rgba(var(--blue-rgb), 0.8);
+
+  /* Shadows */
+  --shadow-card: 0 8px 24px rgba(0,0,0,0.12);
+  --shadow-panel: 0 6px 30px rgba(0,0,0,0.12);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+
+  /* Z-index scale */
+  --z-dialog: 5;
+  --z-box-content: 100;
+  --z-modal: 9999;
+  --z-toast: 999999999;
+
   /* Layout */
   --header-height: 84px;
   --border-width: 2px;

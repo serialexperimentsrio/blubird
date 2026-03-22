@@ -25,7 +25,7 @@
   width: 100%;
   cursor: pointer;
   font-size: 1.4rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, opacity 200ms ease, transform 200ms ease, background-color 200ms ease, color 200ms ease;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-base), transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
   box-sizing: border-box;
   /* 2px border matches design system; 1px transparent outline reserves the extra pixel to prevent layout shift on hover */
   border: 2px solid transparent;
@@ -35,7 +35,7 @@
 
 /* Show only border on hover; do not change background for inactive tabs */
 .card:not(.active):hover {
-  background: rgba(var(--blue-rgb), 0.2);
+  background: var(--blue-hover);
   border-color: var(--blue-accent);
 }
 
@@ -45,13 +45,13 @@
 }
 
 .active {
-  background: rgba(var(--blue-rgb), 0.8);
+  background: var(--blue-active);
   color: var(--white);
 }
 
 .card.active:hover {
   border-color: var(--blue-accent);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-card);
 }
 
 .panel {
@@ -59,7 +59,7 @@
   height: clamp(200px, calc(100dvh - 84px - 6rem), 640px);
   background: var(--white);
   border-radius: 0; /* no rounded corners */
-  box-shadow: 0 6px 30px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-panel);
   opacity: 0.9;
   border: 2px solid var(--blue-accent);
   box-sizing: border-box;
@@ -101,7 +101,7 @@
      to create the subtle motion when switching files. */
 .withTransitions .list,
 .withTransitions .panel .inner {
-  transition: opacity 200ms ease;
+  transition: opacity var(--transition-base);
 }
 
 .withTransitions.switching .list,
@@ -117,7 +117,7 @@
 /* Panel content/placeholder get the vertical motion only. */
 .withTransitions .panel .content,
 .withTransitions .panel .placeholder {
-  transition: opacity 200ms ease;
+  transition: opacity var(--transition-base);
 }
 
 .withTransitions.switching .panel .content,

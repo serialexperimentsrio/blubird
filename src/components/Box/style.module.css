@@ -8,7 +8,7 @@
 
 .box * {
 	position: relative;
-	z-index: 100;
+	z-index: var(--z-box-content);
 }
 
 .box .loadingAnimation {

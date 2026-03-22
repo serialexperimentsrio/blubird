@@ -17,7 +17,7 @@
 }
 
 .card:focus-visible {
-	outline: 3px solid var(--white, #ffffff);
+	outline: 2px solid var(--white);
 	outline-offset: 3px;
 }
 
@@ -47,10 +47,10 @@
 	padding: 16px;
 	border-radius: 0;
 	backface-visibility: hidden;
-	border: 2px solid var(--blue-accent, #4d64f8);
-	background: var(--blue, #0021f5);
-	box-shadow: 0 8px 24px rgba(var(--blue-rgb, 0, 33, 245), 0.2);
-	color: var(--white, #ffffff);
+	border: 2px solid var(--blue-accent);
+	background: var(--blue);
+	box-shadow: var(--shadow-card);
+	color: var(--white);
 }
 
 .cardFront h3 {
@@ -64,8 +64,8 @@
 
 .cardBack {
 	transform: rotateY(180deg);
-	background: var(--blue, #0021f5);
-	color: var(--white, #ffffff);
+	background: var(--blue);
+	color: var(--white);
 }
 
 .cardBack p {

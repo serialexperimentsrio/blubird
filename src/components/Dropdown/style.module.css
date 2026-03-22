@@ -12,7 +12,7 @@
 }
 
 .dropdown > div > span {
-	transition: all 0.3s ease;
+	transition: color var(--transition-slow), opacity var(--transition-slow);
 }
 
 .dropdown > div:last-child {
