@@ -21,30 +21,6 @@ type Props = {
 
 const cards: MemoryCard[] = [
 	{
-		slug: 'library',
-		icon: 'book.svg',
-		label: {
-			en: 'LIBRARY',
-			ja: 'ライブラリ',
-		},
-		description: {
-			en: 'BOOKS I HAVE READ, FAVORITES, AND READING NOTES.',
-			ja: '読んだ本やお気に入り、読書メモの記録。',
-		},
-	},
-	{
-		slug: 'projects',
-		icon: 'gear.svg',
-		label: {
-			en: 'PROJECTS',
-			ja: 'プロジェクト',
-		},
-		description: {
-			en: 'ACTIVE AND ARCHIVED PERSONAL PROJECTS.',
-			ja: '進行中のものや過去の個人プロジェクト。',
-		},
-	},
-	{
 		slug: 'f-and-f',
 		icon: 'man.svg',
 		label: {
@@ -52,8 +28,8 @@ const cards: MemoryCard[] = [
 			ja: '友達と家族',
 		},
 		description: {
-			en: 'MEMORIES, NOTES, AND MOMENTS WITH FRIENDS AND FAMILY.',
-			ja: '友達や家族との思い出や出来事の記録。',
+			en: 'MY FRIENDS AND FAMILY.',
+			ja: '友達と家族のこと。',
 		},
 	},
 	{
@@ -65,8 +41,32 @@ const cards: MemoryCard[] = [
 			ja: '展示室',
 		},
 		description: {
-			en: 'ARTWORKS BY ME, MY FRIENDS, AND MY FAMILY.',
-			ja: '自分や友達、家族の作品をまとめた場所。',
+			en: 'CREATIVE WORK BY PEOPLE I KNOW AND LOVE.',
+			ja: '自分の作品たち。大切な人たちのために作ってる。',
+		},
+	},
+	{
+		slug: 'workshop',
+		icon: 'gear.svg',
+		label: {
+			en: 'WORKSHOP',
+			ja: 'ワークショップ',
+		},
+		description: {
+			en: 'THINGS I\'M BUILDING, PAST AND PRESENT.',
+			ja: '今まで作ってきたものと、今作ってるもの。',
+		},
+	},
+	{
+		slug: 'library',
+		icon: 'book.svg',
+		label: {
+			en: 'LIBRARY',
+			ja: 'ライブラリ',
+		},
+		description: {
+			en: 'GREAT BOOKS AND GOOD READS.',
+			ja: 'お気に入りの本たち。',
 		},
 	},
 	{
@@ -78,8 +78,8 @@ const cards: MemoryCard[] = [
 			ja: '音楽',
 		},
 		description: {
-			en: 'MUSIC I LISTEN TO, FAVORITES, AND PLAYLIST LOGS.',
-			ja: '聴いた曲やお気に入り、プレイリストの記録。',
+			en: 'EARGASMS.',
+			ja: '最高に気持ちいい音楽たち。',
 		},
 	},
 	{
@@ -90,8 +90,8 @@ const cards: MemoryCard[] = [
 			ja: '映画とドラマ',
 		},
 		description: {
-			en: 'MY WATCHED AND TO-WATCH MOVIES AND TV SHOWS',
-			ja: '見た作品と、これから見たい映画やドラマ。',
+			en: 'WHAT I\'VE WATCHED AND PLAN TO.',
+			ja: '観てきたものと、これから観たいもの。',
 		},
 	},
 ]

@@ -13,9 +13,11 @@
   /* Colors */
   --color-main: #0021f5;
   --color-accent: #4d64f8;
+
   --color-bright: #ffffff;
-  --color-ghost: rgba(0,33,245, 0.2);
   --color-dim: rgba(0,33,245, 0.45);
+
+  --color-ghost: rgba(0,33,245, 0.2);
 
   /* Shadows */
   --shadow-card: 0 8px 24px rgba(0,0,0,0.12);
