@@ -17,9 +17,9 @@
   --white: #ffffff;
 
   /* Blue opacity variants */
-  --blue-hover: rgba(var(--blue-rgb), 0.2);
-  --blue-muted: rgba(var(--blue-rgb), 0.45);
-  --blue-active: rgba(var(--blue-rgb), 0.8);
+  --blue-hover: rgba(0,33,245, 0.2);
+  --blue-muted: rgba(0,33,245, 0.45);
+  --blue-active: rgba(0,33,245, 0.8);
 
   /* Shadows */
   --shadow-card: 0 8px 24px rgba(0,0,0,0.12);

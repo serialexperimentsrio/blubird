@@ -4,7 +4,7 @@ export const runtime = 'edge'
 
 import React, { useEffect, useState } from 'react'
 import PageFrame from '@/components/Layout/PageFrame'
-import ReadingPanel from '@/components/Diary/ReadingPanel'
+import ReadingPanel from '@/components/Special/Diary/ReadingPanel'
 
 type Params = {
 	lang: 'en' | 'ja'
