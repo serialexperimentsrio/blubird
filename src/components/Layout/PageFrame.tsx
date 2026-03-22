@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import Header from './Header'
 import Footer from './Footer'
-// Removed unused import: WithTooltip
 
 type PageFrameProps = {
 	params: Promise<{ lang: 'en' | 'ja' }>
@@ -189,6 +188,12 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 				.footer-arrow {
 					animation: footerBounce 0.6s ease-in-out infinite;
 					display: inline-block;
+				}
+
+				@media (prefers-reduced-motion: reduce) {
+					.footer-arrow {
+						animation: none;
+					}
 				}
 
 				@keyframes fadeOut {

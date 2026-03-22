@@ -135,7 +135,7 @@ export default function Footer({ language }: FooterProps) {
 					</WithTooltip>
 					<WithTooltip text={tooltipText || (language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')} above forceShow={copied}>
 						<div onClick={handleCopyAddress} onMouseEnter={handleQRMouseEnter} onMouseLeave={handleQRMouseLeave} style={{ height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--blue-accent)', cursor: 'pointer' }}>
-							<img src={QR_CODES[currentQRIndex].image} alt={`${QR_CODES[currentQRIndex].coin} QR Code`} style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { console.error('Failed to load QR code:', QR_CODES[currentQRIndex].image); e.currentTarget.style.display = 'none' }} />
+							<img src={QR_CODES[currentQRIndex].image} alt={`${QR_CODES[currentQRIndex].coin} QR Code`} style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { e.currentTarget.style.display = 'none' }} />
 						</div>
 					</WithTooltip>
 				</div>
@@ -177,9 +177,9 @@ export default function Footer({ language }: FooterProps) {
 					color: var(--white);
 					background-color: var(--blue);
 					padding: 8px;
-					border: none; /* Removed border */
+					border: none;
 					animation: pulse 1.5s ease-in-out infinite;
-					gap: 4px; /* Adjusted gap for better spacing */
+					gap: 4px;
 				}
 				.tip-me span {
 					writing-mode: horizontal-tb;

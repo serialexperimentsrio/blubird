@@ -39,6 +39,11 @@
   border-color: var(--blue-accent);
 }
 
+.card:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+
 .active {
   background: rgba(var(--blue-rgb), 0.8);
   color: var(--white);
@@ -51,10 +56,11 @@
 
 .panel {
   width: 640px;
-  height: clamp(200px, calc(100dvh - var(--header-height) - 6rem), 640px);
-  background: rgba(255, 255, 255, 0.9);
+  height: clamp(200px, calc(100dvh - 84px - 6rem), 640px);
+  background: var(--white);
   border-radius: 0; /* no rounded corners */
   box-shadow: 0 6px 30px rgba(0,0,0,0.12);
+  opacity: 0.9;
   border: 2px solid var(--blue-accent);
   box-sizing: border-box;
   overflow: hidden;
@@ -179,14 +185,14 @@
 .container.isSmall .panel {
   width: 100%;
   max-width: 680px;
-  height: clamp(200px, calc(100dvh - var(--header-height) - 12rem), 640px);
+  height: clamp(200px, calc(100dvh - 84px - 12rem), 640px);
   margin: 0 auto;
 }
 
 .container.isSmall .inner {
   /* Limit inner height to avoid pushing footer offscreen; preserves breathing room.
      Use dvh so the calculation is correct on mobile browsers with dynamic toolbars. */
-  max-height: calc(100dvh - var(--header-height) - 12rem);
+  max-height: calc(100dvh - 84px - 12rem);
   overflow: auto;
 }
 

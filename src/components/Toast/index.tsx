@@ -138,17 +138,6 @@ const initToastPortal = () => {
 			}
 		}, [])
 
-		// use requestAnimationFrame for smoother updates
-		useEffect(() => {
-			let frameId: number
-			const updateFrame = () => {
-				forceUpdate({})
-				frameId = requestAnimationFrame(updateFrame)
-			}
-			frameId = requestAnimationFrame(updateFrame)
-			return () => cancelAnimationFrame(frameId)
-		}, [])
-
 		useEffect(() => {
 			mountedRef.current = true
 			return () => {

@@ -77,3 +77,8 @@
 .dismissButton:hover {
   background: var(--blue-accent);
 }
+
+.dismissButton:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+}
