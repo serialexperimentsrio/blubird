@@ -10,16 +10,12 @@
 }
 
 :root {
-  /* Primary Colors */
-  --blue: #0021f5;
-  --blue-rgb: 0,33,245;
-  --blue-accent: #4d64f8;
-  --white: #ffffff;
-
-  /* Blue opacity variants */
-  --blue-hover: rgba(0,33,245, 0.2);
-  --blue-muted: rgba(0,33,245, 0.45);
-  --blue-active: rgba(0,33,245, 0.8);
+  /* Colors */
+  --color-main: #0021f5;
+  --color-accent: #4d64f8;
+  --color-bright: #ffffff;
+  --color-ghost: rgba(0,33,245, 0.2);
+  --color-dim: rgba(0,33,245, 0.45);
 
   /* Shadows */
   --shadow-card: 0 8px 24px rgba(0,0,0,0.12);
@@ -50,7 +46,7 @@ body {
   font-family: var(--font-maru-monica);
   margin: 0;
   padding: 0;
-  background: var(--blue);
+  background: var(--color-main);
 }
 
 /* Navigation Arrow Animation */

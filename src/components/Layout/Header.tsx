@@ -35,7 +35,7 @@ export default function Header({
 	// Reusable styles to reduce duplication
 	const mobileNavItemBase: React.CSSProperties = {
 		fontSize: '1.4rem',
-		color: 'var(--white)',
+		color: 'var(--color-bright)',
 		cursor: 'pointer',
 		padding: '1rem 1rem',
 		fontFamily: 'var(--font-maru-monica)',
@@ -44,7 +44,7 @@ export default function Header({
 
 	const mobileLangBox: React.CSSProperties = {
 		fontSize: '1.4rem',
-		color: 'var(--white)',
+		color: 'var(--color-bright)',
 		cursor: 'pointer',
 		userSelect: 'none',
 		fontFamily: 'var(--font-maru-monica)',
@@ -55,9 +55,9 @@ export default function Header({
 	}
 
 	const toggleButtonBox: React.CSSProperties = {
-		background: isToggleHovered ? 'var(--blue-accent)' : 'var(--blue)',
-		border: '2px solid var(--blue-accent)',
-		color: 'var(--white)',
+		background: isToggleHovered ? 'var(--color-accent)' : 'var(--color-main)',
+		border: '2px solid var(--color-accent)',
+		color: 'var(--color-bright)',
 		width: '2.8rem',
 		height: '2.8rem',
 		padding: '0',
@@ -116,7 +116,7 @@ export default function Header({
 					right: 0,
 					minHeight: '84px',
 					maxHeight: isMenuOpen ? '300px' : '84px',
-					background: 'var(--blue)',
+					background: 'var(--color-main)',
 					zIndex: 10,
 					transition: 'max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
 					paddingBottom: isMenuOpen ? '1rem' : '0',
@@ -146,8 +146,8 @@ export default function Header({
 								width: '100%',
 								textAlign: 'left',
 								border: 'none',
-								borderBottom: '2px solid var(--blue-accent)',
-								background: hoveredNav === 'diary' ? 'var(--blue-accent)' : 'transparent',
+								borderBottom: '2px solid var(--color-accent)',
+								background: hoveredNav === 'diary' ? 'var(--color-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '日記' : 'DIARY'}
@@ -161,8 +161,8 @@ export default function Header({
 								width: '100%',
 								textAlign: 'left',
 								border: 'none',
-								borderBottom: '2px solid var(--blue-accent)',
-								background: hoveredNav === 'memories' ? 'var(--blue-accent)' : 'transparent',
+								borderBottom: '2px solid var(--color-accent)',
+								background: hoveredNav === 'memories' ? 'var(--color-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '思い出' : 'MEMORIES'}
@@ -176,7 +176,7 @@ export default function Header({
 								width: '100%',
 								textAlign: 'left',
 								border: 'none',
-								background: hoveredNav === 'school' ? 'var(--blue-accent)' : 'transparent',
+								background: hoveredNav === 'school' ? 'var(--color-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '学校' : 'SCHOOL'}
@@ -205,7 +205,7 @@ export default function Header({
 					onClick={handleLogoClick}
 					style={{
 						fontSize: '2rem',
-						color: 'var(--white)',
+						color: 'var(--color-bright)',
 						cursor: 'pointer',
 						userSelect: 'none',
 						fontFamily: 'var(--font-maru-monica)',
@@ -245,7 +245,7 @@ export default function Header({
 						style={{
 							width: '200px',
 							fontSize: '1.4rem',
-							color: 'var(--white)',
+							color: 'var(--color-bright)',
 							cursor: 'pointer',
 							userSelect: 'none',
 							fontFamily: 'var(--font-maru-monica)',
@@ -353,7 +353,7 @@ export default function Header({
 					justifyContent: 'center',
 					fontSize: '1.4rem',
 					fontFamily: 'var(--font-maru-monica)',
-					color: 'var(--white)',
+					color: 'var(--color-bright)',
 					zIndex: 12,
 					pointerEvents: 'none',
 				}}

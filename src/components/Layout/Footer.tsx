@@ -110,7 +110,7 @@ export default function Footer({ language }: FooterProps) {
 	)
 
 	const marqueeBlock = (
-		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: isSmall ? 'relative' : 'absolute', left: isSmall ? 0 : '50%', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translate(-50%, -50%)', width: isSmall ? '100%' : '60%', height: isSmall ? 'auto' : '100%', color: 'var(--white)', fontSize: '1.2rem' }}>
+		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: isSmall ? 'relative' : 'absolute', left: isSmall ? 0 : '50%', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translate(-50%, -50%)', width: isSmall ? '100%' : '60%', height: isSmall ? 'auto' : '100%', color: 'var(--color-bright)', fontSize: '1.2rem' }}>
 			<Marquee text={language === 'ja' ? '著作権 2025 理央 • 著作権 2025 理央 • 著作権 2025 理央 • ' : 'COPYRIGHT 2025 RIO • COPYRIGHT 2025 RIO • COPYRIGHT 2025 RIO • '} speed={12} />
 		</div>
 	)
@@ -124,16 +124,16 @@ export default function Footer({ language }: FooterProps) {
 				</div>
 				<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0' }}>
 					<WithTooltip text={language === 'ja' ? '次のコイン' : 'NEXT COIN'} above>
-						<div onClick={handleNextQR} style={{ color: 'var(--white)', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--blue-accent)', borderRight: 'none', cursor: 'pointer', position: 'relative' }}>
-							<div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-							<div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-							<div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
-							<div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--blue-accent)' }} />
+						<div onClick={handleNextQR} style={{ color: 'var(--color-bright)', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--color-accent)', borderRight: 'none', cursor: 'pointer', position: 'relative' }}>
+							<div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--color-accent)' }} />
+							<div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--color-accent)' }} />
+							<div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--color-accent)' }} />
+							<div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--color-accent)' }} />
 							<span className={isFadingQR ? 'qr-fade-out' : 'qr-fade-in'}>{QR_CODES[currentQRIndex].coin}</span>
 						</div>
 					</WithTooltip>
 					<WithTooltip text={tooltipText || (language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')} above forceShow={copied}>
-						<div onClick={handleCopyAddress} onMouseEnter={handleQRMouseEnter} onMouseLeave={handleQRMouseLeave} style={{ height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--blue-accent)', cursor: 'pointer' }}>
+						<div onClick={handleCopyAddress} onMouseEnter={handleQRMouseEnter} onMouseLeave={handleQRMouseLeave} style={{ height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--color-accent)', cursor: 'pointer' }}>
 							<img src={QR_CODES[currentQRIndex].image} alt={`${QR_CODES[currentQRIndex].coin} QR Code`} style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { e.currentTarget.style.display = 'none' }} />
 						</div>
 					</WithTooltip>
@@ -173,8 +173,8 @@ export default function Footer({ language }: FooterProps) {
 					align-items: center;
 					font-family: var(--font-maru-monica);
 					font-size: 1.2rem;
-					color: var(--white);
-					background-color: var(--blue);
+					color: var(--color-bright);
+					background-color: var(--color-main);
 					padding: 8px;
 					border: none;
 					animation: pulse 1.5s ease-in-out infinite;
@@ -194,7 +194,7 @@ export default function Footer({ language }: FooterProps) {
 			<div
 				style={{
 					width: '100%',
-					background: 'var(--blue)',
+					background: 'var(--color-main)',
 					pointerEvents: 'auto',
 					scrollSnapAlign: 'start',
 					scrollSnapStop: 'always',

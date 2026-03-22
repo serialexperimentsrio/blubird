@@ -8,11 +8,11 @@
 }
 
 .button {
-	background: var(--blue);
-	border: 2px solid var(--blue-accent);
+	background: var(--color-main);
+	border: 2px solid var(--color-accent);
 	padding: 10px 20px;
 	outline: none;
-	color: var(--white);
+	color: var(--color-bright);
 	position: relative;
 	transition: background var(--transition-fast), color 0.5s ease;
 	cursor: pointer;
@@ -22,7 +22,7 @@
 }
 
 .button:hover:not(:disabled):not(.loading) {
-	background: var(--blue-accent);
+	background: var(--color-accent);
 }
 
 .button:active:not(:disabled):not(.loading) {
@@ -30,7 +30,7 @@
 }
 
 .button:focus-visible {
-	outline: 2px solid var(--white);
+	outline: 2px solid var(--color-bright);
 	outline-offset: 3px;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .button.loading {
-	color: var(--white);
+	color: var(--color-bright);
 	pointer-events: none;
 }
 

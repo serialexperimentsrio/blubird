@@ -28,7 +28,7 @@ export default function SchoolPage({ params }: Props) {
 			{(isFadingOut) => (
 				<div
 					style={{
-						color: 'var(--white)',
+						color: 'var(--color-bright)',
 						fontFamily: 'var(--font-maru-monica)',
 						textAlign: 'center',
 						opacity: isFadingOut ? 0 : (isVisible ? 1 : 0),

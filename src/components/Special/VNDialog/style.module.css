@@ -15,8 +15,8 @@
 }
 
 .dialogBox {
-  background: var(--blue);
-  border: 2px solid var(--blue-accent);
+  background: var(--color-main);
+  border: 2px solid var(--color-accent);
   padding: 2rem;
   position: relative;
   cursor: pointer;
@@ -25,7 +25,7 @@
 
 .text {
   font-family: var(--font-maru-monica);
-  color: var(--white);
+  color: var(--color-bright);
   font-size: 1.2rem;
   line-height: 1.6;
   white-space: pre-wrap;
@@ -50,7 +50,7 @@
   bottom: 1rem;
   right: 1rem;
   font-size: 1.5rem;
-  color: var(--white);
+  color: var(--color-bright);
   opacity: 0;
   transition: opacity var(--transition-base);
   display: inline-block;
@@ -64,9 +64,9 @@
   position: absolute;
   top: -3rem;
   right: 0;
-  background: var(--blue);
-  border: 2px solid var(--blue-accent);
-  color: var(--white);
+  background: var(--color-main);
+  border: 2px solid var(--color-accent);
+  color: var(--color-bright);
   padding: 0.5rem 1rem;
   font-family: var(--font-maru-monica);
   font-size: 0.9rem;
@@ -75,10 +75,10 @@
 }
 
 .dismissButton:hover {
-  background: var(--blue-accent);
+  background: var(--color-accent);
 }
 
 .dismissButton:focus-visible {
-  outline: 2px solid var(--white);
+  outline: 2px solid var(--color-bright);
   outline-offset: 3px;
 }

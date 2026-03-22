@@ -8,7 +8,7 @@
 	white-space: nowrap;
 	position: relative;
 	padding: 13px 15px;
-	border-bottom: 2px solid var(--blue-accent);
+	border-bottom: 2px solid var(--color-accent);
 }
 
 .dropdown > div > span {

@@ -274,7 +274,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 							transform: `translateX(-50%) rotate(${isFooterVisible ? 180 : 0}deg)`,
 							display: 'flex',
 							justifyContent: 'center',
-							color: 'var(--white)',
+							color: 'var(--color-bright)',
 							fontSize: '1.5rem',
 							opacity: isFadingOut ? 0 : (isArrowVisible ? 1 : 0),
 							transition: 'transform 0.6s ease-in-out, opacity 0.3s ease-in-out',

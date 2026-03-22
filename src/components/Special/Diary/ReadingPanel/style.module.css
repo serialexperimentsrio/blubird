@@ -17,7 +17,7 @@
 
 .card {
   background: transparent;
-  color: var(--white);
+  color: var(--color-bright);
   padding: 1rem 1rem;
   text-align: left;
   font-weight: 700;
@@ -35,33 +35,33 @@
 
 /* Show only border on hover; do not change background for inactive tabs */
 .card:not(.active):hover {
-  background: var(--blue-hover);
-  border-color: var(--blue-accent);
+  background: var(--color-ghost);
+  border-color: var(--color-accent);
 }
 
 .card:focus-visible {
-  outline: 2px solid var(--white);
+  outline: 2px solid var(--color-bright);
   outline-offset: 2px;
 }
 
 .active {
-  background: var(--blue-active);
-  color: var(--white);
+  background: var(--color-main);
+  color: var(--color-bright);
 }
 
 .card.active:hover {
-  border-color: var(--blue-accent);
+  border-color: var(--color-accent);
   box-shadow: var(--shadow-card);
 }
 
 .panel {
   width: 640px;
   height: clamp(200px, calc(100dvh - 84px - 6rem), 640px);
-  background: var(--white);
+  background: var(--color-bright);
   border-radius: 0; /* no rounded corners */
   box-shadow: var(--shadow-panel);
   opacity: 0.9;
-  border: 2px solid var(--blue-accent);
+  border: 2px solid var(--color-accent);
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -76,20 +76,20 @@
 }
 
 .empty {
-  color: var(--white);
+  color: var(--color-bright);
   padding: 12px;
 }
 
 .content {
   white-space: pre-wrap;
-  color: var(--blue);
+  color: var(--color-main);
   font-family: var(--font-maru-monica);
   font-size: 1.2rem;
   font-weight: 700;
 }
 
 .placeholder {
-  color: var(--blue-accent);
+  color: var(--color-accent);
   font-size: 1.2rem;
   font-family: var(--font-maru-monica);
   font-weight: 700;
