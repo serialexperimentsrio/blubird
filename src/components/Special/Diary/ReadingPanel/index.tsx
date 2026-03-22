@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import styles from './style.module.css'
-import { useViewport } from '@/hooks/useViewport'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 
 type Props = {
   files: string[] | null
@@ -99,8 +99,7 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
   const isLoading = files === null
   const displayFiles = (files || []).filter((f) => !f.startsWith('.'))
 
-  const { isPortrait, isSquarish } = useViewport(500, 1270)
-  const isSmall = isPortrait || isSquarish
+  const { isSmall } = useBreakpoint(500, 1270)
 
   // Touch swipe handling for mobile: detect horizontal swipes on the panel
   const touchStartX = useRef<number | null>(null)

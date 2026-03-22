@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, type MouseEvent } from 'react'
-import { useViewport } from '@/hooks/useViewport'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 import AnimatedContent from '@/components/Special/AnimatedContent'
 
 type HeaderProps = {
@@ -30,8 +30,7 @@ export default function Header({
 
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const [isToggleHovered, setIsToggleHovered] = useState(false)
-	const { isPortrait, isSquarish } = useViewport(500, 1270)
-	const isSmall = isPortrait || isSquarish
+	const { isSmall } = useBreakpoint(500, 1270)
 
 	// Reusable styles to reduce duplication
 	const mobileNavItemBase: React.CSSProperties = {

@@ -2,7 +2,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useViewport } from '@/hooks/useViewport'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 import WithTooltip from '@/components/Tooltip'
 import Marquee from '@/components/Special/Marquee'
 
@@ -25,8 +25,7 @@ export default function Footer({ language }: FooterProps) {
 	const [copied, setCopied] = useState(false)
 	const [tooltipText, setTooltipText] = useState('')
 	const [isFadingQR, setIsFadingQR] = useState(false)
-	const { isPortrait, isSquarish } = useViewport(500, 1270)
-	const isSmall = isPortrait || isSquarish
+	const { isNarrow, isMedium, isSmall } = useBreakpoint(500, 1270)
 
 	const handleNextQR = async () => {
 		setIsFadingQR(true)
@@ -118,8 +117,8 @@ export default function Footer({ language }: FooterProps) {
 
 	const tipsBlock = (
 		<div style={{ position: isSmall ? 'relative' : 'absolute', right: isSmall ? 0 : 'clamp(1rem, 5vw, 4rem)', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translateY(-50%)', display: 'flex', alignItems: 'center', justifyContent: isSmall ? 'center' : 'flex-end', gap: '0', overflow: 'visible' }}>
-			<div style={{ display: 'flex', flexDirection: isPortrait ? 'column' : 'row', alignItems: 'center', gap: isPortrait ? '8px' : '16px', position: 'relative' }}>
-				<div className="tip-me" style={{ alignSelf: isPortrait ? 'center' : 'auto' }}>
+			<div style={{ display: 'flex', flexDirection: isNarrow ? 'column' : 'row', alignItems: 'center', gap: isNarrow ? '8px' : '16px', position: 'relative' }}>
+				<div className="tip-me" style={{ alignSelf: isNarrow ? 'center' : 'auto' }}>
 					<span>{language === 'ja' ? 'チップ' : 'TIPS'}</span>
 					<span>{language === 'ja' ? 'お願い!' : 'PLEASE!'}</span>
 				</div>
@@ -210,7 +209,7 @@ export default function Footer({ language }: FooterProps) {
 					gap: isSmall ? '1.5rem' : undefined,
 				}}
 			>
-			{isSquarish ? (
+			{isMedium ? (
 				<>
 					<div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', gap: '2rem' }}>
 						{flagsGrid}
@@ -218,7 +217,7 @@ export default function Footer({ language }: FooterProps) {
 					</div>
 					{marqueeBlock}
 				</>
-			) : isPortrait ? (
+			) : isNarrow ? (
 				<>
 					{flagsGrid}
 					{tipsBlock}
