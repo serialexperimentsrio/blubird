@@ -16,10 +16,14 @@
   --blue-accent: #4d64f8;
   --white: #ffffff;
 
-    /* Fonts */
-    /* Provide a system font fallback stack that closely matches metrics to reduce layout shift
-      while the custom font loads. */
-    --font-maru-monica: "MaruMonica", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Layout */
+  --header-height: 84px;
+  --border-width: 2px;
+
+  /* Fonts */
+  /* Provide a system font fallback stack that closely matches metrics to reduce layout shift
+    while the custom font loads. */
+  --font-maru-monica: "MaruMonica", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 body {

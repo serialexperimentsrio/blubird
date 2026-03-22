@@ -367,7 +367,7 @@ export default function Header({
 						pointerEvents: 'auto',
 					}}
 				>
-				<div
+				<button
 					data-nav-item="diary"
 					onClick={() => handleNavClick('/diary')}
 					style={{
@@ -378,6 +378,11 @@ export default function Header({
 						justifyContent: 'center',
 						minHeight: '1.4rem',
 						position: 'relative',
+						background: 'none',
+						border: 'none',
+						padding: 0,
+						color: 'inherit',
+						font: 'inherit',
 						textDecoration: currentPage === '/diary' ? 'underline' : 'none',
 						textUnderlineOffset: '0.3em',
 					}}
@@ -402,8 +407,8 @@ export default function Header({
 							</AnimatedContent>
 						</div>
 					</div>
-				</div>
-				<div
+				</button>
+				<button
 					data-nav-item="memories"
 					onClick={() => handleNavClick('/memories')}
 					style={{
@@ -414,6 +419,11 @@ export default function Header({
 						justifyContent: 'center',
 						minHeight: '1.4rem',
 						position: 'relative',
+						background: 'none',
+						border: 'none',
+						padding: 0,
+						color: 'inherit',
+						font: 'inherit',
 						textDecoration: currentPage === '/memories' ? 'underline' : 'none',
 						textUnderlineOffset: '0.3em',
 					}}
@@ -438,8 +448,8 @@ export default function Header({
 							</AnimatedContent>
 						</div>
 					</div>
-				</div>
-				<div
+				</button>
+				<button
 					data-nav-item="school"
 					onClick={() => handleNavClick('/school')}
 					style={{
@@ -450,6 +460,11 @@ export default function Header({
 						justifyContent: 'center',
 						minHeight: '1.4rem',
 						position: 'relative',
+						background: 'none',
+						border: 'none',
+						padding: 0,
+						color: 'inherit',
+						font: 'inherit',
 						textDecoration: currentPage === '/school' ? 'underline' : 'none',
 						textUnderlineOffset: '0.3em',
 					}}
@@ -474,7 +489,7 @@ export default function Header({
 							</AnimatedContent>
 						</div>
 					</div>
-				</div>
+				</button>
 				</div>
 			</div>
 			)}
