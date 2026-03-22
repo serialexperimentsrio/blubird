@@ -48,3 +48,9 @@ body {
   vertical-align: middle;
   transition: opacity 0.2s ease-in-out;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-arrow {
+    animation: none;
+  }
+}

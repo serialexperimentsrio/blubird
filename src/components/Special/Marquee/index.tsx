@@ -33,6 +33,12 @@ const Marquee: FC<MarqueeProps> = ({ text, speed = 50 }) => {
           display: inline-block;
           will-change: transform;
         }
+
+        @media (prefers-reduced-motion: reduce) {
+          .marquee-text {
+            animation: none;
+          }
+        }
       `}</style>
       <div className="marquee-text">
         {text}{text}{text}{text}{text}{text}

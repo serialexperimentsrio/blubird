@@ -12,7 +12,7 @@
 	border: 2px solid var(--blue-accent);
 	padding: 10px 20px;
 	outline: none;
-	color: #ffffff;
+	color: var(--white);
 	position: relative;
 	transition: color 0.5s ease;
 	cursor: pointer;
@@ -22,7 +22,7 @@
 
 .button:disabled {
 	opacity: 0.7;
-	color: #cccccc;
+	color: rgba(255, 255, 255, 0.5);
 	cursor: not-allowed;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .button.loading {
-	color: var(--text-dark);
+	color: var(--white);
 	pointer-events: none;
 }
 

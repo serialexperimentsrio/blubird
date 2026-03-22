@@ -57,6 +57,15 @@ const AnimatedContent: React.FC<AnimatedContentProps> = ({
       return;
     }
 
+    // Respect reduced-motion: skip animation, jump to final state
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      el.style.transform = 'none';
+      el.style.opacity = '1';
+      if (onComplete) onComplete();
+      return;
+    }
+
     // Build keyframes for animation starting from the initial offset state
     const keyframes: Keyframe[] = [
       {
@@ -110,12 +119,23 @@ const AnimatedContent: React.FC<AnimatedContentProps> = ({
     el.style.opacity = String(animateOpacity ? initialOpacity : 1);
 
     // Create intersection observer for scroll trigger
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           // Kill any existing animations
           if (el.getAnimations) {
             el.getAnimations().forEach(animation => animation.cancel());
+          }
+
+          // Respect reduced-motion: skip animation, jump to final state
+          if (prefersReducedMotion) {
+            el.style.transform = 'none';
+            el.style.opacity = '1';
+            if (onComplete) onComplete();
+            observer.unobserve(el);
+            return;
           }
 
           const keyframes: Keyframe[] = [

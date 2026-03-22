@@ -50,7 +50,7 @@
   bottom: 1rem;
   right: 1rem;
   font-size: 1.5rem;
-  color: #ffffff;
+  color: var(--white);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
   display: inline-block;
@@ -71,7 +71,7 @@
   font-family: var(--font-maru-monica);
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 .dismissButton:hover {

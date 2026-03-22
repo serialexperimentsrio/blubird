@@ -106,6 +106,17 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
     const fullText = dialogStrings[currentLanguageRef.current][currentIndex]
     const textWithoutPauses = fullText.replace(/<pause>/g, '')
 
+    // Respect reduced-motion preference: reveal text instantly
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) {
+      setIsTyping(false)
+      setShowContinueIndicator(true)
+      setDisplayedText(textWithoutPauses)
+      setShouldStopTyping(false)
+      return
+    }
+
     setIsTyping(true)
     setShowContinueIndicator(false)
     setDisplayedText('')
@@ -225,6 +236,7 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
       <div className={styles.dialogBox} onClick={handleClick}>
         <button
           className={styles.dismissButton}
+          aria-label="Dismiss dialog"
           onClick={(e) => {
             e.stopPropagation()
             handleDismiss()

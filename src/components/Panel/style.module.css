@@ -17,6 +17,6 @@
 	margin: 0;
 	padding-left: 4px;
 	margin-bottom: 8px;
-	color: #999999;
+	color: rgba(var(--blue-rgb), 0.45);
 	background: transparent !important;
 }

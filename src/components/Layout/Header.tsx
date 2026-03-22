@@ -138,41 +138,50 @@ export default function Header({
 						transition: 'max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
 					}}
 				>
-						<div
+						<button
 							onClick={() => handleNavClick('/diary')}
 							onMouseEnter={() => handleNavHover('diary')}
 							onMouseLeave={handleNavLeave}
 							style={{
 								...mobileNavItemBase,
+								width: '100%',
+								textAlign: 'left',
+								border: 'none',
 								borderBottom: '2px solid var(--blue-accent)',
 								background: hoveredNav === 'diary' ? 'var(--blue-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '日記' : 'DIARY'}
-						</div>
-						<div
+						</button>
+						<button
 							onClick={() => handleNavClick('/memories')}
 							onMouseEnter={() => handleNavHover('memories')}
 							onMouseLeave={handleNavLeave}
 							style={{
 								...mobileNavItemBase,
+								width: '100%',
+								textAlign: 'left',
+								border: 'none',
 								borderBottom: '2px solid var(--blue-accent)',
 								background: hoveredNav === 'memories' ? 'var(--blue-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '思い出' : 'MEMORIES'}
-						</div>
-						<div
+						</button>
+						<button
 							onClick={() => handleNavClick('/school')}
 							onMouseEnter={() => handleNavHover('school')}
 							onMouseLeave={handleNavLeave}
 							style={{
 								...mobileNavItemBase,
+								width: '100%',
+								textAlign: 'left',
+								border: 'none',
 								background: hoveredNav === 'school' ? 'var(--blue-accent)' : 'transparent',
 							}}
 						>
 							{language === 'ja' ? '学校' : 'SCHOOL'}
-						</div>
+						</button>
 					</div>
 			</div>
 
