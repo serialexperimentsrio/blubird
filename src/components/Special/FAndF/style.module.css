@@ -1,0 +1,254 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: min(980px, 92vw);
+	margin: 0 auto;
+	padding: clamp(1rem, 3vw, 2.5rem) 0;
+	box-sizing: border-box;
+}
+
+/* ── Scrollable panel ── */
+.gridScroll {
+	overflow: hidden;
+	width: 100%;
+	height: clamp(200px, calc(100dvh - 84px - 6rem), 640px);
+	background: rgba(255, 255, 255, 0.6);
+	border: var(--border-width) solid var(--color-accent);
+	box-shadow: var(--shadow-panel);
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	animation: fadeIn 0.4s 0.1s ease both;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+/* ── Fixed header + me row ── */
+.fixedTop {
+	padding: 0;
+	flex-shrink: 0;
+}
+
+
+/* ── Scrollable list ── */
+.gridScrollInner {
+	flex: 1;
+	width: 100%;
+	overflow-y: auto;
+	padding: 0;
+	box-sizing: border-box;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-accent) transparent;
+}
+
+/* ── List layout ── */
+@keyframes spinY {
+	from { transform: rotateY(0deg); }
+	to   { transform: rotateY(360deg); }
+}
+
+.listHeader,
+.listRow {
+	display: grid;
+	grid-template-columns: 48px 1fr 1.4fr 2.5fr 1fr;
+	align-items: center;
+	gap: 16px;
+	width: 100%;
+	box-sizing: border-box;
+	padding-left: clamp(16px, 2.5vw, 28px);
+	padding-right: clamp(16px, 2.5vw, 28px);
+}
+
+.listHeader {
+	font-size: 1rem;
+	letter-spacing: 0.12em;
+	background: var(--color-main);
+	color: var(--color-bright);
+	font-family: var(--font-maru-monica);
+	text-align: left;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.listRow {
+	background: none;
+	border: none;
+	border-bottom: 1px solid rgba(0, 33, 245, 0.15);
+	color: var(--color-main);
+	font-family: var(--font-maru-monica);
+	cursor: pointer;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	transition: background var(--transition-fast);
+}
+
+.listRow:hover {
+	background: var(--color-ghost);
+}
+
+.listRow:focus-visible {
+	outline: 2px solid var(--color-main);
+	outline-offset: -2px;
+}
+
+/* Me row — same style as others, no special color treatment */
+.listRowMe {
+	border-bottom: 1px solid rgba(0, 33, 245, 0.15);
+}
+
+/* ── Avatar ── */
+.listAvatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background: var(--color-main);
+	flex-shrink: 0;
+	perspective: 400px;
+	margin-left: 10px;
+}
+
+.avatar {
+	width: 22px;
+	height: 22px;
+	object-fit: contain;
+	transform-style: preserve-3d;
+}
+
+.listRow:hover .avatar {
+	animation: spinY 2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.listRow:hover .avatar { animation: none; }
+	.gridScroll { animation: none; }
+}
+
+/* ── Columns ── */
+.listNick {
+	font-size: 1.2rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	
+}
+
+.listRoles {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.roleTag {
+	font-size: 0.75rem;
+	letter-spacing: 0.08em;
+	padding: 2px 7px;
+	background: var(--color-main);
+	color: var(--color-bright);
+	font-family: var(--font-maru-monica);
+}
+
+.listMemoir {
+	font-size: 1.2rem;
+	line-height: 1.4;
+	color: var(--color-main);
+}
+
+.listFrom {
+	font-size: 1.2rem;
+	color: var(--color-main);
+	white-space: nowrap;
+}
+
+/* ── Modal ── */
+.modal {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	min-width: min(420px, 80vw);
+	max-width: min(560px, 90vw);
+}
+
+.modalHeader {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.modalHandle {
+	margin: 0;
+	font-family: var(--font-maru-monica);
+	font-size: 1.6rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	color: var(--color-bright);
+	text-align: left;
+}
+
+.modalRoles {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.modalRoles .roleTag {
+	background: none;
+	padding: 0;
+	color: var(--color-bright);
+	opacity: 0.6;
+	font-size: 1rem;
+}
+
+.modalMemoir {
+	margin: 0;
+	font-family: var(--font-maru-monica);
+	font-size: 1rem;
+	line-height: 1.65;
+	color: var(--color-bright);
+	text-align: left;
+}
+
+.modalNotes {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	border-top: 2px solid var(--color-accent);
+	padding-top: 14px;
+}
+
+.modalNotes li {
+	font-family: var(--font-maru-monica);
+	font-size: 1rem;
+	line-height: 1.5;
+	color: var(--color-bright);
+	text-align: left;
+}
+
+/* ── Responsive ── */
+@media (max-width: 620px) {
+	.listHeader,
+	.listRow {
+		grid-template-columns: 40px 1fr 1fr;
+	}
+
+	.listMemoir,
+	.listFrom {
+		display: none;
+	}
+
+	.modal {
+		min-width: unset;
+		width: min(90vw, 420px);
+	}
+}

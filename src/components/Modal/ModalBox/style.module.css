@@ -1,7 +1,7 @@
 .outerModal {
 	position: fixed !important;
 	left: 50%;
-	top: clamp(100px, 40%, calc(100vh - 100px));
+	top: 50%;
 	transform: translate(-50%, -50%);
 	max-width: calc(100vw - 70px);
 	max-height: calc(100vh - 70px);
@@ -17,8 +17,8 @@
 	border: none !important;
 	position: absolute;
 	left: calc(50% + 0.5px);
-	top: 10%;
-	transform: translate(-50%, -10%);
+	top: 50%;
+	transform: translate(-50%, -50%);
 	overflow: auto;
 }
 

@@ -62,14 +62,14 @@
 
 .dismissButton {
   position: absolute;
-  top: -3rem;
+  top: -3.5rem;
   right: 0;
   background: var(--color-main);
   border: 2px solid var(--color-accent);
   color: var(--color-bright);
   padding: 0.5rem 1rem;
   font-family: var(--font-maru-monica);
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: background var(--transition-base);
 }

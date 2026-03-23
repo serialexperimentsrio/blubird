@@ -233,18 +233,14 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
 
   return (
     <div className={`${containerClassName} ${parentFadingOut ? 'language-fade-out' : ''}`}>
+      <button
+        className={styles.dismissButton}
+        aria-label="Dismiss dialog"
+        onClick={handleDismiss}
+      >
+        ESC
+      </button>
       <div className={styles.dialogBox} onClick={handleClick}>
-        <button
-          className={styles.dismissButton}
-          aria-label="Dismiss dialog"
-          onClick={(e) => {
-            e.stopPropagation()
-            handleDismiss()
-          }}
-        >
-          ESC
-        </button>
-
         <div className={styles.text}>
           {displayedText}
         </div>
