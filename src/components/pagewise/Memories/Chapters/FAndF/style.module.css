@@ -164,10 +164,22 @@
 }
 
 .listFrom {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
 	font-size: 1.2rem;
 	color: var(--color-main);
 	font-weight: 600;
 	white-space: nowrap;
+}
+
+.flagIcon {
+	width: 28px;
+	height: 20px;
+	object-fit: cover;
+	display: block;
+	flex-shrink: 0;
 }
 
 /* ── Modal ── */

@@ -6,7 +6,7 @@ export type Person = {
 		en: string
 		ja: string
 	}
-	from?: string
+	from?: string | string[]
 	notes: {
 		en: string[]
 		ja: string[]
@@ -22,7 +22,7 @@ const people: Person[] = [
 			en: 'THE ONE MAINTAINING THIS PLACE. A COLLECTOR OF THINGS. MIGHT BE AUTISTIC.',
 			ja: 'この場所を管理している人。物事、人、瞬間を集める人。',
 		},
-		from: 'SOUTH KOREA',
+		from: ['SOUTH KOREA', 'BANGLADESH'],
 		notes: {
 			en: ['LOOKING FOR A JOB THAT PAYS.'],
 			ja: ['このサイト全体が、ひとつの記憶みたいなもの。'],
@@ -47,6 +47,112 @@ const people: Person[] = [
 			],
 		},
 	},
+	{
+		nick: 'FAA',
+		roles: ['ALUMNI', 'COMRADE'],
+		memoir: { en: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT.', ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。' },
+		from: 'BANGLADESH',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'BAR',
+		roles: ['N/A'],
+		memoir: { en: 'SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.', ja: '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'BAZ',
+		roles: ['N/A'],
+		memoir: { en: 'UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS.', ja: '吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'QUX',
+		roles: ['N/A'],
+		memoir: { en: 'DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM.', ja: '人間の中でも特に獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話だ。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'QUUX',
+		roles: ['N/A'],
+		memoir: { en: 'EXCEPTEUR SINT OCCAECAT CUPIDATAT NON PROIDENT SUNT IN CULPA.', ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'CORGE',
+		roles: ['N/A'],
+		memoir: { en: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD.', ja: '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'GRAULT',
+		roles: ['N/A'],
+		memoir: { en: 'TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA UT ENIM AD MINIM.', ja: '吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'GARPLY',
+		roles: ['N/A'],
+		memoir: { en: 'VENIAM QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA.', ja: '人間の中でも特に獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話だ。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'WALDO',
+		roles: ['N/A'],
+		memoir: { en: 'COMMODO CONSEQUAT DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE.', ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'FRED',
+		roles: ['N/A'],
+		memoir: { en: 'VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR SINT OCCAECAT.', ja: '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'PLUGH',
+		roles: ['N/A'],
+		memoir: { en: 'CUPIDATAT NON PROIDENT SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM.', ja: '吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'XYZZY',
+		roles: ['N/A'],
+		memoir: { en: 'ID EST LABORUM ET DOLORUM FUGA ET HARUM QUIDEM RERUM FACILIS EST.', ja: '人間の中でも特に獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話だ。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'THUD',
+		roles: ['N/A'],
+		memoir: { en: 'NAM LIBERO TEMPORE CUM SOLUTA NOBIS EST ELIGENDI OPTIO CUMQUE NIHIL.', ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'FLOB',
+		roles: ['N/A'],
+		memoir: { en: 'IMPEDIT QUO MINUS ID QUOD MAXIME PLACEAT FACERE POSSIMUS OMNIS VOLUPTAS.', ja: '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+	{
+		nick: 'ZORK',
+		roles: ['N/A'],
+		memoir: { en: 'ASSUMENDA EST OMNIS DOLOR REPELLENDUS TEMPORIBUS AUTEM QUIBUSDAM OFFICIIS.', ja: '吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という。' },
+		from: 'UNKNOWN',
+		notes: { en: ['N/A'], ja: ['N/A'] },
+	},
+
 	// {
 	// 	nick: 'SABLE',
 	// 	roles: ['COMRADE'],
@@ -241,21 +347,6 @@ const people: Person[] = [
 	// 		ja: ['いつも言葉より行動。'],
 	// 	},
 	// },
-	{ nick: 'FOO', roles: ['N/A'], memoir: { en: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT.', ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'BAR', roles: ['N/A'], memoir: { en: 'SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.', ja: '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'BAZ', roles: ['N/A'], memoir: { en: 'UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS.', ja: '吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'QUX', roles: ['N/A'], memoir: { en: 'DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM.', ja: '人間の中でも特に獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話だ。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'QUUX', roles: ['N/A'], memoir: { en: 'EXCEPTEUR SINT OCCAECAT CUPIDATAT NON PROIDENT SUNT IN CULPA.', ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'CORGE', roles: ['N/A'], memoir: { en: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD.', ja: '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'GRAULT', roles: ['N/A'], memoir: { en: 'TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA UT ENIM AD MINIM.', ja: '吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'GARPLY', roles: ['N/A'], memoir: { en: 'VENIAM QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA.', ja: '人間の中でも特に獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話だ。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'WALDO', roles: ['N/A'], memoir: { en: 'COMMODO CONSEQUAT DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE.', ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'FRED', roles: ['N/A'], memoir: { en: 'VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR SINT OCCAECAT.', ja: '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'PLUGH', roles: ['N/A'], memoir: { en: 'CUPIDATAT NON PROIDENT SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM.', ja: '吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'XYZZY', roles: ['N/A'], memoir: { en: 'ID EST LABORUM ET DOLORUM FUGA ET HARUM QUIDEM RERUM FACILIS EST.', ja: '人間の中でも特に獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話だ。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'THUD', roles: ['N/A'], memoir: { en: 'NAM LIBERO TEMPORE CUM SOLUTA NOBIS EST ELIGENDI OPTIO CUMQUE NIHIL.', ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'FLOB', roles: ['N/A'], memoir: { en: 'IMPEDIT QUO MINUS ID QUOD MAXIME PLACEAT FACERE POSSIMUS OMNIS VOLUPTAS.', ja: '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
-	{ nick: 'ZORK', roles: ['N/A'], memoir: { en: 'ASSUMENDA EST OMNIS DOLOR REPELLENDUS TEMPORIBUS AUTEM QUIBUSDAM OFFICIIS.', ja: '吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という。' }, from: 'UNKNOWN', notes: { en: ['N/A'], ja: ['N/A'] } },
 ]
 
 export default people
