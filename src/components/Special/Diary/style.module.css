@@ -20,7 +20,7 @@
   color: var(--color-bright);
   padding: 1rem 1rem;
   text-align: left;
-  font-weight: 700;
+  font-weight: 600;
   border-radius: 0;
   width: 100%;
   cursor: pointer;
@@ -57,10 +57,8 @@
 .panel {
   width: 640px;
   height: clamp(200px, calc(100dvh - 84px - 6rem), 640px);
-  background: var(--color-bright);
-  border-radius: 0; /* no rounded corners */
+  background: rgba(255, 255, 255, 0.67);
   box-shadow: var(--shadow-panel);
-  opacity: 0.9;
   border: 2px solid var(--color-accent);
   box-sizing: border-box;
   overflow: hidden;
@@ -87,14 +85,14 @@
   color: var(--color-main);
   font-family: var(--font-maru-monica);
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .placeholder {
   color: var(--color-accent);
   font-size: 1.2rem;
   font-family: var(--font-maru-monica);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /* Fade/transform transition rules
@@ -108,11 +106,11 @@
 
 .withTransitions.switching .list,
 .withTransitions.switching .panel .inner {
-  opacity: 0.6;
+  opacity: 0.67;
 }
 
 .withTransitions.switching .card {
-  opacity: 0.6;
+  opacity: 0.67;
   transform: translateY(0);
 }
 
@@ -124,7 +122,7 @@
 
 .withTransitions.switching .panel .content,
 .withTransitions.switching .panel .placeholder {
-  opacity: 0.6;
+  opacity: 0.67;
   /* Do not apply translate here; translation is controlled by the
      `.hidden` class on the content/placeholder to avoid moving the
      currently visible text when a switch begins. */
@@ -134,13 +132,6 @@
   opacity: 1;
 }
 
-/* When content is hidden, move only the content/placeholder to avoid moving
-   the panel container. */
-.panel .content.hidden,
-.panel .placeholder.hidden {
-  /* No vertical translation — use opacity-only transitions to avoid
-     any perceived layout movement when switching files. */
-}
 
 /* Mobile: when the container element also has the `mobile` class,
    stack the list above the panel and make the list a horizontal timeline. */

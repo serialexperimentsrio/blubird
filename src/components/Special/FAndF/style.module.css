@@ -9,11 +9,11 @@
 }
 
 /* ── Scrollable panel ── */
-.gridScroll {
+.listPanel {
 	overflow: hidden;
 	width: 100%;
 	height: clamp(200px, calc(100dvh - 84px - 6rem), 640px);
-	background: rgba(255, 255, 255, 0.6);
+	background: rgba(255, 255, 255, 0.67);
 	border: var(--border-width) solid var(--color-accent);
 	box-shadow: var(--shadow-panel);
 	box-sizing: border-box;
@@ -35,7 +35,7 @@
 
 
 /* ── Scrollable list ── */
-.gridScrollInner {
+.listPanelInner {
 	flex: 1;
 	width: 100%;
 	overflow-y: auto;
@@ -127,13 +127,13 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.listRow:hover .avatar { animation: none; }
-	.gridScroll { animation: none; }
+	.listPanel { animation: none; }
 }
 
 /* ── Columns ── */
 .listNick {
 	font-size: 1.2rem;
-	font-weight: 700;
+	font-weight: 600;
 	letter-spacing: 0.04em;
 	white-space: nowrap;
 	overflow: hidden;
@@ -160,11 +160,13 @@
 	font-size: 1.2rem;
 	line-height: 1.4;
 	color: var(--color-main);
+	font-weight: 600;
 }
 
 .listFrom {
 	font-size: 1.2rem;
 	color: var(--color-main);
+	font-weight: 600;
 	white-space: nowrap;
 }
 
@@ -187,7 +189,7 @@
 	margin: 0;
 	font-family: var(--font-maru-monica);
 	font-size: 1.6rem;
-	font-weight: 700;
+	font-weight: 600;
 	letter-spacing: 0.06em;
 	color: var(--color-bright);
 	text-align: left;
@@ -203,7 +205,7 @@
 	background: none;
 	padding: 0;
 	color: var(--color-bright);
-	opacity: 0.6;
+	opacity: 0.8;
 	font-size: 1rem;
 }
 

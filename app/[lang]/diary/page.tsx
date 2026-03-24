@@ -4,7 +4,7 @@ export const runtime = 'edge'
 
 import React, { useEffect, useState } from 'react'
 import PageFrame from '@/components/Layout/PageFrame'
-import ReadingPanel from '@/components/Special/Diary/ReadingPanel'
+import Diary from '@/components/Special/Diary'
 
 type Params = {
 	lang: 'en' | 'ja'
@@ -13,7 +13,7 @@ type Params = {
 export default function DiaryPage({ params }: { params: Promise<Params> }) {
 	const [isVisible, setIsVisible] = useState(false)
 	const [lang, setLang] = useState<'en' | 'ja' | null>(null)
-	const [files, setFiles] = useState<string[] | null>(null)
+	const [entries, setEntries] = useState<string[] | null>(null)
 
 	useEffect(() => {
 		params.then((resolved) => {
@@ -38,14 +38,14 @@ export default function DiaryPage({ params }: { params: Promise<Params> }) {
 					if (!r.ok) throw new Error(`${url} -> ${r.status}`)
 					const data = await r.json()
 					if (!cancelled && Array.isArray(data.files)) {
-						setFiles(data.files.slice().sort().reverse())
+						setEntries(data.files.slice().sort().reverse())
 						return
 					}
 				} catch (err) {
 					console.error('Manifest fetch failed for', url, err)
 				}
 			}
-			if (!cancelled) setFiles([])
+			if (!cancelled) setEntries([])
 		}
 		tryFetch()
 		return () => {
@@ -63,7 +63,7 @@ export default function DiaryPage({ params }: { params: Promise<Params> }) {
 					maxHeight: 'calc(100dvh - 84px - 3rem)',
 					overflow: 'visible',
 				}}>
-					<ReadingPanel files={files} lang={lang ?? 'en'} />
+					<Diary entries={entries} lang={lang ?? 'en'} />
 				</div>
 			)}
 		</PageFrame>

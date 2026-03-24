@@ -5,17 +5,17 @@ import styles from './style.module.css'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 
 type Props = {
-  files: string[] | null
+  entries: string[] | null
   lang: string
-  initialSelected?: string | null
+  initialEntry?: string | null
   initialContent?: string | null
 }
 
 const MD_LINK_RE = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/
 const URL_RE = /(https?:\/\/[^\s]+)/
 
-export default function ReadingPanel({ files, lang, initialSelected, initialContent }: Props) {
-  const [selected, setSelected] = useState<string | null>(initialSelected ?? null)
+export default function Diary({ entries, lang, initialEntry, initialContent }: Props) {
+  const [selectedEntry, setSelectedEntry] = useState<string | null>(initialEntry ?? null)
   const [content, setContent] = useState<string>(initialContent ?? '')
   const [contentReady, setContentReady] = useState<boolean>(initialContent ? true : false)
   const [visible, setVisible] = useState<boolean>(false)
@@ -24,11 +24,11 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
   // Enable transitions after mount (so initial appearance is immediate, then tab switches animate)
   const [withTransitions, setWithTransitions] = useState<boolean>(false)
   const [isSwitching, setIsSwitching] = useState<boolean>(false)
-  // `selected` drives which file we fetch. `visualSelected` controls which tab
+  // `selectedEntry` drives which file we fetch. `visualEntry` controls which tab
   // shows the active styling so we can delay the visual change until after
   // the synchronized transition completes.
-  const [visualSelected, setVisualSelected] = useState<string | null>(initialSelected ?? null)
-  const [initialized, setInitialized] = useState<boolean>(initialSelected ? true : false)
+  const [visualEntry, setVisualEntry] = useState<string | null>(initialEntry ?? null)
+  const [initialized, setInitialized] = useState<boolean>(initialEntry ? true : false)
 
   // Parse text and convert Markdown links [text](url) and plain URLs into React nodes.
   function renderWithLinks(text: string) {
@@ -93,14 +93,14 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
   useEffect(() => {
     const raf = requestAnimationFrame(() => requestAnimationFrame(() => {
       setWithTransitions(true)
-      // Do not reveal yet — wait for `files` to finish loading so the
+      // Do not reveal yet — wait for `entries` to finish loading so the
       // tab list is present and can animate together with the panel.
       }))
       return () => cancelAnimationFrame(raf)
   }, [])
 
-  const isLoading = files === null
-  const displayFiles = (files || []).filter((f) => !f.startsWith('.'))
+  const isLoading = entries === null
+  const displayEntries = (entries || []).filter((entry) => !entry.startsWith('.'))
 
   const { isSmall } = useBreakpoint(500, 1270)
 
@@ -110,24 +110,24 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
   const SWIPE_THRESHOLD = 50
 
   const selectPrev = () => {
-    if (!selected) return
-    const i = displayFiles.indexOf(selected)
-    if (i < displayFiles.length - 1) {
-      setVisualSelected(displayFiles[i + 1])
-      requestAnimationFrame(() => setSelected(displayFiles[i + 1]))
+    if (!selectedEntry) return
+    const i = displayEntries.indexOf(selectedEntry)
+    if (i < displayEntries.length - 1) {
+      setVisualEntry(displayEntries[i + 1])
+      requestAnimationFrame(() => setSelectedEntry(displayEntries[i + 1]))
     }
   }
 
   const selectNext = () => {
-    if (!selected) return
-    const i = displayFiles.indexOf(selected)
+    if (!selectedEntry) return
+    const i = displayEntries.indexOf(selectedEntry)
     if (i > 0) {
-      setVisualSelected(displayFiles[i - 1])
-      requestAnimationFrame(() => setSelected(displayFiles[i - 1]))
+      setVisualEntry(displayEntries[i - 1])
+      requestAnimationFrame(() => setSelectedEntry(displayEntries[i - 1]))
     }
   }
 
-  // Reveal only after transitions are enabled and files have finished loading
+  // Reveal only after transitions are enabled and entries have finished loading
   useEffect(() => {
     if (!withTransitions) return
     if (!isLoading) {
@@ -137,15 +137,15 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
   }, [withTransitions, isLoading])
 
   useEffect(() => {
-    if (!selected) return
+    if (!selectedEntry) return
     let cancelled = false
 
-    const fetchContent = async () => {
+    const fetchEntry = async () => {
       // Mark content not-ready until this fetch completes to avoid showing
       // stale/duplicate text while a new fetch is in-flight.
       setContentReady(false)
       try {
-        const url = `/diary/${encodeURIComponent(lang)}/${encodeURIComponent(selected)}`
+        const url = `/diary/${encodeURIComponent(lang)}/${encodeURIComponent(selectedEntry)}`
         const r = await fetch(url)
         if (!r.ok) throw new Error('failed')
         const t = await r.text()
@@ -172,8 +172,8 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
     // If prevSelected is null, this is initial mount/navigation back — don't animate out
     if (prevSelected.current === null) {
       setVisible(true)
-      fetchContent()
-      prevSelected.current = selected
+      fetchEntry()
+      prevSelected.current = selectedEntry
       return () => {
         cancelled = true
       }
@@ -187,53 +187,53 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
         setVisible(false)
       })
     }
-    fetchContent()
+    fetchEntry()
 
-    prevSelected.current = selected
+    prevSelected.current = selectedEntry
     return () => {
       cancelled = true
     }
   // `withTransitions` is intentionally omitted to avoid changing the
   // dependency array size between HMR updates. The fetch depends on
-  // `selected` and `lang` only.
+  // `selectedEntry` and `lang` only.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected, lang])
+  }, [selectedEntry, lang])
 
   useEffect(() => {
-    if (displayFiles && displayFiles.length && !selected) {
-      // Set visual selection first so the tab can paint, then start the
+    if (displayEntries && displayEntries.length && !selectedEntry) {
+      // Set visual entry first so the tab can paint, then start the
       // content fetch on the next animation frame. This ensures the tab
       // button appears before the panel content loads, avoiding a snap.
-      const first = displayFiles[0]
-      setVisualSelected(first)
-      requestAnimationFrame(() => setSelected(first))
+      const first = displayEntries[0]
+      setVisualEntry(first)
+      requestAnimationFrame(() => setSelectedEntry(first))
       setInitialized(true)
     }
-  }, [displayFiles, selected])
+  }, [displayEntries, selectedEntry])
 
   return (
     <div className={`${styles.container} ${isSmall ? styles.isSmall : ''} ${withTransitions ? styles.withTransitions : ''} ${isSwitching ? styles.switching : ''}`}>
       <div className={`${styles.list} ${visible ? styles.visible : styles.hidden}`}>
-        {displayFiles.length === 0 ? (
-          // If files are still loading, don't show the empty placeholder —
+        {displayEntries.length === 0 ? (
+          // If entries are still loading, don't show the empty placeholder —
           // wait until the parent has finished fetching to avoid a flash.
           isLoading ? null : (
-            <div className={styles.empty}>No files found</div>
+            <div className={styles.empty}>No entries found</div>
           )
         ) : (
-          displayFiles.map((f) => {
-          const label = f.replace(/\.[^/.]+$/, '')
+          displayEntries.map((entry) => {
+          const label = entry.replace(/\.[^/.]+$/, '')
           return (
             <button
-              key={f}
-              className={`${styles.card} ${visualSelected === f ? styles.active : ''} ${visible ? styles.visible : styles.hidden}`}
+              key={entry}
+              className={`${styles.card} ${visualEntry === entry ? styles.active : ''} ${visible ? styles.visible : styles.hidden}`}
               onClick={() => {
-                if (selected === f) return
-                // Paint the visual active state first, then set `selected`
+                if (selectedEntry === entry) return
+                // Paint the visual active state first, then set `selectedEntry`
                 // on the next frame to allow the button to render before
                 // the fetch and panel update begin.
-                setVisualSelected(f)
-                requestAnimationFrame(() => setSelected(f))
+                setVisualEntry(entry)
+                requestAnimationFrame(() => setSelectedEntry(entry))
               }}
               aria-label={`Open ${label}`}
             >
@@ -269,17 +269,17 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
         }}
       >
         <div className={styles.inner}>
-          {selected && contentReady ? (
+          {selectedEntry && contentReady ? (
             <div className={`${styles.content} ${visible ? styles.visible : styles.hidden}`} style={{ whiteSpace: 'pre-wrap' }}>
               {renderWithLinks(content)}
             </div>
-          ) : selected && !contentReady ? (
+          ) : selectedEntry && !contentReady ? (
             <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>LOADING...</div>
           ) : (
-            // Don't show the placeholder until we've initialized (i.e. assigned the first file).
-            // This avoids a brief flash of "Select a file to view" while the first file is being selected.
+            // Don't show the placeholder until we've initialized (i.e. assigned the first entry).
+            // This avoids a brief flash of "Select an entry to view" while the first entry is being selected.
             initialized ? (
-              <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>Select a file to view</div>
+              <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>Select an entry to view</div>
             ) : null
           )}
         </div>
