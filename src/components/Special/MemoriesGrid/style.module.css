@@ -90,8 +90,25 @@
 
 @media (max-width: 620px) {
 	.grid {
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		width: min(540px, 92vw);
+	}
+
+	.card {
+		height: clamp(90px, 28vw, 130px);
+	}
+
+	.cardFront h3 {
+		font-size: 1.1rem;
+	}
+
+	.cardBack p {
+		font-size: 1rem;
+	}
+
+	.icon {
+		width: clamp(16px, 5vw, 24px);
+		height: clamp(16px, 5vw, 24px);
 	}
 }
 

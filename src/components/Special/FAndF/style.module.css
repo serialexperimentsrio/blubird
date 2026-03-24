@@ -4,7 +4,7 @@
 	align-items: center;
 	width: min(980px, 92vw);
 	margin: 0 auto;
-	padding: clamp(1rem, 3vw, 2.5rem) 0;
+	padding: 0;
 	box-sizing: border-box;
 }
 
@@ -12,7 +12,7 @@
 .roster {
 	overflow: hidden;
 	width: 100%;
-	height: clamp(200px, calc(100dvh - 84px - 6rem), 640px);
+	height: clamp(200px, calc(100dvh - 84px - 2rem), 640px);
 	background: rgba(255, 255, 255, 0.67);
 	border: var(--border-width) solid var(--color-accent);
 	box-shadow: var(--shadow-panel);

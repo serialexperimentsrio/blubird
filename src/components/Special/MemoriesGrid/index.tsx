@@ -78,8 +78,8 @@ const cards: MemoryCard[] = [
 			ja: '音楽',
 		},
 		description: {
-			en: 'EARGASMS.',
-			ja: '最高に気持ちいい音楽たち。',
+			en: 'SOUNDS THAT SOUND NICE.',
+			ja: '気持ちよく響く音たち。',
 		},
 	},
 	{
