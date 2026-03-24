@@ -1,6 +1,6 @@
 'use client'
 
-import ModalBox from '@/components/Modal/ModalBox'
+import ModalBox from '@/components/shared/Modal/ModalBox'
 import type { Person } from '@/data/people'
 import styles from './style.module.css'
 

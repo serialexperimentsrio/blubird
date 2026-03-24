@@ -2,7 +2,7 @@
 
 import { useState, useEffect, type MouseEvent } from 'react'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
-import AnimatedContent from '@/components/Special/AnimatedContent'
+import AnimatedContent from '@/components/special/AnimatedContent'
 
 type HeaderProps = {
 	language: 'en' | 'ja'

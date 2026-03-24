@@ -1,6 +1,6 @@
 'use client'
 
-import { setModal } from '@/components/Modal'
+import { setModal } from '@/components/shared/Modal'
 import people from '@/data/people'
 import styles from './style.module.css'
 import PersonModal from './PersonModal'

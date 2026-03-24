@@ -3,8 +3,8 @@
 
 import { useState } from 'react'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
-import WithTooltip from '@/components/Tooltip'
-import Marquee from '@/components/Special/Marquee'
+import WithTooltip from '@/components/shared/Tooltip'
+import Marquee from '@/components/special/Marquee'
 import styles from './style.module.css'
 
 type FooterProps = {

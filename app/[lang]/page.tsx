@@ -3,8 +3,8 @@
 export const runtime = 'edge'
 
 import { useState, useEffect, useRef } from 'react'
-import PageFrame from '@/components/Layout/PageFrame'
-import VNDialog from '@/components/Special/VNDialog'
+import PageFrame from '@/components/shared/Layout/PageFrame'
+import VNDialog from '@/components/pagewise/Home/VNDialog'
 
 type Props = {
 	params: Promise<{ lang: 'en' | 'ja' }>

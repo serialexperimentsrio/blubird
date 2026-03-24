@@ -3,8 +3,8 @@
 export const runtime = 'edge'
 
 import { useEffect, useState } from 'react'
-import PageFrame from '@/components/Layout/PageFrame'
-import FAndF from '@/components/Special/FAndF'
+import PageFrame from '@/components/shared/Layout/PageFrame'
+import FAndF from '@/components/pagewise/Memories/Chapters/FAndF'
 
 type Props = {
 	params: Promise<{ lang: 'en' | 'ja' }>

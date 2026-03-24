@@ -2,9 +2,9 @@
 
 import dynamic from 'next/dynamic'
 
-const Dither = dynamic(() => import('@/components/Special/Dither'), { ssr: false })
+const Dither = dynamic(() => import('@/components/special/Dither'), { ssr: false })
 
-export default function DitherBackground() {
+export default function Background() {
   return (
     <div
       style={{

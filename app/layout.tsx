@@ -1,6 +1,6 @@
 import './globals.css'
 import { metadata } from './metadata'
-import DitherBackground from '@/components/DitherBackground'
+import DitherBackground from '@/components/special/Dither/Background'
 
 export { metadata }
 

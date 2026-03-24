@@ -3,8 +3,8 @@
 export const runtime = 'edge'
 
 import { useState, useEffect } from 'react'
-import PageFrame from '@/components/Layout/PageFrame'
-import MemoriesGrid from '@/components/Special/MemoriesGrid'
+import PageFrame from '@/components/shared/Layout/PageFrame'
+import Memories from '@/components/pagewise/Memories'
 
 type Props = {
 	params: Promise<{ lang: 'en' | 'ja' }>
@@ -31,7 +31,7 @@ export default function MemoriesPage({ params }: Props) {
 						transition: 'opacity 0.3s ease-in-out',
 					}}
 				>
-					<MemoriesGrid lang={lang} />
+					<Memories lang={lang} />
 				</div>
 			)}
 		</PageFrame>

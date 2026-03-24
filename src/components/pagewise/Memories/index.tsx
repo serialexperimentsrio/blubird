@@ -29,7 +29,7 @@ const cards: MemoryCard[] = [
 		},
 		description: {
 			en: 'MY FRIENDS AND FAMILY.',
-			ja: '友達と家族のこと。',
+			ja: '友達とか家族。',
 		},
 	},
 	{
@@ -42,7 +42,7 @@ const cards: MemoryCard[] = [
 		},
 		description: {
 			en: 'CREATIVE WORK BY PEOPLE I KNOW AND LOVE.',
-			ja: '自分の作品たち。大切な人たちのために作ってる。',
+			ja: '好きな人たちが作ったクリエイティブなやつ。',
 		},
 	},
 	{
@@ -54,7 +54,7 @@ const cards: MemoryCard[] = [
 		},
 		description: {
 			en: 'THINGS I\'M BUILDING, PAST AND PRESENT.',
-			ja: '今まで作ってきたものと、今作ってるもの。',
+			ja: '今まで作ってきたものとか、今作ってるやつ。',
 		},
 	},
 	{
@@ -66,7 +66,7 @@ const cards: MemoryCard[] = [
 		},
 		description: {
 			en: 'GREAT BOOKS AND GOOD READS.',
-			ja: 'お気に入りの本たち。',
+			ja: 'めっちゃいい本とか、おもしろい本。',
 		},
 	},
 	{
@@ -79,7 +79,7 @@ const cards: MemoryCard[] = [
 		},
 		description: {
 			en: 'SOUNDS THAT SOUND NICE.',
-			ja: '気持ちよく響く音たち。',
+			ja: 'なんかいい感じの音。',
 		},
 	},
 	{
@@ -91,7 +91,7 @@ const cards: MemoryCard[] = [
 		},
 		description: {
 			en: 'WHAT I\'VE WATCHED AND PLAN TO.',
-			ja: '観てきたものと、これから観たいもの。',
+			ja: '観たやつとか、これから観る予定のやつ。',
 		},
 	},
 ]

@@ -3,8 +3,8 @@
 export const runtime = 'edge'
 
 import React, { useEffect, useState } from 'react'
-import PageFrame from '@/components/Layout/PageFrame'
-import Diary from '@/components/Special/Diary'
+import PageFrame from '@/components/shared/Layout/PageFrame'
+import Diary from '@/components/pagewise/Diary'
 
 type Params = {
 	lang: 'en' | 'ja'
