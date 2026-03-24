@@ -80,7 +80,7 @@ const ToastPortalContent = ({
 	}
 
 	return (
-		<div className={style.toastProvider} style={providerStyle}>
+		<div className={style.toastProvider} style={providerStyle} aria-live="polite" aria-atomic="false">
 			{toastList.map((toast) => {
 				// Render an invisible placeholder for placeholders or faded toasts
 				if (

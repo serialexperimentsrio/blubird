@@ -92,8 +92,14 @@ const ModalBox = ({
 			})
 		})
 
+		let resizeRafId: number | undefined
 		const resizeObserver = new ResizeObserver(() => {
-			if (opened.current) animateOuterModal({}, finalStyles())
+			if (!opened.current) return
+			if (resizeRafId !== undefined) cancelAnimationFrame(resizeRafId)
+			resizeRafId = requestAnimationFrame(() => {
+				resizeRafId = undefined
+				animateOuterModal({}, finalStyles())
+			})
 		})
 
 		resizeObserver.observe(divRef.current)
@@ -101,6 +107,7 @@ const ModalBox = ({
 		const currentRef = divRef.current
 		return () => {
 			if (currentRef) resizeObserver.unobserve(currentRef)
+			if (resizeRafId !== undefined) cancelAnimationFrame(resizeRafId)
 		}
 	}, [])
 

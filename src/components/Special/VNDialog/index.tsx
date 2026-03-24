@@ -58,32 +58,36 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
 
     if (isLanguageToggle && savedState) {
       // Restore state from before language toggle
-      const state = JSON.parse(savedState)
-      setCurrentIndex(state.currentIndex)
-      setIsTyping(state.isTyping)
-      setShowContinueIndicator(state.showContinueIndicator)
+      let state: { currentIndex: number; isTyping: boolean; showContinueIndicator: boolean } | null = null
+      try { state = JSON.parse(savedState) } catch { /* ignore corrupted state, fall through to normal mount */ }
+      if (state) {
+        setCurrentIndex(state.currentIndex)
+        setIsTyping(state.isTyping)
+        setShowContinueIndicator(state.showContinueIndicator)
 
-      // Show immediately, no delay
-      setIsMounted(true)
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          setIsVisible(true)
-        }, 10)
-      })
-    } else {
-      // Normal initial mount with delay
-      const mountTimer = setTimeout(() => {
+        // Show immediately, no delay
         setIsMounted(true)
-        // Small delay to allow DOM to render before triggering fade
         requestAnimationFrame(() => {
           setTimeout(() => {
             setIsVisible(true)
           }, 10)
         })
-      }, 1500)
-
-      return () => clearTimeout(mountTimer)
+        return
+      }
     }
+
+    // Normal initial mount with delay
+    const mountTimer = setTimeout(() => {
+      setIsMounted(true)
+      // Small delay to allow DOM to render before triggering fade
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          setIsVisible(true)
+        }, 10)
+      })
+    }, 1500)
+
+    return () => clearTimeout(mountTimer)
   }, [language])
 
   // Save state when language changes (before unmount due to navigation)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import { ANIMATION_CONFIG } from './animationConfig'
 import style from './style.module.css'
@@ -128,6 +128,8 @@ let portalUpdateFn: ((value: Record<string, never>) => void) | null = null
 // modal portal component
 const ModalPortal = () => {
 	const [, forceUpdate] = useState({})
+	const dialogRef = useRef<HTMLDivElement>(null)
+	const previousFocusRef = useRef<Element | null>(null)
 
 	useEffect(() => {
 		portalUpdateFn = forceUpdate
@@ -139,10 +141,49 @@ const ModalPortal = () => {
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === 'Escape' && modalActive) hideModal()
+
+			// focus trap: keep Tab inside the dialog
+			if (e.key === 'Tab' && modalActive && dialogRef.current) {
+				const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+					'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+				)
+				if (focusable.length === 0) return
+				const first = focusable[0]
+				const last = focusable[focusable.length - 1]
+				if (e.shiftKey) {
+					if (document.activeElement === first) {
+						e.preventDefault()
+						last.focus()
+					}
+				} else {
+					if (document.activeElement === last) {
+						e.preventDefault()
+						first.focus()
+					}
+				}
+			}
 		}
 		document.addEventListener('keydown', handleKeyDown)
 		return () => document.removeEventListener('keydown', handleKeyDown)
 	}, [])
+
+	// save focus and move it into the dialog when modal opens; restore on close
+	useEffect(() => {
+		if (modalActive) {
+			previousFocusRef.current = document.activeElement
+			requestAnimationFrame(() => {
+				const firstFocusable = dialogRef.current?.querySelector<HTMLElement>(
+					'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+				)
+				firstFocusable?.focus()
+			})
+		} else {
+			if (previousFocusRef.current instanceof HTMLElement) {
+				previousFocusRef.current.focus()
+			}
+			previousFocusRef.current = null
+		}
+	})
 
 	return (
 		<>
@@ -150,7 +191,14 @@ const ModalPortal = () => {
 				onClick={() => (onCloseCallback || hideModal)()}
 				className={`${style.modalBackdrop} ${modalActive ? style.active : ''}`}
 			/>
-			{currentModal}
+			<div
+				ref={dialogRef}
+				role="dialog"
+				aria-modal="true"
+				style={{ display: 'contents' }}
+			>
+				{currentModal}
+			</div>
 		</>
 	)
 }
