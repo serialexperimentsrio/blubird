@@ -40,7 +40,7 @@ export default function FAndF({ lang }: Props) {
 
 	return (
 		<section className={styles.container}>
-			<div className={styles.listPanel}>
+			<div className={styles.roster}>
 				<div className={styles.fixedTop}>
 					{me && renderRow(me, styles.listRowMe)}
 					<div className={styles.listHeader}>
@@ -51,7 +51,7 @@ export default function FAndF({ lang }: Props) {
 						<span>FROM</span>
 					</div>
 				</div>
-				<div className={styles.listPanelInner}>
+				<div className={styles.rosterInner}>
 					{others.map((person) => renderRow(person))}
 				</div>
 			</div>
