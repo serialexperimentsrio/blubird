@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 import WithTooltip from '@/components/Tooltip'
 import Marquee from '@/components/Special/Marquee'
-import styles from './Footer.module.css'
+import styles from './style.module.css'
 
 type FooterProps = {
 	language: 'en' | 'ja'

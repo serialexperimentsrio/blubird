@@ -29,41 +29,6 @@ export const setupObservers = (
 		popoverResizeObserver.observe(popoverContentElement)
 	}
 
-	// track position changes more aggressively
-	let lastRect = triggerElement.getBoundingClientRect()
-
-	// use intersection observer for viewport changes
-	const intersectionObserver = new IntersectionObserver(
-		(entries) => {
-			for (const entry of entries) {
-				const newRect = entry.boundingClientRect
-				if (
-					Math.abs(lastRect.left - newRect.left) > 0.5 ||
-					Math.abs(lastRect.top - newRect.top) > 0.5
-				) {
-					lastRect = newRect
-					debouncedUpdate()
-				}
-			}
-		},
-		{ threshold: [0, 0.1, 0.5, 1.0] }
-	)
-	intersectionObserver.observe(triggerElement)
-
-	// add scroll tracking for position changes
-	const checkPositionChange = () => {
-		const newRect = triggerElement.getBoundingClientRect()
-		if (
-			Math.abs(lastRect.left - newRect.left) > 0.5 ||
-			Math.abs(lastRect.top - newRect.top) > 0.5 ||
-			Math.abs(lastRect.width - newRect.width) > 0.5 ||
-			Math.abs(lastRect.height - newRect.height) > 0.5
-		) {
-			lastRect = newRect
-			debouncedUpdate()
-		}
-	}
-
 	// track scroll events on scrollable parents
 	const scrollableParents: Element[] = []
 	let scrollParent = triggerElement.parentElement
@@ -78,7 +43,7 @@ export const setupObservers = (
 			computedStyle.overflowY === 'scroll'
 		) {
 			scrollableParents.push(scrollParent)
-			scrollParent.addEventListener('scroll', checkPositionChange, {
+			scrollParent.addEventListener('scroll', debouncedUpdate, {
 				passive: true
 			})
 		}
@@ -86,12 +51,12 @@ export const setupObservers = (
 	}
 
 	// also listen to document scroll
-	document.addEventListener('scroll', checkPositionChange, { passive: true })
+	document.addEventListener('scroll', debouncedUpdate, { passive: true })
 
 	// observe DOM mutations with wider scope for position-affecting changes
 	const mutationObserver = new MutationObserver(() => {
 		// use RAF to batch multiple mutations
-		requestAnimationFrame(checkPositionChange)
+		requestAnimationFrame(debouncedUpdate)
 	})
 
 	// observe the trigger element and its immediate container for changes
@@ -108,14 +73,13 @@ export const setupObservers = (
 	return () => {
 		targetResizeObserver.disconnect()
 		popoverResizeObserver.disconnect()
-		intersectionObserver.disconnect()
 		mutationObserver.disconnect()
 		window.removeEventListener('resize', debouncedUpdate)
-		document.removeEventListener('scroll', checkPositionChange)
+		document.removeEventListener('scroll', debouncedUpdate)
 
 		// remove scroll listeners from scrollable parents
 		for (const parent of scrollableParents) {
-			parent.removeEventListener('scroll', checkPositionChange)
+			parent.removeEventListener('scroll', debouncedUpdate)
 		}
 
 		if (updateTimeout) clearTimeout(updateTimeout)
