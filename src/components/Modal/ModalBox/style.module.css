@@ -8,6 +8,8 @@
 	overflow: hidden;
 	z-index: var(--z-modal);
 	padding: 0;
+	border: none !important;
+	box-shadow: inset 0 0 0 2px var(--color-accent);
 }
 
 .outerModal > * {

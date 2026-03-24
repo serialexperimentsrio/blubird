@@ -287,7 +287,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 				</div>
 
 				{/* Footer */}
-				<div ref={footerRef}>
+				<div ref={footerRef} data-footer="true">
 					<Footer language={language} />
 				</div>
 			</div>

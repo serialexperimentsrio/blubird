@@ -197,6 +197,26 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
     handleComplete()
   }, [handleComplete])
 
+  // Document-level click: advance dialog when clicking content area, ignore header/footer
+  useEffect(() => {
+    if (!isVisible) return
+
+    const handleDocClick = (e: MouseEvent) => {
+      const target = e.target as Element
+      if (
+        target.closest('[data-nav-item]') ||
+        target.closest('[data-nav-desktop]') ||
+        target.closest('[data-nav-hamburger]') ||
+        target.closest('[data-mobile-menu]') ||
+        target.closest('[data-footer]')
+      ) return
+      handleClick()
+    }
+
+    document.addEventListener('click', handleDocClick)
+    return () => document.removeEventListener('click', handleDocClick)
+  }, [isVisible, handleClick])
+
   // Keyboard support
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -240,7 +260,7 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
       >
         ESC
       </button>
-      <div className={styles.dialogBox} onClick={handleClick}>
+      <div className={styles.dialogBox}>
         <div className={styles.text}>
           {displayedText}
         </div>

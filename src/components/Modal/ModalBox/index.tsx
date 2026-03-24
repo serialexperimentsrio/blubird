@@ -6,7 +6,6 @@ import { isModalTransitioning, registerCloseAnimation } from '../'
 import { ANIMATION_CONFIG } from '../animationConfig'
 import style from './style.module.css'
 
-// type for modal box props
 export interface ModalBoxProps {
 	className?: string
 	style?: React.CSSProperties
@@ -15,7 +14,6 @@ export interface ModalBoxProps {
 	image?: string
 }
 
-// type for components that return a ModalBox
 export type ModalBoxComponent = React.ReactElement<ModalBoxProps>
 
 const ModalBox = ({
@@ -30,9 +28,7 @@ const ModalBox = ({
 
 	// focus any input when modal is opened
 	useEffect(() => {
-		divRef.current?.querySelector('input')?.focus({
-			preventScroll: true
-		})
+		divRef.current?.querySelector('input')?.focus({ preventScroll: true })
 	}, [])
 
 	useEffect(() => {
@@ -40,18 +36,11 @@ const ModalBox = ({
 
 		const animateOuterModal = (from: Keyframe, to: Keyframe) => {
 			if (!divRef.current) return
-			const outerModal = divRef.current.parentElement
-			outerModal?.animate([from, to], {
+			divRef.current.parentElement?.animate([from, to], {
 				duration: ANIMATION_CONFIG.modalTransition.duration,
 				easing: ANIMATION_CONFIG.modalTransition.easing,
 				fill: 'forwards'
 			})
-		}
-
-		const getCurrentInnerModalSize = () => {
-			if (!divRef.current) return
-			const rect = divRef.current.getBoundingClientRect()
-			return [rect.width, rect.height]
 		}
 
 		const getThemeFilter = () => {
@@ -59,28 +48,9 @@ const ModalBox = ({
 			return ANIMATION_CONFIG.modalTransition.initialFilters[theme]
 		}
 
-		const openInitialStyles = (width: number) => ({
-			width: `${width}px`,
-			height: 0,
-			boxShadow: '0 0 0 0 transparent',
-			filter: getThemeFilter()
-		})
-
-		const closeInitialStyles = (width: number) => ({
-			width: `${width}px`,
-			height: 0,
-			borderWidth: 0,
-			borderColor: 'transparent',
-			boxShadow: '0 0 0 0 transparent',
-			filter: getThemeFilter()
-		})
-
 		const finalStyles = () => {
-			const modalSize = getCurrentInnerModalSize() || [0, 0]
-			return {
-				width: `${modalSize[0]}px`,
-				height: `${modalSize[1]}px`
-			}
+			const rect = divRef.current?.getBoundingClientRect()
+			return { width: `${rect?.width ?? 0}px`, height: `${rect?.height ?? 0}px` }
 		}
 
 		const openModal = () => {
@@ -89,7 +59,7 @@ const ModalBox = ({
 			}
 			const fin = finalStyles()
 			const width = parseFloat(fin.width)
-			animateOuterModal(openInitialStyles(width), fin)
+			animateOuterModal({ width: `${width}px`, height: 0, boxShadow: '0 0 0 0 transparent', filter: getThemeFilter() }, fin)
 		}
 
 		const closeModal = (isNested = false) => {
@@ -100,23 +70,21 @@ const ModalBox = ({
 				? ANIMATION_CONFIG.nestedTransition.duration
 				: ANIMATION_CONFIG.modalTransition.duration
 			const fin = finalStyles()
-			const anim = outerModal.animate([fin, closeInitialStyles(parseFloat(fin.width))], {
-				duration,
-				easing: ANIMATION_CONFIG.modalTransition.easing,
-				fill: 'forwards'
-			})
+			const width = parseFloat(fin.width)
+			const anim = outerModal.animate(
+				[fin, { width: `${width}px`, height: 0, filter: getThemeFilter() }],
+				{ duration, easing: ANIMATION_CONFIG.modalTransition.easing, fill: 'forwards' }
+			)
 			anim.onfinish = () => {
 				outerModal.style.visibility = 'hidden'
 			}
 		}
 
-		registerCloseAnimation((isNested?: boolean) => {
-			closeModal(isNested)
-		})
+		registerCloseAnimation((isNested?: boolean) => closeModal(isNested))
 
 		// Double rAF: first frame waits for React's DOM commit,
 		// second frame waits for the browser's layout pass so
-		// getBoundingClientRect() always returns real dimensions.
+		// getBoundingClientRect() returns real dimensions.
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				openModal()
@@ -125,9 +93,7 @@ const ModalBox = ({
 		})
 
 		const resizeObserver = new ResizeObserver(() => {
-			if (opened.current) {
-				animateOuterModal({}, finalStyles())
-			}
+			if (opened.current) animateOuterModal({}, finalStyles())
 		})
 
 		resizeObserver.observe(divRef.current)
@@ -138,14 +104,7 @@ const ModalBox = ({
 		}
 	}, [])
 
-	// generate a unique key that always forces a remount
-	const boxKey = useMemo(
-		() => {
-			if (typeof window === 'undefined') return 'modal-ssr'
-			return `modal-${Date.now()}-${Math.random()}`
-		},
-		[]
-	)
+	const boxKey = useMemo(() => `modal-${Date.now()}-${Math.random()}`, [])
 
 	return (
 		<Box
