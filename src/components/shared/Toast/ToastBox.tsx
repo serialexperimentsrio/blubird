@@ -17,7 +17,7 @@ export default function ToastBox(props: ToastBoxProps) {
 	const [initialDelayPassed, setInitialDelayPassed] = useState(false)
 	const boxRef = useRef<HTMLDivElement>(null)
 	const animationRef = useRef<Animation | null>(null)
-	const shownAtRef = useRef<number>(Date.now())
+	const shownAtRef = useRef<number>(0)
 
 	const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 	const removeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)

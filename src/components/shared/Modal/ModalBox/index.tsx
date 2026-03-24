@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Box } from '../../Box'
 import type React from 'react'
 import { useEffect, useRef } from 'react'
