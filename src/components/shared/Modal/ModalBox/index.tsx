@@ -43,7 +43,7 @@ const ModalBox = ({
 			})
 		}
 
-		const getThemeFilter = () => ANIMATION_CONFIG.modalTransition.initialFilters.dark
+		const getInitialFilter = () => ANIMATION_CONFIG.modalTransition.initialFilter
 
 		const finalStyles = () => {
 			const rect = divRef.current?.getBoundingClientRect()
@@ -56,7 +56,7 @@ const ModalBox = ({
 			}
 			const fin = finalStyles()
 			const width = parseFloat(fin.width)
-			animateOuterModal({ width: `${width}px`, height: 0, boxShadow: '0 0 0 0 transparent', filter: getThemeFilter() }, fin)
+			animateOuterModal({ width: `${width}px`, height: 0, boxShadow: '0 0 0 0 transparent', filter: getInitialFilter() }, fin)
 		}
 
 		const closeModal = (isNested = false) => {
@@ -69,7 +69,7 @@ const ModalBox = ({
 			const fin = finalStyles()
 			const width = parseFloat(fin.width)
 			const anim = outerModal.animate(
-				[fin, { width: `${width}px`, height: 0, filter: getThemeFilter() }],
+				[fin, { width: `${width}px`, height: 0, filter: getInitialFilter() }],
 				{ duration, easing: ANIMATION_CONFIG.modalTransition.easing, fill: 'forwards' }
 			)
 			anim.onfinish = () => {
