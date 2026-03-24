@@ -39,7 +39,7 @@ const clearModalTimeout = () => {
 
 // helper to add a unique key to modal content
 const addKeyToModalContent = (content: React.ReactNode): React.ReactNode => {
-	if (content && typeof content === 'object' && 'type' in content) {
+	if (React.isValidElement(content)) {
 		const uniqueKey = `modal-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
 		return React.cloneElement(content, { key: uniqueKey })
 	}
@@ -183,12 +183,13 @@ const ModalPortal = () => {
 			}
 			previousFocusRef.current = null
 		}
-	})
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [modalActive])
 
 	return (
 		<>
 			<div
-				onClick={() => (onCloseCallback || hideModal)()}
+				onClick={() => { onCloseCallback?.(); hideModal() }}
 				className={`${style.modalBackdrop} ${modalActive ? style.active : ''}`}
 			/>
 			<div

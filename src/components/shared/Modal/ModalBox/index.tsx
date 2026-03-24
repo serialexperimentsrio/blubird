@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box } from '../../Box'
 import type React from 'react'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { isModalTransitioning, registerCloseAnimation } from '../'
 import { ANIMATION_CONFIG } from '../animationConfig'
 import style from './style.module.css'
@@ -43,10 +43,7 @@ const ModalBox = ({
 			})
 		}
 
-		const getThemeFilter = () => {
-			const theme = document.documentElement.classList.contains('light') ? 'light' : 'dark'
-			return ANIMATION_CONFIG.modalTransition.initialFilters[theme]
-		}
+		const getThemeFilter = () => ANIMATION_CONFIG.modalTransition.initialFilters.dark
 
 		const finalStyles = () => {
 			const rect = divRef.current?.getBoundingClientRect()
@@ -111,11 +108,8 @@ const ModalBox = ({
 		}
 	}, [])
 
-	const boxKey = useMemo(() => `modal-${Date.now()}-${Math.random()}`, [])
-
 	return (
 		<Box
-			key={boxKey}
 			image={image}
 			icon={icon}
 			className={`outerModal ${style.outerModal}`}
