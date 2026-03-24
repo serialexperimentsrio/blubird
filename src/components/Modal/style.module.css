@@ -7,7 +7,7 @@
 	background: rgba(0, 0, 0, 0);
 	z-index: var(--z-modal);
 	pointer-events: none;
-	transition: all 1s ease;
+	transition: background 0.25s ease;
 }
 
 .modalBackdrop.active {

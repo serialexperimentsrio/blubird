@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 import WithTooltip from '@/components/Tooltip'
 import Marquee from '@/components/Special/Marquee'
+import styles from './Footer.module.css'
 
 type FooterProps = {
 	language: 'en' | 'ja'
@@ -78,32 +79,32 @@ export default function Footer({ language }: FooterProps) {
 		>
 			<WithTooltip text={language === 'ja' ? 'ここで生まれ' : 'I WAS BORN HERE'} above>
 				<a href="https://en.wikipedia.org/wiki/South_Korea" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/south_korea.png" alt="South Korea" style={HOVER_SCALE_STYLE} className="flag-img" />
+					<img src="/icons/flags/south_korea.png" alt="South Korea" style={HOVER_SCALE_STYLE} className={styles.flagImg} />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'ここに生き' : 'I LIVE HERE'} above>
 				<a href="https://en.wikipedia.org/wiki/Bangladesh" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/bangladesh.png" alt="Bangladesh" style={HOVER_SCALE_STYLE} className="flag-img" />
+					<img src="/icons/flags/bangladesh.png" alt="Bangladesh" style={HOVER_SCALE_STYLE} className={styles.flagImg} />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'ここにいたい' : 'I WANT TO BE HERE'} above>
 				<a href="https://en.wikipedia.org/wiki/Japan" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/japan.png" alt="Japan" style={HOVER_SCALE_STYLE} className="flag-img" />
+					<img src="/icons/flags/japan.png" alt="Japan" style={HOVER_SCALE_STYLE} className={styles.flagImg} />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'パレスチナを解放せよ' : 'FREE PALESTINE'} above>
 				<a href="https://en.wikipedia.org/wiki/Palestine" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/palestine.png" alt="Palestine" style={HOVER_SCALE_STYLE} className="flag-img" />
+					<img src="/icons/flags/palestine.png" alt="Palestine" style={HOVER_SCALE_STYLE} className={styles.flagImg} />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? 'スーダンに目を向けよう' : 'EYES ON SUDAN'} above>
 				<a href="https://en.wikipedia.org/wiki/Sudan" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/sudan.png" alt="Sudan" style={HOVER_SCALE_STYLE} className="flag-img" />
+					<img src="/icons/flags/sudan.png" alt="Sudan" style={HOVER_SCALE_STYLE} className={styles.flagImg} />
 				</a>
 			</WithTooltip>
 			<WithTooltip text={language === 'ja' ? '✌' : '✌'} above>
 				<a href="https://en.wikipedia.org/wiki/Give_Peace_a_Chance" target="_blank" rel="noopener noreferrer">
-					<img src="/icons/flags/peace_blue.png" alt="Peace" style={HOVER_SCALE_STYLE} className="flag-img" />
+					<img src="/icons/flags/peace_blue.png" alt="Peace" style={HOVER_SCALE_STYLE} className={styles.flagImg} />
 				</a>
 			</WithTooltip>
 		</div>
@@ -118,7 +119,7 @@ export default function Footer({ language }: FooterProps) {
 	const tipsBlock = (
 		<div style={{ position: isSmall ? 'relative' : 'absolute', right: isSmall ? 0 : 'clamp(1rem, 5vw, 4rem)', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translateY(-50%)', display: 'flex', alignItems: 'center', justifyContent: isSmall ? 'center' : 'flex-end', gap: '0', overflow: 'visible' }}>
 			<div style={{ display: 'flex', flexDirection: isNarrow ? 'column' : 'row', alignItems: 'center', gap: isNarrow ? '8px' : '16px', position: 'relative' }}>
-				<div className="tip-me" style={{ alignSelf: isNarrow ? 'center' : 'auto' }}>
+				<div className={styles.tipMe} style={{ alignSelf: isNarrow ? 'center' : 'auto' }}>
 					<span>{language === 'ja' ? 'チップ' : 'TIPS'}</span>
 					<span>{language === 'ja' ? 'お願い!' : 'PLEASE!'}</span>
 				</div>
@@ -129,7 +130,7 @@ export default function Footer({ language }: FooterProps) {
 							<div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--color-accent)' }} />
 							<div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', backgroundColor: 'var(--color-accent)' }} />
 							<div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', backgroundColor: 'var(--color-accent)' }} />
-							<span className={isFadingQR ? 'qr-fade-out' : 'qr-fade-in'}>{QR_CODES[currentQRIndex].coin}</span>
+							<span className={isFadingQR ? styles.qrFadeOut : styles.qrFadeIn}>{QR_CODES[currentQRIndex].coin}</span>
 						</div>
 					</WithTooltip>
 					<WithTooltip text={tooltipText || (language === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS')} above forceShow={copied}>
@@ -143,55 +144,7 @@ export default function Footer({ language }: FooterProps) {
 	)
 
 	return (
-		<>
-			<style>{`
-				@keyframes qrFadeOut {
-					from { opacity: 1; }
-					to { opacity: 0; }
-				}
-				@keyframes qrFadeIn {
-					from { opacity: 0; }
-					to { opacity: 1; }
-				}
-				.qr-fade-out {
-					animation: qrFadeOut 0.2s ease-in-out forwards;
-				}
-				.qr-fade-in {
-					animation: qrFadeIn 0.2s ease-in-out forwards;
-				}
-				@keyframes pulse {
-					0%, 100% {
-						opacity: 0.4;
-					}
-					50% {
-						opacity: 1;
-					}
-				}
-				.tip-me {
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					font-family: var(--font-maru-monica);
-					font-size: 1.2rem;
-					color: var(--color-bright);
-					background-color: var(--color-main);
-					padding: 8px;
-					border: none;
-					animation: pulse 1.5s ease-in-out infinite;
-					gap: 4px;
-				}
-				.tip-me span {
-					writing-mode: horizontal-tb;
-					text-orientation: mixed;
-				}
-				.flag-img {
-					transition: transform 0.2s ease;
-				}
-				.flag-img:hover {
-					transform: scale(1.2);
-				}
-			`}</style>
-			<div
+		<div
 				style={{
 					width: '100%',
 					background: 'var(--color-main)',
@@ -231,6 +184,5 @@ export default function Footer({ language }: FooterProps) {
 				</>
 			)}
 		</div>
-		</>
 	)
 }

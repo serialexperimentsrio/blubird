@@ -11,6 +11,9 @@ type Props = {
   initialContent?: string | null
 }
 
+const MD_LINK_RE = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/
+const URL_RE = /(https?:\/\/[^\s]+)/
+
 export default function ReadingPanel({ files, lang, initialSelected, initialContent }: Props) {
   const [selected, setSelected] = useState<string | null>(initialSelected ?? null)
   const [content, setContent] = useState<string>(initialContent ?? '')
@@ -31,8 +34,8 @@ export default function ReadingPanel({ files, lang, initialSelected, initialCont
   function renderWithLinks(text: string) {
     const nodes: React.ReactNode[] = []
     let idx = 0
-    const mdLink = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g
-    const urlRe = /(https?:\/\/[^\s]+)/g
+    const mdLink = new RegExp(MD_LINK_RE.source, 'g')
+    const urlRe = new RegExp(URL_RE.source, 'g')
 
     while (idx < text.length) {
       mdLink.lastIndex = idx
