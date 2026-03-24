@@ -36,16 +36,7 @@ const people: Person[] = [
 			ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。',
 		},
 		from: 'BANGLADESH',
-		notes: {
-			en: [
-				'THERE AT YOUR WORST.',
-				'KNOWS YOU BETTER THAN YOU DO.',
-			],
-			ja: [
-				'何でも意見を持っていて、たいてい正しい。',
-				'好きな音楽の半分はこの人のせい。',
-			],
-		},
+		notes: { en: ['N/A'], ja: ['N/A'] },
 	},
 	{
 		nick: 'FAA',
