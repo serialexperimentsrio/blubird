@@ -10,11 +10,14 @@ export interface ToastBoxProps {
 	onRemove?: (id: string) => void
 }
 
+const DISPLAY_DURATION = 5000
+
 export default function ToastBox(props: ToastBoxProps) {
 	const [isAnimationComplete, setIsAnimationComplete] = useState(false)
 	const [initialDelayPassed, setInitialDelayPassed] = useState(false)
 	const boxRef = useRef<HTMLDivElement>(null)
 	const animationRef = useRef<Animation | null>(null)
+	const shownAtRef = useRef<number>(Date.now())
 
 	const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 	const removeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -56,11 +59,12 @@ export default function ToastBox(props: ToastBoxProps) {
 	}, [props])
 
 	useEffect(() => {
+		shownAtRef.current = Date.now()
 		// set initial timeout to start the closing animation
 		closeTimeoutRef.current = setTimeout(() => {
 			setInitialDelayPassed(true)
 			fadeOut()
-		}, 5000)
+		}, DISPLAY_DURATION)
 
 		return () => {
 			if (closeTimeoutRef.current) {
@@ -96,11 +100,13 @@ export default function ToastBox(props: ToastBoxProps) {
 		if (initialDelayPassed) {
 			fadeOut()
 		} else {
-			// if initial delay hasn't passed yet, restart the timeout
+			// resume from remaining time, not a full reset
+			const elapsed = Date.now() - shownAtRef.current
+			const remaining = Math.max(0, DISPLAY_DURATION - elapsed)
 			closeTimeoutRef.current = setTimeout(() => {
 				setInitialDelayPassed(true)
 				fadeOut()
-			}, 5000)
+			}, remaining)
 		}
 	}
 

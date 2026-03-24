@@ -366,129 +366,54 @@ export default function Header({
 						pointerEvents: 'auto',
 					}}
 				>
-				<button
-					data-nav-item="diary"
-					onClick={() => handleNavClick('/diary')}
-					style={{
-						width: '120px',
-						cursor: 'pointer',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						minHeight: '1.4rem',
-						position: 'relative',
-						background: 'none',
-						border: 'none',
-						padding: 0,
-						color: 'inherit',
-						font: 'inherit',
-						textDecoration: currentPage === '/diary' ? 'underline' : 'none',
-						textUnderlineOffset: '0.3em',
-					}}
-					onMouseEnter={() => handleNavHover('diary')}
-					onMouseLeave={handleNavLeave}
-				>
-					<div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
-						<span
-							className="nav-arrow"
-							style={{
-								opacity: hoveredNav === 'diary' && isAnimating ? 1 : 0,
-								position: 'absolute',
-								right: 'calc(100% + 0.5rem)',
-								zIndex: 1,
-							}}
-						>
-							▸
-						</span>
-						<div className={isFadingOut ? 'language-fade-out' : ''}>
-							<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
-								<span>{language === 'ja' ? '日記' : 'DIARY'}</span>
-							</AnimatedContent>
+				{([
+					{ key: 'diary',    path: '/diary',    en: 'DIARY',    ja: '日記' },
+					{ key: 'memories', path: '/memories', en: 'MEMORIES', ja: '思い出' },
+					{ key: 'school',   path: '/school',   en: 'SCHOOL',   ja: '学校' },
+				] as const).map(({ key, path, en, ja }) => (
+					<button
+						key={key}
+						data-nav-item={key}
+						onClick={() => handleNavClick(path)}
+						style={{
+							width: '120px',
+							cursor: 'pointer',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							minHeight: '1.4rem',
+							position: 'relative',
+							background: 'none',
+							border: 'none',
+							padding: 0,
+							color: 'inherit',
+							font: 'inherit',
+							textDecoration: currentPage === path ? 'underline' : 'none',
+							textUnderlineOffset: '0.3em',
+						}}
+						onMouseEnter={() => handleNavHover(key)}
+						onMouseLeave={handleNavLeave}
+					>
+						<div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+							<span
+								className="nav-arrow"
+								style={{
+									opacity: hoveredNav === key && isAnimating ? 1 : 0,
+									position: 'absolute',
+									right: 'calc(100% + 0.5rem)',
+									zIndex: 1,
+								}}
+							>
+								▸
+							</span>
+							<div className={isFadingOut ? 'language-fade-out' : ''}>
+								<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
+									<span>{language === 'ja' ? ja : en}</span>
+								</AnimatedContent>
+							</div>
 						</div>
-					</div>
-				</button>
-				<button
-					data-nav-item="memories"
-					onClick={() => handleNavClick('/memories')}
-					style={{
-						width: '120px',
-						cursor: 'pointer',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						minHeight: '1.4rem',
-						position: 'relative',
-						background: 'none',
-						border: 'none',
-						padding: 0,
-						color: 'inherit',
-						font: 'inherit',
-						textDecoration: currentPage === '/memories' ? 'underline' : 'none',
-						textUnderlineOffset: '0.3em',
-					}}
-					onMouseEnter={() => handleNavHover('memories')}
-					onMouseLeave={handleNavLeave}
-				>
-					<div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
-						<span
-							className="nav-arrow"
-							style={{
-								opacity: hoveredNav === 'memories' && isAnimating ? 1 : 0,
-								position: 'absolute',
-								right: 'calc(100% + 0.5rem)',
-								zIndex: 1,
-							}}
-						>
-							▸
-						</span>
-						<div className={isFadingOut ? 'language-fade-out' : ''}>
-							<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
-								<span>{language === 'ja' ? '思い出' : 'MEMORIES'}</span>
-							</AnimatedContent>
-						</div>
-					</div>
-				</button>
-				<button
-					data-nav-item="school"
-					onClick={() => handleNavClick('/school')}
-					style={{
-						width: '120px',
-						cursor: 'pointer',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						minHeight: '1.4rem',
-						position: 'relative',
-						background: 'none',
-						border: 'none',
-						padding: 0,
-						color: 'inherit',
-						font: 'inherit',
-						textDecoration: currentPage === '/school' ? 'underline' : 'none',
-						textUnderlineOffset: '0.3em',
-					}}
-					onMouseEnter={() => handleNavHover('school')}
-					onMouseLeave={handleNavLeave}
-				>
-					<div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
-						<span
-							className="nav-arrow"
-							style={{
-								opacity: hoveredNav === 'school' && isAnimating ? 1 : 0,
-								position: 'absolute',
-								right: 'calc(100% + 0.5rem)',
-								zIndex: 1,
-							}}
-						>
-							▸
-						</span>
-						<div className={isFadingOut ? 'language-fade-out' : ''}>
-							<AnimatedContent isVisible={isAnimating} useScrollTrigger={false} duration={0.4} distance={30} ease="cubic-bezier(0.16, 1, 0.3, 1)" initialOpacity={0} animateOpacity={true} reverse={true}>
-								<span>{language === 'ja' ? '学校' : 'SCHOOL'}</span>
-							</AnimatedContent>
-						</div>
-					</div>
-				</button>
+					</button>
+				))}
 				</div>
 			</div>
 			)}
