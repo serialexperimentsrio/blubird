@@ -279,6 +279,7 @@ export default function PageFrame({ params, children }: PageFrameProps) {
 							opacity: isFadingOut ? 0 : (isArrowVisible ? 1 : 0),
 							transition: 'transform 0.6s ease-in-out, opacity 0.3s ease-in-out',
 							cursor: 'pointer',
+							userSelect: 'none',
 						}}
 					>
 						<span className="footer-arrow">▾</span>

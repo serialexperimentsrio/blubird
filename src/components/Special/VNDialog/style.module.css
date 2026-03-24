@@ -21,6 +21,7 @@
   position: relative;
   cursor: pointer;
   min-height: 120px;
+  user-select: none;
 }
 
 .text {
@@ -54,6 +55,7 @@
   opacity: 0;
   transition: opacity var(--transition-base);
   display: inline-block;
+  user-select: none;
 }
 
 .continueIndicator.visible {
