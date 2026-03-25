@@ -19,24 +19,24 @@ const people: Person[] = [
 		isMe: true,
 		roles: ['SELF'],
 		memoir: {
-			en: 'THE ONE MAINTAINING THIS PLACE. A COLLECTOR OF THINGS. MIGHT BE AUTISTIC.',
-			ja: 'この場所を管理している人。物事、人、瞬間を集める人。',
+			en: 'MAINTAINER OF THIS SPACE.',
+			ja: 'この場所の管理者。',
 		},
 		from: ['SOUTH KOREA', 'BANGLADESH'],
 		notes: {
-			en: ['LOOKING FOR A JOB THAT PAYS.'],
-			ja: ['このサイト全体が、ひとつの記憶みたいなもの。'],
+			en: ['FOR HIRE.', 'RAADS-R SCORE: 186.'],
+			ja: ['雇われ可能。', 'RAADS-Rスコア: 186。'],
 		},
 	},
 	{
 		nick: 'MISU',
 		roles: ['SIBLING', 'COMRADE'],
 		memoir: {
-			en: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR.',
-			ja: '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。',
+			en: 'REALEST FROM DAY ONE.',
+			ja: '最初から一番ガチ。',
 		},
 		from: 'BANGLADESH',
-		notes: { en: ['N/A'], ja: ['N/A'] },
+		notes: { en: ['MOST TRUSTED'], ja: ['最も信頼されている'] },
 	},
 	{
 		nick: 'FAA',
