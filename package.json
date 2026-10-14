@@ -21,6 +21,7 @@
     "three": "^0.181.0"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "1.13.16",
     "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^20",
     "@types/react": "^19",
