@@ -32,7 +32,6 @@
 }
 
 .card:hover .cardInner,
-.card:focus-within .cardInner,
 .card:focus-visible .cardInner {
 	transform: rotateY(180deg);
 }
@@ -99,7 +98,6 @@
 /* Touch screens: no flip, show the description on the front */
 @media (hover: none) {
 	.card:hover .cardInner,
-	.card:focus-within .cardInner,
 	.card:focus-visible .cardInner {
 		transform: none;
 	}
@@ -165,13 +163,11 @@
 	}
 
 	.card:hover .cardFront,
-	.card:focus-within .cardFront,
 	.card:focus-visible .cardFront {
 		opacity: 0;
 	}
 
 	.card:hover .cardBack,
-	.card:focus-within .cardBack,
 	.card:focus-visible .cardBack {
 		opacity: 1;
 	}
