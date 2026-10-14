@@ -32,7 +32,12 @@
   --z-dialog: 5;
   --z-box-content: 100;
   --z-modal: 9999;
-  --z-toast: 999999999;
+  --z-tooltip: 99999;
+  --z-toast: 999999;
+
+  /* Semantic colors */
+  --color-danger: rgba(255, 133, 133, 0.16);
+  --color-backdrop: rgba(0, 0, 0, 0.3);
 
   /* Layout */
   --header-height: 84px;
@@ -49,6 +54,87 @@ body {
   margin: 0;
   padding: 0;
   background: var(--color-main);
+}
+
+/* Page frame: scrolls the page and footer under the fixed header */
+.scrollable-container {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  /* dvh: excludes mobile browser toolbars, which 100vh hides content behind */
+  height: calc(100dvh - var(--header-height));
+  overflow-x: clip;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  pointer-events: auto;
+  /* Hide scrollbar while keeping scroll functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  display: none;
+}
+
+.page-content {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100dvh - var(--header-height));
+  padding-inline: clamp(1rem, 5vw, 4rem);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  pointer-events: auto;
+}
+
+/* `backwards` so inline opacity takes over again once the fade-in ends */
+.page-fade-in {
+  animation: fadeIn 0.3s ease-in-out 0.05s backwards;
+}
+
+.language-fade-out {
+  animation: fadeOut 0.2s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.footer-arrow {
+  animation: footerBounce 0.6s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes footerBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Header text slides down into place on mount */
+.nav-slide-in {
+  display: block;
+  animation: navSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+}
+
+@keyframes navSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
 }
 
 /* Navigation Arrow Animation */
@@ -72,8 +158,23 @@ body {
   user-select: none;
 }
 
+/* Text is repeated 6 times, so shifting by 1/6 loops seamlessly */
+.marquee-text {
+  display: inline-block;
+  animation: marquee 50s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee {
+  to { transform: translateX(calc(-100% / 6)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .nav-arrow {
+  .nav-arrow,
+  .footer-arrow,
+  .marquee-text,
+  .nav-slide-in,
+  .page-fade-in {
     animation: none;
   }
 }

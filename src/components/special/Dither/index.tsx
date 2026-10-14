@@ -323,7 +323,8 @@ export default function Dither({
   waveColor = [0.5, 0.5, 0.5],
   colorNum = 4,
   pixelSize = 2,
-  disableAnimation = false,
+  // Client-only component (loaded with ssr: false), so window exists here
+  disableAnimation = window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   enableMouseInteraction = true,
   mouseRadius = 1
 }: DitherProps) {
@@ -333,7 +334,7 @@ export default function Dither({
         className="w-full h-full relative"
         camera={{ position: [0, 0, 6] }}
         dpr={1}
-        gl={{ antialias: true, preserveDrawingBuffer: true, alpha: true, failIfMajorPerformanceCaveat: false }}
+        gl={{ antialias: false, alpha: true, failIfMajorPerformanceCaveat: false }}
         style={{ background: 'transparent', pointerEvents: 'auto' }}
       >
       <DitheredWaves

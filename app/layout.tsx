@@ -1,8 +1,11 @@
+import 'ricebag/styles.css'
 import './globals.css'
-import { metadata } from './metadata'
+import type { Metadata } from 'next'
 import DitherBackground from '@/components/special/Dither/Background'
 
-export { metadata }
+export const metadata: Metadata = {
+  title: "理央の世界〜! • RIO'S WORLD!",
+}
 
 export default function RootLayout({
   children,

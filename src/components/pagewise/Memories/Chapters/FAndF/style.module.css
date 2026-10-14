@@ -12,7 +12,8 @@
 .roster {
 	overflow: hidden;
 	width: 100%;
-	height: clamp(200px, calc(100dvh - 84px - 2rem), 640px);
+	/* Fixed height on purpose: empty space shows there's room for more rows */
+	height: clamp(200px, calc(100dvh - var(--header-height) - 2rem), 640px);
 	background: rgba(255, 255, 255, 0.67);
 	border: var(--border-width) solid var(--color-accent);
 	box-shadow: var(--shadow-panel);
@@ -37,6 +38,7 @@
 /* ── Scrollable list ── */
 .rosterInner {
 	flex: 1;
+	min-height: 0;
 	width: 100%;
 	overflow-y: auto;
 	padding: 0;
@@ -94,11 +96,6 @@
 .listRow:focus-visible {
 	outline: 2px solid var(--color-main);
 	outline-offset: -2px;
-}
-
-/* Me row — same style as others, no special color treatment */
-.listRowMe {
-	border-bottom: 1px solid rgba(0, 33, 245, 0.15);
 }
 
 /* ── Avatar ── */
@@ -207,6 +204,18 @@
 	text-align: left;
 }
 
+.modalTitleRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.modalFlags {
+	display: flex;
+	gap: 6px;
+}
+
 .modalRoles {
 	display: flex;
 	flex-wrap: wrap;
@@ -256,12 +265,14 @@
 	}
 
 	.listMemoir,
-	.listFrom {
+	.listFrom,
+	.wideOnly {
 		display: none;
 	}
 
+	/* ricebag's ModalBox caps content at 100vw - 50px, minus its 20px padding per side */
 	.modal {
 		min-width: unset;
-		width: min(90vw, 420px);
+		width: min(420px, calc(100vw - 90px));
 	}
 }

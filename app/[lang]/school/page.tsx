@@ -1,45 +1,25 @@
-'use client'
+import type { Lang } from '@/lib/lang'
 
 export const runtime = 'edge'
 
-import { useState, useEffect } from 'react'
-import PageFrame from '@/components/shared/Layout/PageFrame'
-
 type Props = {
-	params: Promise<{ lang: 'en' | 'ja' }>
+	params: Promise<{ lang: Lang }>
 }
 
-export default function SchoolPage({ params }: Props) {
-	const [isVisible, setIsVisible] = useState(false)
-	const [lang, setLang] = useState<'en' | 'ja' | null>(null)
-
-	useEffect(() => {
-		params.then((resolvedParams) => {
-			setLang(resolvedParams.lang)
-		})
-		const timer = setTimeout(() => setIsVisible(true), 50)
-		return () => clearTimeout(timer)
-	}, [params])
-
-	const comingSoonText = lang === 'ja' ? '[近日公開]' : '[COMING SOON]'
+export default async function SchoolPage({ params }: Props) {
+	const { lang } = await params
 
 	return (
-		<PageFrame params={params}>
-			{(isFadingOut) => (
-				<div
-					style={{
-						color: 'var(--color-bright)',
-						fontFamily: 'var(--font-maru-monica)',
-						textAlign: 'center',
-						opacity: isFadingOut ? 0 : (isVisible ? 1 : 0),
-						transition: 'opacity 0.3s ease-in-out',
-					}}
-				>
-					<p style={{ fontSize: '1.5rem' }}>
-						{comingSoonText}
-					</p>
-				</div>
-			)}
-		</PageFrame>
+		<div
+			style={{
+				color: 'var(--color-bright)',
+				fontFamily: 'var(--font-maru-monica)',
+				textAlign: 'center',
+			}}
+		>
+			<p style={{ fontSize: '1.5rem' }}>
+				{lang === 'ja' ? '[近日公開]' : '[COMING SOON]'}
+			</p>
+		</div>
 	)
 }

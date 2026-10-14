@@ -3,21 +3,22 @@
 import React, { useEffect, useState, useRef } from 'react'
 import styles from './style.module.css'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
+import type { Lang } from '@/lib/lang'
 
 type Props = {
-  entries: string[] | null
-  lang: string
-  initialEntry?: string | null
-  initialContent?: string | null
+  lang: Lang
 }
 
 const MD_LINK_RE = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/
-const URL_RE = /(https?:\/\/[^\s]+)/
+// Trailing punctuation ("see https://x.com.") is not part of the link
+const URL_RE = /(https?:\/\/[^\s]*[^\s.,;:!?)\]'"])/
 
-export default function Diary({ entries, lang, initialEntry, initialContent }: Props) {
-  const [selectedEntry, setSelectedEntry] = useState<string | null>(initialEntry ?? null)
-  const [content, setContent] = useState<string>(initialContent ?? '')
-  const [contentReady, setContentReady] = useState<boolean>(initialContent ? true : false)
+export default function Diary({ lang }: Props) {
+  // Newest first; null while the manifest is loading
+  const [entries, setEntries] = useState<string[] | null>(null)
+  const [selectedEntry, setSelectedEntry] = useState<string | null>(null)
+  const [content, setContent] = useState<string>('')
+  const [contentReady, setContentReady] = useState<boolean>(false)
   const [visible, setVisible] = useState<boolean>(false)
   const FADE_MS = 200
   const prevSelected = useRef<string | null>(null)
@@ -27,8 +28,25 @@ export default function Diary({ entries, lang, initialEntry, initialContent }: P
   // `selectedEntry` drives which file we fetch. `visualEntry` controls which tab
   // shows the active styling so we can delay the visual change until after
   // the synchronized transition completes.
-  const [visualEntry, setVisualEntry] = useState<string | null>(initialEntry ?? null)
-  const [initialized, setInitialized] = useState<boolean>(initialEntry ? true : false)
+  const [visualEntry, setVisualEntry] = useState<string | null>(null)
+  const [initialized, setInitialized] = useState<boolean>(false)
+
+  // Manifests are generated at build time by scripts/generate-diary-manifests.js
+  useEffect(() => {
+    let cancelled = false
+    fetch(`/diary/${lang}/manifest.json`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`manifest ${r.status}`))))
+      .then((data) => {
+        if (!cancelled) setEntries(Array.isArray(data.files) ? data.files.slice().sort().reverse() : [])
+      })
+      .catch((err) => {
+        console.error('Diary manifest fetch failed:', err)
+        if (!cancelled) setEntries([])
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [lang])
 
   // Parse text and convert Markdown links [text](url) and plain URLs into React nodes.
   function renderWithLinks(text: string) {
@@ -102,14 +120,15 @@ export default function Diary({ entries, lang, initialEntry, initialContent }: P
   const isLoading = entries === null
   const displayEntries = (entries || []).filter((entry) => !entry.startsWith('.'))
 
-  const { isSmall } = useBreakpoint(500, 1270)
+  const { isSmall } = useBreakpoint()
 
   // Touch swipe handling for mobile: detect horizontal swipes on the panel
   const touchStartX = useRef<number | null>(null)
   const touchEndX = useRef<number | null>(null)
   const SWIPE_THRESHOLD = 50
 
-  const selectPrev = () => {
+  // Entries are sorted newest first, so older = higher index
+  const selectOlder = () => {
     if (!selectedEntry) return
     const i = displayEntries.indexOf(selectedEntry)
     if (i < displayEntries.length - 1) {
@@ -118,7 +137,7 @@ export default function Diary({ entries, lang, initialEntry, initialContent }: P
     }
   }
 
-  const selectNext = () => {
+  const selectNewer = () => {
     if (!selectedEntry) return
     const i = displayEntries.indexOf(selectedEntry)
     if (i > 0) {
@@ -218,7 +237,7 @@ export default function Diary({ entries, lang, initialEntry, initialContent }: P
           // If entries are still loading, don't show the empty placeholder —
           // wait until the parent has finished fetching to avoid a flash.
           isLoading ? null : (
-            <div className={styles.empty}>No entries found</div>
+            <div className={styles.empty}>{lang === 'ja' ? '日記はまだありません' : 'NO ENTRIES FOUND'}</div>
           )
         ) : (
           displayEntries.map((entry) => {
@@ -235,7 +254,8 @@ export default function Diary({ entries, lang, initialEntry, initialContent }: P
                 setVisualEntry(entry)
                 requestAnimationFrame(() => setSelectedEntry(entry))
               }}
-              aria-label={`Open ${label}`}
+              aria-label={lang === 'ja' ? `${label}を開く` : `Open ${label}`}
+              aria-pressed={visualEntry === entry}
             >
               {label}
             </button>
@@ -260,9 +280,9 @@ export default function Diary({ entries, lang, initialEntry, initialContent }: P
           if (touchStartX.current === null || touchEndX.current === null) return
           const dx = touchEndX.current - touchStartX.current
           if (dx > SWIPE_THRESHOLD) {
-            selectPrev()
+            selectOlder()
           } else if (dx < -SWIPE_THRESHOLD) {
-            selectNext()
+            selectNewer()
           }
           touchStartX.current = null
           touchEndX.current = null
@@ -274,12 +294,12 @@ export default function Diary({ entries, lang, initialEntry, initialContent }: P
               {renderWithLinks(content)}
             </div>
           ) : selectedEntry && !contentReady ? (
-            <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>LOADING...</div>
+            <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>{lang === 'ja' ? '読み込み中...' : 'LOADING...'}</div>
           ) : (
             // Don't show the placeholder until we've initialized (i.e. assigned the first entry).
             // This avoids a brief flash of "Select an entry to view" while the first entry is being selected.
             initialized ? (
-              <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>Select an entry to view</div>
+              <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>{lang === 'ja' ? '日記を選んでください' : 'SELECT AN ENTRY TO VIEW'}</div>
             ) : null
           )}
         </div>

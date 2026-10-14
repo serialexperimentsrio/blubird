@@ -1,15 +1,10 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import type { Lang } from '@/lib/lang'
 import styles from './style.module.css'
 
-interface VNDialogProps {
-  language: 'en' | 'ja'
-  isFadingOut: boolean
-  onComplete?: () => void
-}
-
-const dialogStrings = {
+const dialogStrings: Record<Lang, string[]> = {
   en: [
     "I THOUGHT ABOUT<pause> WHAT TO SAY HERE.",
     ".<pause>.<pause>.",
@@ -28,8 +23,14 @@ const dialogStrings = {
   ]
 }
 
-export default function VNDialog({ language, isFadingOut: parentFadingOut, onComplete }: VNDialogProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+// Module state survives client-side navigation and language toggles, and
+// resets on a full page load, so the dialog plays once per visit and resumes
+// where it left off when the user comes back to it.
+const progress = { started: false, seen: false, index: 0 }
+
+export default function VNDialog({ lang }: { lang: Lang }) {
+  const lines = dialogStrings[lang]
+  const [currentIndex, setCurrentIndex] = useState(progress.index)
   const [isTyping, setIsTyping] = useState(false)
   const [displayedText, setDisplayedText] = useState('')
   const [isMounted, setIsMounted] = useState(false)
@@ -40,91 +41,45 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
   // Use refs for click debouncing to avoid state updates
   const isClickableRef = useRef(true)
   const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
-  const currentLanguageRef = useRef(language)
 
-  // Initial delay before showing dialog
+  // Show after a delay on first view, immediately when resuming
   useEffect(() => {
-    const hasSeenDialog = sessionStorage.getItem('vn-dialog-seen')
-    if (hasSeenDialog === 'true') {
-      return
-    }
+    if (progress.seen) return
 
-    // Update language ref to current language
-    currentLanguageRef.current = language
-
-    // Check if we're resuming from a language toggle
-    const isLanguageToggle = sessionStorage.getItem('language-toggling')
-    const savedState = sessionStorage.getItem('vn-dialog-state')
-
-    if (isLanguageToggle && savedState) {
-      // Restore state from before language toggle
-      let state: { currentIndex: number; isTyping: boolean; showContinueIndicator: boolean } | null = null
-      try { state = JSON.parse(savedState) } catch { /* ignore corrupted state, fall through to normal mount */ }
-      if (state) {
-        setCurrentIndex(state.currentIndex)
-        setIsTyping(state.isTyping)
-        setShowContinueIndicator(state.showContinueIndicator)
-
-        // Show immediately, no delay
-        setIsMounted(true)
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            setIsVisible(true)
-          }, 10)
-        })
-        return
-      }
-    }
-
-    // Normal initial mount with delay
     const mountTimer = setTimeout(() => {
+      progress.started = true
       setIsMounted(true)
       // Small delay to allow DOM to render before triggering fade
       requestAnimationFrame(() => {
-        setTimeout(() => {
-          setIsVisible(true)
-        }, 10)
+        setTimeout(() => setIsVisible(true), 10)
       })
-    }, 1500)
+    }, progress.started ? 0 : 1500)
 
     return () => clearTimeout(mountTimer)
-  }, [language])
+  }, [])
 
-  // Save state when language changes (before unmount due to navigation)
   useEffect(() => {
-    if (!isVisible) return
-
-    // Save current state for restoration after language toggle navigation
-    const state = {
-      currentIndex,
-      isTyping,
-      showContinueIndicator
-    }
-    sessionStorage.setItem('vn-dialog-state', JSON.stringify(state))
-  }, [currentIndex, isTyping, showContinueIndicator, isVisible])
+    progress.index = currentIndex
+  }, [currentIndex])
 
   // Typewriter effect + pause support
   useEffect(() => {
-    if (!isVisible || currentIndex >= dialogStrings[currentLanguageRef.current].length || shouldStopTyping) return
+    if (!isVisible || currentIndex >= lines.length || shouldStopTyping) return
 
-    const fullText = dialogStrings[currentLanguageRef.current][currentIndex]
+    const fullText = lines[currentIndex]
     const textWithoutPauses = fullText.replace(/<pause>/g, '')
 
     // Respect reduced-motion preference: reveal text instantly
-    const prefersReducedMotion = typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setIsTyping(false)
       setShowContinueIndicator(true)
       setDisplayedText(textWithoutPauses)
-      setShouldStopTyping(false)
       return
     }
 
     setIsTyping(true)
     setShowContinueIndicator(false)
     setDisplayedText('')
-    setShouldStopTyping(false)
 
     let timeoutId: NodeJS.Timeout
     let sourcePosition = 0 // Position in original text with <pause> markers
@@ -161,15 +116,13 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
       isCancelled = true
       if (timeoutId) clearTimeout(timeoutId)
     }
-  }, [currentIndex, isVisible, shouldStopTyping])
+  }, [lines, currentIndex, isVisible, shouldStopTyping])
 
   const handleComplete = useCallback(() => {
-    sessionStorage.setItem('vn-dialog-seen', 'true')
+    progress.seen = true
     setIsVisible(false)
-    setTimeout(() => {
-      onComplete?.()
-    }, 600)
-  }, [onComplete])
+    setTimeout(() => setIsMounted(false), 600)
+  }, [])
 
   const handleClick = useCallback(() => {
     if (!isClickableRef.current) return
@@ -182,12 +135,11 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
 
     if (isTyping) {
       // Complete current text instantly by removing pause markers
-      const fullText = dialogStrings[currentLanguageRef.current][currentIndex].replace(/<pause>/g, '')
       setShouldStopTyping(true)
-      setDisplayedText(fullText)
+      setDisplayedText(lines[currentIndex].replace(/<pause>/g, ''))
       setIsTyping(false)
       setShowContinueIndicator(true)
-    } else if (currentIndex < dialogStrings[currentLanguageRef.current].length - 1) {
+    } else if (currentIndex < lines.length - 1) {
       // Advance to next dialog
       setShouldStopTyping(false)
       setCurrentIndex(prev => prev + 1)
@@ -195,25 +147,15 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
       // Final dialog completed, exit
       handleComplete()
     }
-  }, [isTyping, currentIndex, handleComplete])
+  }, [lines, isTyping, currentIndex, handleComplete])
 
-  const handleDismiss = useCallback(() => {
-    handleComplete()
-  }, [handleComplete])
-
-  // Document-level click: advance dialog when clicking content area, ignore header/footer
+  // Document-level click: advance dialog when clicking the content area.
+  // Clicks on the header, footer and any link or button keep their own behavior.
   useEffect(() => {
     if (!isVisible) return
 
     const handleDocClick = (e: MouseEvent) => {
-      const target = e.target as Element
-      if (
-        target.closest('[data-nav-item]') ||
-        target.closest('[data-nav-desktop]') ||
-        target.closest('[data-nav-hamburger]') ||
-        target.closest('[data-mobile-menu]') ||
-        target.closest('[data-footer]')
-      ) return
+      if ((e.target as Element).closest('header, footer, a, button')) return
       handleClick()
     }
 
@@ -223,44 +165,36 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
 
   // Keyboard support
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (!isVisible) return
+    if (!isVisible) return
 
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        handleComplete()
+        return
+      }
+      // Leave Enter/Space alone while a control has focus
+      if ((e.target as Element).closest('a, button, input, textarea, select, [contenteditable]')) return
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
         handleClick()
-      }
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        handleDismiss()
       }
     }
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [isVisible, handleClick, handleDismiss])
-
-  // Memoize className to avoid string concatenation on every render
-  const containerClassName = useMemo(
-    () => `${styles.container} ${isVisible ? styles.visible : ''}`,
-    [isVisible]
-  )
-
-  const continueClassName = useMemo(
-    () => `${styles.continueIndicator} ${showContinueIndicator ? styles.visible : ''}`,
-    [showContinueIndicator]
-  )
+  }, [isVisible, handleClick, handleComplete])
 
   if (!isMounted) {
     return null
   }
 
   return (
-    <div className={`${containerClassName} ${parentFadingOut ? 'language-fade-out' : ''}`}>
+    <div className={`${styles.container} ${isVisible ? styles.visible : ''}`}>
       <button
         className={styles.dismissButton}
-        aria-label="Dismiss dialog"
-        onClick={handleDismiss}
+        aria-label={lang === 'ja' ? 'ダイアログを閉じる' : 'Dismiss dialog'}
+        onClick={handleComplete}
       >
         ESC
       </button>
@@ -269,7 +203,7 @@ export default function VNDialog({ language, isFadingOut: parentFadingOut, onCom
           {displayedText}
         </div>
 
-        <div className={continueClassName}>
+        <div className={`${styles.continueIndicator} ${showContinueIndicator ? styles.visible : ''}`} aria-hidden="true">
           ▸
         </div>
       </div>

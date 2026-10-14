@@ -84,6 +84,41 @@
 	object-fit: contain;
 }
 
+.soon {
+	cursor: default;
+}
+
+.soon .cardFront > * {
+	opacity: 0.6;
+}
+
+.touchDescription {
+	display: none;
+}
+
+/* Touch screens: no flip, show the description on the front */
+@media (hover: none) {
+	.card:hover .cardInner,
+	.card:focus-within .cardInner,
+	.card:focus-visible .cardInner {
+		transform: none;
+	}
+
+	.cardBack {
+		display: none;
+	}
+
+	.touchDescription {
+		display: block;
+		margin: 0;
+		font-family: var(--font-maru-monica);
+		font-size: 0.9rem;
+		line-height: 1.3;
+		text-align: center;
+		opacity: 0.8;
+	}
+}
+
 @media (max-width: 900px) {
 	.grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));

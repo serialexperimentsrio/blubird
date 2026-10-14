@@ -1,12 +1,14 @@
 'use client'
 
-import ModalBox from '@/components/shared/Modal/ModalBox'
+import { ModalBox } from 'ricebag'
 import type { Person } from '@/data/people'
+import type { Lang } from '@/lib/lang'
 import styles from './style.module.css'
+import Flags from './Flags'
 
 type Props = {
 	person: Person
-	lang: 'en' | 'ja'
+	lang: Lang
 }
 
 export default function PersonModal({ person, lang }: Props) {
@@ -14,7 +16,12 @@ export default function PersonModal({ person, lang }: Props) {
 		<ModalBox icon="man.svg">
 			<div className={styles.modal}>
 				<div className={styles.modalHeader}>
-					<h2 className={styles.modalHandle}>{person.nick}</h2>
+					<div className={styles.modalTitleRow}>
+						<h2 className={styles.modalHandle}>{person.nick}</h2>
+						<div className={styles.modalFlags}>
+							<Flags from={person.from} />
+						</div>
+					</div>
 					<div className={styles.modalRoles}>
 						{person.roles.map((role) => (
 							<span key={role} className={styles.roleTag}>#{role}</span>

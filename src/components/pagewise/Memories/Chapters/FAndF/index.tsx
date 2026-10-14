@@ -1,58 +1,39 @@
 'use client'
+/* eslint-disable @next/next/no-img-element */
 
-import { setModal } from '@/components/shared/Modal'
-import people from '@/data/people'
+import { setModal } from 'ricebag'
+import people, { type Person } from '@/data/people'
+import type { Lang } from '@/lib/lang'
 import styles from './style.module.css'
+import Flags from './Flags'
 import PersonModal from './PersonModal'
 
-const FLAG_MAP: Record<string, string> = {
-	'BANGLADESH': 'bangladesh',
-	'JAPAN': 'japan',
-	'PALESTINE': 'palestine',
-	'PEACE_BLUE': 'peace_blue',
-	'SOUTH KOREA': 'south_korea',
-	'SUDAN': 'sudan',
-}
-
-function renderFlags(from?: string | string[]) {
-	const countries = from == null ? [] : Array.isArray(from) ? from : [from]
-	const flags = countries.map((c) => FLAG_MAP[c.toUpperCase()]).filter(Boolean)
-	if (flags.length === 0) return <span>—</span>
-	return (
-		<>
-			{flags.map((f) => (
-				<img
-					key={f}
-					src={`/icons/flags/${f}.png`}
-					alt={f.replace(/_/g, ' ')}
-					className={styles.flagIcon}
-				/>
-			))}
-		</>
-	)
-}
-
 type Props = {
-	lang: 'en' | 'ja'
+	lang: Lang
+}
+
+const COLUMNS = {
+	en: ['NICK', 'RELATIONSHIP', 'MEMOIR', 'FROM'],
+	ja: ['名前', '関係', '思い出', '出身'],
 }
 
 export default function FAndF({ lang }: Props) {
 	const me = people.find((p) => p.isMe)
 	const others = people.filter((p) => !p.isMe)
+	const [nick, relationship, memoir, from] = COLUMNS[lang]
 
-	const openModal = (person: typeof people[0]) => {
+	const openModal = (person: Person) => {
 		setModal(<PersonModal person={person} lang={lang} />)
 	}
 
-	const renderRow = (person: typeof people[0], extraClass?: string) => (
+	const renderRow = (person: Person) => (
 		<button
 			key={person.nick}
-			className={`${styles.listRow} ${extraClass ?? ''}`}
+			className={styles.listRow}
 			onClick={() => openModal(person)}
-			aria-label={person.nick}
 		>
 			<div className={styles.listAvatar}>
-				<img src="/icons/man.svg" alt="avatar" className={styles.avatar} />
+				<img src="/icons/man.svg" alt="" className={styles.avatar} />
 			</div>
 			<span className={styles.listNick}>{person.nick}</span>
 			<div className={styles.listRoles}>
@@ -62,7 +43,7 @@ export default function FAndF({ lang }: Props) {
 			</div>
 			<span className={styles.listMemoir}>{person.memoir[lang].length > 80 ? person.memoir[lang].slice(0, 80) + '...' : person.memoir[lang]}</span>
 			<div className={styles.listFrom}>
-				{renderFlags(person.from)}
+				<Flags from={person.from} fallback={<span>—</span>} />
 			</div>
 		</button>
 	)
@@ -71,13 +52,13 @@ export default function FAndF({ lang }: Props) {
 		<section className={styles.container}>
 			<div className={styles.roster}>
 				<div className={styles.fixedTop}>
-					{me && renderRow(me, styles.listRowMe)}
+					{me && renderRow(me)}
 					<div className={styles.listHeader}>
-						<span style={{paddingLeft: 10}}>NICK</span>
+						<span style={{paddingLeft: 10}}>{nick}</span>
 						<span />
-						<span>RELATIONSHIP</span>
-						<span>MEMOIR</span>
-						<span>FROM</span>
+						<span>{relationship}</span>
+						<span className={styles.wideOnly}>{memoir}</span>
+						<span className={styles.wideOnly}>{from}</span>
 					</div>
 				</div>
 				<div className={styles.rosterInner}>

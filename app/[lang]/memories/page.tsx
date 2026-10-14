@@ -1,39 +1,13 @@
-'use client'
+import Memories from '@/components/pagewise/Memories'
+import type { Lang } from '@/lib/lang'
 
 export const runtime = 'edge'
 
-import { useState, useEffect } from 'react'
-import PageFrame from '@/components/shared/Layout/PageFrame'
-import Memories from '@/components/pagewise/Memories'
-
 type Props = {
-	params: Promise<{ lang: 'en' | 'ja' }>
+	params: Promise<{ lang: Lang }>
 }
 
-export default function MemoriesPage({ params }: Props) {
-	const [isVisible, setIsVisible] = useState(false)
-	const [lang, setLang] = useState<'en' | 'ja'>('en')
-
-	useEffect(() => {
-		params.then((resolvedParams) => {
-			setLang(resolvedParams.lang)
-		})
-		const timer = setTimeout(() => setIsVisible(true), 50)
-		return () => clearTimeout(timer)
-	}, [params])
-
-	return (
-		<PageFrame params={params}>
-			{(isFadingOut) => (
-				<div
-					style={{
-						opacity: isFadingOut ? 0 : (isVisible ? 1 : 0),
-						transition: 'opacity 0.3s ease-in-out',
-					}}
-				>
-					<Memories lang={lang} />
-				</div>
-			)}
-		</PageFrame>
-	)
+export default async function MemoriesPage({ params }: Props) {
+	const { lang } = await params
+	return <Memories lang={lang} />
 }

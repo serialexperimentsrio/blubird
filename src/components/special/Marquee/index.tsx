@@ -5,9 +5,8 @@ interface MarqueeProps {
   speed?: number;
 }
 
+// Text is repeated 6 times; the `marquee` keyframes in globals.css scroll one copy's width
 const Marquee: FC<MarqueeProps> = ({ text, speed = 50 }) => {
-  const duration = `${speed}s`;
-
   return (
     <div
       style={{
@@ -18,30 +17,8 @@ const Marquee: FC<MarqueeProps> = ({ text, speed = 50 }) => {
         alignItems: 'center',
       }}
     >
-      <style>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(calc(-1 * ${100 / 6}%));
-          }
-        }
-
-        .marquee-text {
-          animation: marquee ${duration} linear infinite;
-          display: inline-block;
-          will-change: transform;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .marquee-text {
-            animation: none;
-          }
-        }
-      `}</style>
-      <div className="marquee-text">
-        {text}{text}{text}{text}{text}{text}
+      <div className="marquee-text" style={{ animationDuration: `${speed}s` }}>
+        {text.repeat(6)}
       </div>
     </div>
   );
