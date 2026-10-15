@@ -12,7 +12,7 @@ export default async function SchoolPage({ params }: Props) {
 	return (
 		<div
 			style={{
-				color: 'var(--color-bright)',
+				color: 'var(--rb-color-bright)',
 				fontFamily: 'var(--font-maru-monica)',
 				textAlign: 'center',
 			}}

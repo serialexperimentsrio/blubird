@@ -17,7 +17,7 @@
 
 .card {
   background: transparent;
-  color: var(--color-bright);
+  color: var(--rb-color-bright);
   padding: 1rem 1rem;
   text-align: left;
   font-weight: 600;
@@ -25,7 +25,7 @@
   width: 100%;
   cursor: pointer;
   font-size: 1.4rem;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-base), transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+  transition: border-color var(--rb-transition-fast), opacity var(--rb-transition-base), transform var(--rb-transition-base), background-color var(--rb-transition-base), color var(--rb-transition-base);
   box-sizing: border-box;
   /* 2px border matches design system; 1px transparent outline reserves the extra pixel to prevent layout shift on hover */
   border: 2px solid transparent;
@@ -35,31 +35,29 @@
 
 /* Show only border on hover; do not change background for inactive tabs */
 .card:not(.active):hover {
-  background: var(--color-ghost);
-  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--rb-color-main) 20%, transparent);
+  border-color: var(--rb-color-accent);
 }
 
 .card:focus-visible {
-  outline: 2px solid var(--color-bright);
+  outline: 2px solid var(--rb-color-bright);
   outline-offset: 2px;
 }
 
 .active {
-  background: var(--color-main);
-  color: var(--color-bright);
+  background: var(--rb-color-main);
+  color: var(--rb-color-bright);
 }
 
 .card.active:hover {
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-card);
+  border-color: var(--rb-color-accent);
 }
 
 .panel {
   width: 640px;
   height: clamp(200px, calc(100dvh - var(--header-height) - 6rem), 640px);
   background: rgba(255, 255, 255, 0.67);
-  box-shadow: var(--shadow-panel);
-  border: 2px solid var(--color-accent);
+  border: 2px solid var(--rb-color-accent);
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -72,24 +70,24 @@
   height: 100%;
   overflow: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-accent) transparent;
+  scrollbar-color: var(--rb-color-accent) transparent;
 }
 
 .empty {
-  color: var(--color-bright);
+  color: var(--rb-color-bright);
   padding: 12px;
 }
 
 .content {
   white-space: pre-wrap;
-  color: var(--color-main);
+  color: var(--rb-color-main);
   font-family: var(--font-maru-monica);
   font-size: 1.2rem;
   font-weight: 600;
 }
 
 .placeholder {
-  color: var(--color-accent);
+  color: var(--rb-color-accent);
   font-size: 1.2rem;
   font-family: var(--font-maru-monica);
   font-weight: 600;
@@ -101,7 +99,7 @@
      to create the subtle motion when switching files. */
 .withTransitions .list,
 .withTransitions .panel .inner {
-  transition: opacity var(--transition-base);
+  transition: opacity var(--rb-transition-base);
 }
 
 .withTransitions.switching .list,
@@ -117,7 +115,7 @@
 /* Panel content/placeholder get the vertical motion only. */
 .withTransitions .panel .content,
 .withTransitions .panel .placeholder {
-  transition: opacity var(--transition-base);
+  transition: opacity var(--rb-transition-base);
 }
 
 .withTransitions.switching .panel .content,
@@ -161,7 +159,7 @@
   scroll-snap-type: x mandatory;
   align-items: center;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-accent) transparent;
+  scrollbar-color: var(--rb-color-accent) transparent;
 }
 
 /* Compact timeline chips: don't stretch to full width like desktop list */

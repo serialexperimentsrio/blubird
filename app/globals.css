@@ -10,38 +10,17 @@
 }
 
 :root {
-  /* Colors */
-  --color-main: #0021f5;
-  --color-accent: #4d64f8;
+  /* Theme for both the site and ricebag (its other tokens keep their defaults) */
+  --rb-color-main: #0021f5;
+  --rb-color-accent: #4d64f8;
+  --rb-color-bright: #ffffff;
+  --rb-color-dim: rgba(255, 255, 255, 0.5);
 
-  --color-bright: #ffffff;
-  --color-dim: rgba(255, 255, 255, 0.5);
-
-  --color-ghost: rgba(0,33,245, 0.2);
-
-  /* Shadows */
-  --shadow-card: 0 8px 24px rgba(0,0,0,0.12);
-  --shadow-panel: 0 6px 30px rgba(0,0,0,0.12);
-
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-base: 0.2s ease;
-  --transition-slow: 0.3s ease;
-
-  /* Z-index scale */
-  --z-dialog: 5;
-  --z-box-content: 100;
-  --z-modal: 9999;
-  --z-tooltip: 99999;
-  --z-toast: 999999;
-
-  /* Semantic colors */
-  --color-danger: rgba(255, 133, 133, 0.16);
-  --color-backdrop: rgba(0, 0, 0, 0.3);
+  --rb-transition-fast: 0.15s ease;
+  --rb-transition-base: 0.2s ease;
 
   /* Layout */
   --header-height: 84px;
-  --border-width: 2px;
 
   /* Fonts */
   /* Provide a system font fallback stack that closely matches metrics to reduce layout shift
@@ -53,7 +32,7 @@ body {
   font-family: var(--font-maru-monica);
   margin: 0;
   padding: 0;
-  background: var(--color-main);
+  background: var(--rb-color-main);
 }
 
 /* Page frame: scrolls the page and footer under the fixed header */

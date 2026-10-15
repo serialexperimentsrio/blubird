@@ -4,7 +4,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: min(90vw, 800px);
-  z-index: var(--z-dialog);
+  z-index: 5;
   pointer-events: auto;
   opacity: 0;
   transition: opacity 0.6s ease-in-out;
@@ -15,8 +15,8 @@
 }
 
 .dialogBox {
-  background: var(--color-main);
-  border: 2px solid var(--color-accent);
+  background: var(--rb-color-main);
+  border: 2px solid var(--rb-color-accent);
   padding: 2rem;
   position: relative;
   cursor: pointer;
@@ -26,7 +26,7 @@
 
 .text {
   font-family: var(--font-maru-monica);
-  color: var(--color-bright);
+  color: var(--rb-color-bright);
   font-size: 1.2rem;
   line-height: 1.6;
   white-space: pre-wrap;
@@ -51,9 +51,9 @@
   bottom: 1rem;
   right: 1rem;
   font-size: 1.5rem;
-  color: var(--color-bright);
+  color: var(--rb-color-bright);
   opacity: 0;
-  transition: opacity var(--transition-base);
+  transition: opacity var(--rb-transition-base);
   display: inline-block;
   user-select: none;
 }
@@ -73,21 +73,21 @@
   position: absolute;
   top: -3.5rem;
   right: 0;
-  background: var(--color-main);
-  border: 2px solid var(--color-accent);
-  color: var(--color-bright);
+  background: var(--rb-color-main);
+  border: 2px solid var(--rb-color-accent);
+  color: var(--rb-color-bright);
   padding: 0.5rem 1rem;
   font-family: var(--font-maru-monica);
   font-size: 1.2rem;
   cursor: pointer;
-  transition: background var(--transition-base);
+  transition: background var(--rb-transition-base);
 }
 
 .dismissButton:hover {
-  background: var(--color-accent);
+  background: var(--rb-color-accent);
 }
 
 .dismissButton:focus-visible {
-  outline: 2px solid var(--color-bright);
+  outline: 2px solid var(--rb-color-bright);
   outline-offset: 3px;
 }

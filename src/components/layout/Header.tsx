@@ -20,7 +20,7 @@ const EASE_OUT = 'cubic-bezier(0.16, 1, 0.3, 1)'
 let lastHovered: string | null = null
 
 const linkReset: CSSProperties = {
-	color: 'var(--color-bright)',
+	color: 'var(--rb-color-bright)',
 	textDecoration: 'none',
 	cursor: 'pointer',
 	userSelect: 'none',
@@ -125,7 +125,7 @@ export default function Header({ lang, isFadingOut }: HeaderProps) {
 					right: 0,
 					minHeight: 'var(--header-height)',
 					maxHeight: menuOpen ? '300px' : 'var(--header-height)',
-					background: 'var(--color-main)',
+					background: 'var(--rb-color-main)',
 					zIndex: 10,
 					transition: `max-height 0.35s ${EASE_OUT}`,
 					paddingBottom: menuOpen ? '1rem' : '0',
@@ -159,8 +159,8 @@ export default function Header({ lang, isFadingOut }: HeaderProps) {
 								fontSize: '1.4rem',
 								padding: '1rem',
 								transition: 'background 0.15s ease',
-								borderBottom: i < NAV_ITEMS.length - 1 ? '2px solid var(--color-accent)' : 'none',
-								background: hoveredNav === key ? 'var(--color-accent)' : 'transparent',
+								borderBottom: i < NAV_ITEMS.length - 1 ? '2px solid var(--rb-color-accent)' : 'none',
+								background: hoveredNav === key ? 'var(--rb-color-accent)' : 'transparent',
 								textDecorationLine: isCurrent(path) ? 'underline' : 'none',
 								textUnderlineOffset: '0.3em',
 							}}
@@ -220,9 +220,9 @@ export default function Header({ lang, isFadingOut }: HeaderProps) {
 							onMouseEnter={() => setIsToggleHovered(true)}
 							onMouseLeave={() => setIsToggleHovered(false)}
 							style={{
-								background: isToggleHovered ? 'var(--color-accent)' : 'var(--color-main)',
-								border: '2px solid var(--color-accent)',
-								color: 'var(--color-bright)',
+								background: isToggleHovered ? 'var(--rb-color-accent)' : 'var(--rb-color-main)',
+								border: '2px solid var(--rb-color-accent)',
+								color: 'var(--rb-color-bright)',
 								width: '2.8rem',
 								height: '2.8rem',
 								padding: '0',
@@ -263,7 +263,7 @@ export default function Header({ lang, isFadingOut }: HeaderProps) {
 						justifyContent: 'center',
 						fontSize: '1.4rem',
 						fontFamily: 'var(--font-maru-monica)',
-						color: 'var(--color-bright)',
+						color: 'var(--rb-color-bright)',
 						zIndex: 12,
 						pointerEvents: 'none',
 					}}

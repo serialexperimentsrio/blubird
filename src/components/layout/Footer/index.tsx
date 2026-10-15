@@ -107,7 +107,7 @@ export default function Footer({ lang }: FooterProps) {
 	const copyright = (lang === 'ja' ? `著作権 ${year} 理央 • ` : `COPYRIGHT ${year} RIO • `).repeat(3)
 
 	const marqueeBlock = (
-		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: isSmall ? 'relative' : 'absolute', left: isSmall ? 0 : '50%', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translate(-50%, -50%)', width: isSmall ? '100%' : '60%', height: isSmall ? 'auto' : '100%', color: 'var(--color-bright)', fontSize: '1.2rem' }}>
+		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: isSmall ? 'relative' : 'absolute', left: isSmall ? 0 : '50%', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translate(-50%, -50%)', width: isSmall ? '100%' : '60%', height: isSmall ? 'auto' : '100%', color: 'var(--rb-color-bright)', fontSize: '1.2rem' }}>
 			<Marquee text={copyright} speed={12} />
 		</div>
 	)
@@ -121,7 +121,7 @@ export default function Footer({ lang }: FooterProps) {
 				</div>
 				<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0' }}>
 					<Tooltip text={lang === 'ja' ? '次のコイン' : 'NEXT COIN'} above>
-						<button type="button" onClick={handleNextQR} style={{ ...buttonReset, color: 'var(--color-bright)', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--color-accent)', borderRight: 'none', position: 'relative' }}>
+						<button type="button" onClick={handleNextQR} style={{ ...buttonReset, color: 'var(--rb-color-bright)', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--rb-color-accent)', borderRight: 'none', position: 'relative' }}>
 							<span className={isFadingQR ? styles.qrFadeOut : styles.qrFadeIn} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 								{qr.coin}
 								{qr.network && <small style={{ fontSize: '0.8rem', opacity: 0.8 }}>{qr.network}</small>}
@@ -137,7 +137,7 @@ export default function Footer({ lang }: FooterProps) {
 							onMouseLeave={handleQRLeave}
 							onFocus={handleQREnter}
 							onBlur={handleQRLeave}
-							style={{ ...buttonReset, height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--color-accent)' }}
+							style={{ ...buttonReset, height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--rb-color-accent)' }}
 						>
 							<img src={qr.image} alt={`${qr.coin} QR Code`} style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { e.currentTarget.style.display = 'none' }} />
 						</button>
@@ -151,7 +151,7 @@ export default function Footer({ lang }: FooterProps) {
 		<div
 			style={{
 				width: '100%',
-				background: 'var(--color-main)',
+				background: 'var(--rb-color-main)',
 				pointerEvents: 'auto',
 				scrollSnapAlign: 'start',
 				scrollSnapStop: 'always',

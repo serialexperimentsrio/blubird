@@ -12,7 +12,7 @@
         "postprocessing": "^6.38.0",
         "react": "19.2.0",
         "react-dom": "19.2.0",
-        "ricebag": "^0.1.4",
+        "ricebag": "^0.2.0",
         "three": "^0.181.0",
       },
       "devDependencies": {
@@ -1174,7 +1174,7 @@
 
     "reusify": ["reusify@1.1.0", "", {}, "sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw=="],
 
-    "ricebag": ["ricebag@0.1.4", "", { "peerDependencies": { "react": ">=19", "react-dom": ">=19" } }, "sha512-MRl67Wx3GoIyuy9LFtbQv6P6YVEou2LyTfPn2yiJTO1q6hsK/MllkXy3rsG6NkjfYS7a3OBpr+uKYBN7diDdZg=="],
+    "ricebag": ["ricebag@0.2.0", "", { "peerDependencies": { "react": ">=19", "react-dom": ">=19" } }, "sha512-qZ0nQXLIpkEn1sTlE/wv9WnhCkpaldlXcuLjxQpI5ktLVIvSCDRhSB/XTAnNPmbW7t4/jp+s+EbvduQmElQtbA=="],
 
     "run-parallel": ["run-parallel@1.2.0", "", { "dependencies": { "queue-microtask": "^1.2.2" } }, "sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA=="],
 

@@ -118,7 +118,7 @@ export default function PageFrame({ lang, children }: PageFrameProps) {
 								border: 'none',
 								padding: 0,
 								font: 'inherit',
-								color: 'var(--color-bright)',
+								color: 'var(--rb-color-bright)',
 								fontSize: '1.5rem',
 								opacity: isFading ? 0 : 1,
 								transition: 'transform 0.6s ease-in-out, opacity 0.3s ease-in-out',

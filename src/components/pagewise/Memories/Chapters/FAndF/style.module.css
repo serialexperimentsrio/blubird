@@ -15,8 +15,7 @@
 	/* Fixed height on purpose: empty space shows there's room for more rows */
 	height: clamp(200px, calc(100dvh - var(--header-height) - 2rem), 640px);
 	background: rgba(255, 255, 255, 0.67);
-	border: var(--border-width) solid var(--color-accent);
-	box-shadow: var(--shadow-panel);
+	border: 2px solid var(--rb-color-accent);
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -44,7 +43,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	scrollbar-width: thin;
-	scrollbar-color: var(--color-accent) transparent;
+	scrollbar-color: var(--rb-color-accent) transparent;
 }
 
 /* ── List layout ── */
@@ -68,8 +67,8 @@
 .listHeader {
 	font-size: 1rem;
 	letter-spacing: 0.12em;
-	background: var(--color-main);
-	color: var(--color-bright);
+	background: var(--rb-color-main);
+	color: var(--rb-color-bright);
 	font-family: var(--font-maru-monica);
 	text-align: left;
 	padding-top: 8px;
@@ -79,22 +78,22 @@
 .listRow {
 	background: none;
 	border: none;
-	border-bottom: 1px solid rgba(0, 33, 245, 0.15);
-	color: var(--color-main);
+	border-bottom: 1px solid color-mix(in srgb, var(--rb-color-main) 15%, transparent);
+	color: var(--rb-color-main);
 	font-family: var(--font-maru-monica);
 	cursor: pointer;
 	text-align: left;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	transition: background var(--transition-fast);
+	transition: background var(--rb-transition-fast);
 }
 
 .listRow:hover {
-	background: var(--color-ghost);
+	background: color-mix(in srgb, var(--rb-color-main) 20%, transparent);
 }
 
 .listRow:focus-visible {
-	outline: 2px solid var(--color-main);
+	outline: 2px solid var(--rb-color-main);
 	outline-offset: -2px;
 }
 
@@ -105,7 +104,7 @@
 	justify-content: center;
 	width: 40px;
 	height: 40px;
-	background: var(--color-main);
+	background: var(--rb-color-main);
 	flex-shrink: 0;
 	perspective: 400px;
 	margin-left: 10px;
@@ -148,15 +147,15 @@
 	font-size: 0.75rem;
 	letter-spacing: 0.08em;
 	padding: 2px 7px;
-	background: var(--color-main);
-	color: var(--color-bright);
+	background: var(--rb-color-main);
+	color: var(--rb-color-bright);
 	font-family: var(--font-maru-monica);
 }
 
 .listMemoir {
 	font-size: 1.2rem;
 	line-height: 1.4;
-	color: var(--color-main);
+	color: var(--rb-color-main);
 	font-weight: 600;
 }
 
@@ -166,7 +165,7 @@
 	justify-content: center;
 	gap: 6px;
 	font-size: 1.2rem;
-	color: var(--color-main);
+	color: var(--rb-color-main);
 	font-weight: 600;
 	white-space: nowrap;
 }
@@ -200,7 +199,7 @@
 	font-size: 1.6rem;
 	font-weight: 600;
 	letter-spacing: 0.06em;
-	color: var(--color-bright);
+	color: var(--rb-color-bright);
 	text-align: left;
 }
 
@@ -225,7 +224,7 @@
 .modalRoles .roleTag {
 	background: none;
 	padding: 0;
-	color: var(--color-bright);
+	color: var(--rb-color-bright);
 	opacity: 0.8;
 	font-size: 1rem;
 }
@@ -235,7 +234,7 @@
 	font-family: var(--font-maru-monica);
 	font-size: 1rem;
 	line-height: 1.65;
-	color: var(--color-bright);
+	color: var(--rb-color-bright);
 	text-align: left;
 }
 
@@ -246,14 +245,14 @@
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
-	border-top: 2px solid var(--color-accent);
+	border-top: 2px solid var(--rb-color-accent);
 }
 
 .modalNotes li {
 	font-family: var(--font-maru-monica);
 	font-size: 1rem;
 	line-height: 1.5;
-	color: var(--color-bright);
+	color: var(--rb-color-bright);
 	text-align: left;
 }
 
