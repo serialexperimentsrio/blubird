@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import React, { useEffect, useState, useRef } from 'react'
 import styles from './style.module.css'
@@ -31,7 +31,7 @@ export default function Diary({ lang }: Props) {
   const [visualEntry, setVisualEntry] = useState<string | null>(null)
   const [initialized, setInitialized] = useState<boolean>(false)
 
-  // Manifests are generated at build time by scripts/generate-diary-manifests.js
+  // Manifests are generated at build time by scripts/generate-diary-manifests.mjs
   useEffect(() => {
     let cancelled = false
     fetch(`/diary/${lang}/manifest.json`)
@@ -111,7 +111,7 @@ export default function Diary({ lang }: Props) {
   useEffect(() => {
     const raf = requestAnimationFrame(() => requestAnimationFrame(() => {
       setWithTransitions(true)
-      // Do not reveal yet — wait for `entries` to finish loading so the
+      // Do not reveal yet â€” wait for `entries` to finish loading so the
       // tab list is present and can animate together with the panel.
       }))
       return () => cancelAnimationFrame(raf)
@@ -188,7 +188,7 @@ export default function Diary({ lang }: Props) {
       }
     }
 
-    // If prevSelected is null, this is initial mount/navigation back — don't animate out
+    // If prevSelected is null, this is initial mount/navigation back â€” don't animate out
     if (prevSelected.current === null) {
       setVisible(true)
       fetchEntry()
@@ -234,10 +234,10 @@ export default function Diary({ lang }: Props) {
     <div className={`${styles.container} ${isSmall ? styles.isSmall : ''} ${withTransitions ? styles.withTransitions : ''} ${isSwitching ? styles.switching : ''}`}>
       <div className={`${styles.list} ${visible ? styles.visible : styles.hidden}`}>
         {displayEntries.length === 0 ? (
-          // If entries are still loading, don't show the empty placeholder —
+          // If entries are still loading, don't show the empty placeholder â€”
           // wait until the parent has finished fetching to avoid a flash.
           isLoading ? null : (
-            <div className={styles.empty}>{lang === 'ja' ? '日記はまだありません' : 'NO ENTRIES FOUND'}</div>
+            <div className={styles.empty}>{lang === 'ja' ? 'æ—¥è¨˜ã¯ã¾ã ã‚ã‚Šã¾ã›ã‚“' : 'NO ENTRIES FOUND'}</div>
           )
         ) : (
           displayEntries.map((entry) => {
@@ -254,7 +254,7 @@ export default function Diary({ lang }: Props) {
                 setVisualEntry(entry)
                 requestAnimationFrame(() => setSelectedEntry(entry))
               }}
-              aria-label={lang === 'ja' ? `${label}を開く` : `Open ${label}`}
+              aria-label={lang === 'ja' ? `${label}ã‚’é–‹ã` : `Open ${label}`}
               aria-pressed={visualEntry === entry}
             >
               {label}
@@ -294,12 +294,12 @@ export default function Diary({ lang }: Props) {
               {renderWithLinks(content)}
             </div>
           ) : selectedEntry && !contentReady ? (
-            <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>{lang === 'ja' ? '読み込み中...' : 'LOADING...'}</div>
+            <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>{lang === 'ja' ? 'èª­ã¿è¾¼ã¿ä¸­...' : 'LOADING...'}</div>
           ) : (
             // Don't show the placeholder until we've initialized (i.e. assigned the first entry).
             // This avoids a brief flash of "Select an entry to view" while the first entry is being selected.
             initialized ? (
-              <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>{lang === 'ja' ? '日記を選んでください' : 'SELECT AN ENTRY TO VIEW'}</div>
+              <div className={`${styles.placeholder} ${visible ? styles.visible : styles.hidden}`}>{lang === 'ja' ? 'æ—¥è¨˜ã‚’é¸ã‚“ã§ãã ã•ã„' : 'SELECT AN ENTRY TO VIEW'}</div>
             ) : null
           )}
         </div>
