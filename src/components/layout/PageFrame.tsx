@@ -17,9 +17,15 @@ type PageFrameProps = {
 export default function PageFrame({ lang, children }: PageFrameProps) {
 	const router = useRouter()
 	const pathname = usePathname()
-	// The fade belongs to the page it started on, so it clears itself once the
-	// new pathname renders.
+	// The fade belongs to the page it started on. Cleared once the pathname
+	// changes, otherwise going back to that page (browser back) would fade it
+	// out again.
 	const [fade, setFade] = useState<{ from: string; kind: FadeKind } | null>(null)
+	const [fadePath, setFadePath] = useState(pathname)
+	if (fadePath !== pathname) {
+		setFadePath(pathname)
+		setFade(null)
+	}
 	const [isFooterVisible, setIsFooterVisible] = useState(false)
 	const footerRef = useRef<HTMLElement>(null)
 	const scrollableRef = useRef<HTMLDivElement>(null)
