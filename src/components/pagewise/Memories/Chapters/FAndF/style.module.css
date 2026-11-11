@@ -55,7 +55,7 @@
 .listHeader,
 .listRow {
 	display: grid;
-	grid-template-columns: 48px 1fr 1.4fr 2.5fr 1fr;
+	grid-template-columns: 48px 0.5fr 1.5fr 3fr 1fr;
 	align-items: center;
 	gap: 16px;
 	width: 100%;
