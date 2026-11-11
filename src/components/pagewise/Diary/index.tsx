@@ -31,7 +31,7 @@ export default function Diary({ lang }: Props) {
   const [visualEntry, setVisualEntry] = useState<string | null>(null)
   const [initialized, setInitialized] = useState<boolean>(false)
 
-  // Manifests are generated at build time by scripts/generate-diary-manifests.js
+  // Manifests are generated at build time by scripts/generate-diary-manifests.mjs
   useEffect(() => {
     let cancelled = false
     fetch(`/diary/${lang}/manifest.json`)
