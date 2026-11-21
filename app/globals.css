@@ -1,3 +1,6 @@
+/* ricebowl goes above Tailwind's reset (base), so its padding and borders
+   survive, and below components and utilities, so those can still restyle it */
+@layer theme, base, ricebowl, components, utilities;
 @import "tailwindcss";
 
 /* Custom Font */

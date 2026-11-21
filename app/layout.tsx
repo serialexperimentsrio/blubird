@@ -1,5 +1,6 @@
-import 'ricebowl/styles.css'
+// globals.css first: it sets the cascade layer order that ricebowl's CSS slots into
 import './globals.css'
+import 'ricebowl/styles.css'
 import type { Metadata } from 'next'
 import DitherBackground from '@/components/special/Dither/Background'
 

@@ -13,7 +13,7 @@ type Props = {
 
 export default function PersonModal({ person, lang }: Props) {
 	return (
-		<ModalBox icon="man.svg">
+		<ModalBox>
 			<div className={styles.modal}>
 				<div className={styles.modalHeader}>
 					<div className={styles.modalTitleRow}>
