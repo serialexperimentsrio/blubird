@@ -1,4 +1,4 @@
-import 'ricebag/styles.css'
+import 'ricebowl/styles.css'
 import './globals.css'
 import type { Metadata } from 'next'
 import DitherBackground from '@/components/special/Dither/Background'

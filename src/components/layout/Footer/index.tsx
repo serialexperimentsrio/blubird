@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
-import { Tooltip } from 'ricebag'
+import { Tooltip } from 'ricebowl'
 import Marquee from '@/components/special/Marquee'
 import type { Lang } from '@/lib/lang'
 import styles from './style.module.css'

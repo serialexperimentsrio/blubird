@@ -10,7 +10,7 @@
 }
 
 :root {
-  /* Theme for both the site and ricebag (its other tokens keep their defaults) */
+  /* Theme for both the site and ricebowl (its other tokens keep their defaults) */
   --rb-color-main: #0021f5;
   --rb-color-accent: #4d64f8;
   --rb-color-bright: #ffffff;

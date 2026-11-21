@@ -269,7 +269,7 @@
 		display: none;
 	}
 
-	/* ricebag's ModalBox caps content at 100vw - 50px, minus its 20px padding per side */
+	/* ricebowl's ModalBox caps content at 100vw - 50px, minus its 20px padding per side */
 	.modal {
 		min-width: unset;
 		width: min(420px, calc(100vw - 90px));

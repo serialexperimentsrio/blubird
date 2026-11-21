@@ -1,6 +1,6 @@
 'use client'
 
-import { ModalBox } from 'ricebag'
+import { ModalBox } from 'ricebowl'
 import type { Person } from '@/data/people'
 import type { Lang } from '@/lib/lang'
 import styles from './style.module.css'
