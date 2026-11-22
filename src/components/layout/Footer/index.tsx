@@ -12,13 +12,8 @@ type FooterProps = {
 	lang: Lang
 }
 
-const QR_CODES = [
-	{ coin: 'BTC', image: '/icons/qr/BTC.png', address: 'bc1q70vfcrf9x8hdu9vw9k2tcsz2qn9pm0a6nmxkvf' },
-	{ coin: 'ETH', image: '/icons/qr/ETH.png', address: '0xDC45c831D436b39FD91d20773e02bC190A474314' },
-	{ coin: 'SOL', image: '/icons/qr/SOL.png', address: 'DSUCtPUcXsiH2xsSpNmMQP9Vv97qbQM1eF1ha4KeSkNn' },
-	// Same address as ETH: only send USDT over Ethereum (ERC-20)
-	{ coin: 'USDT', network: 'ERC-20', image: '/icons/qr/USDT.png', address: '0xDC45c831D436b39FD91d20773e02bC190A474314' },
-]
+// Payoneer payment link, expires 2027-11-11: create a new one and replace USD.png + this URL before then
+const TIP_LINK = 'https://link.payoneer.com/Token?t=8F74BE500C8A4450A727C1DD9B442D15&src=pl'
 
 const FLAGS = [
 	{ image: 'south_korea', alt: 'South Korea', wiki: 'South_Korea', en: 'I WAS BORN HERE', ja: 'ここで生まれ' },
@@ -39,33 +34,20 @@ const buttonReset = {
 } as const
 
 export default function Footer({ lang }: FooterProps) {
-	const [currentQRIndex, setCurrentQRIndex] = useState(0)
 	const [copied, setCopied] = useState(false)
 	const [tooltipText, setTooltipText] = useState('')
-	const [isFadingQR, setIsFadingQR] = useState(false)
 	const { isNarrow, isMedium, isSmall } = useBreakpoint()
 
-	const scanText = lang === 'ja' ? 'スキャンするかアドレスをコピー' : 'SCAN OR COPY ADDRESS'
-	const qr = QR_CODES[currentQRIndex]
+	const scanText = lang === 'ja' ? 'スキャンするかリンクをコピー' : 'SCAN OR COPY LINK'
 	const year = new Date().getFullYear()
 
-	const handleNextQR = async () => {
-		setIsFadingQR(true)
-
-		// Pause briefly so the fade out can finish
-		await new Promise(resolve => setTimeout(resolve, 200))
-
-		setCurrentQRIndex((prev) => (prev + 1) % QR_CODES.length)
-		setIsFadingQR(false)
-	}
-
-	const handleCopyAddress = async () => {
+	const handleCopyLink = async () => {
 		try {
-			await navigator.clipboard.writeText(qr.address)
+			await navigator.clipboard.writeText(TIP_LINK)
 			setCopied(true)
 			setTooltipText(lang === 'ja' ? 'コピーしました！' : 'COPIED!')
 		} catch (err) {
-			console.error('Failed to copy address:', err)
+			console.error('Failed to copy link:', err)
 		}
 	}
 
@@ -120,26 +102,23 @@ export default function Footer({ lang }: FooterProps) {
 					<span>{lang === 'ja' ? 'お願い!' : 'PLEASE!'}</span>
 				</div>
 				<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0' }}>
-					<Tooltip text={lang === 'ja' ? '次のコイン' : 'NEXT COIN'} above>
-						<button type="button" onClick={handleNextQR} style={{ ...buttonReset, color: 'var(--rb-color-bright)', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--rb-color-accent)', borderRight: 'none', position: 'relative' }}>
-							<span className={isFadingQR ? styles.qrFadeOut : styles.qrFadeIn} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-								{qr.coin}
-								{qr.network && <small style={{ fontSize: '0.8rem', opacity: 0.8 }}>{qr.network}</small>}
-							</span>
-						</button>
+					<Tooltip text={lang === 'ja' ? 'カード/銀行で' : 'VIA CARD/BANK'} above>
+						<a href={TIP_LINK} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--rb-color-bright)', textDecoration: 'none', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--rb-color-accent)', borderRight: 'none' }}>
+							USD
+						</a>
 					</Tooltip>
 					<Tooltip text={tooltipText || scanText} above forceShow={copied}>
 						<button
 							type="button"
-							aria-label={`${lang === 'ja' ? 'アドレスをコピー' : 'Copy address'}: ${qr.coin}${qr.network ? ` (${qr.network})` : ''}`}
-							onClick={handleCopyAddress}
+							aria-label={lang === 'ja' ? 'リンクをコピー' : 'Copy link'}
+							onClick={handleCopyLink}
 							onMouseEnter={handleQREnter}
 							onMouseLeave={handleQRLeave}
 							onFocus={handleQREnter}
 							onBlur={handleQRLeave}
 							style={{ ...buttonReset, height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--rb-color-accent)' }}
 						>
-							<img src={qr.image} alt={`${qr.coin} QR Code`} style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { e.currentTarget.style.display = 'none' }} />
+							<img src="/icons/qr/USD.png" alt={lang === 'ja' ? '支払いリンクのQRコード' : 'Payment link QR code'} style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { e.currentTarget.style.display = 'none' }} />
 						</button>
 					</Tooltip>
 				</div>
