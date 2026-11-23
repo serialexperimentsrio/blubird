@@ -79,15 +79,15 @@ const cards: MemoryCard[] = [
 		},
 	},
 	{
-		slug: 'flix',
+		slug: 'tv',
 		icon: 'tv.svg',
 		label: {
-			en: 'FLIX',
-			ja: '映画とドラマ',
+			en: 'TV',
+			ja: 'テレビ',
 		},
 		description: {
-			en: 'WHAT I\'VE WATCHED AND PLAN TO.',
-			ja: '観たやつとか、これから観る予定のやつ。',
+			en: 'WHAT I\'VE WATCHED, PLAYED, AND PLAN TO.',
+			ja: '観たやつとか遊んだやつとか、これからの予定。',
 		},
 	},
 ]
