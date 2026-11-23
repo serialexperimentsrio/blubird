@@ -126,6 +126,8 @@ export default function Header({ lang, isFadingOut }: HeaderProps) {
 					minHeight: 'var(--header-height)',
 					maxHeight: menuOpen ? '300px' : 'var(--header-height)',
 					background: 'var(--pg-color-main)',
+					// On the panel, not the bar, so it moves down with the mobile menu when it opens
+					borderBottom: '2px solid var(--pg-color-accent)',
 					zIndex: 10,
 					transition: `max-height 0.35s ${EASE_OUT}`,
 					paddingBottom: menuOpen ? '1rem' : '0',

@@ -131,6 +131,7 @@ export default function Footer({ lang }: FooterProps) {
 			style={{
 				width: '100%',
 				background: 'var(--pg-color-main)',
+				borderTop: '2px solid var(--pg-color-accent)',
 				pointerEvents: 'auto',
 				scrollSnapAlign: 'start',
 				scrollSnapStop: 'always',
