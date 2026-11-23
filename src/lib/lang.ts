@@ -1,6 +1,6 @@
 export const LANGS = ['en', 'ja'] as const
 export type Lang = (typeof LANGS)[number]
-export const DEFAULT_LANG: Lang = 'ja'
+export const DEFAULT_LANG: Lang = 'en'
 
 export const isLang = (value: unknown): value is Lang => LANGS.includes(value as Lang)
 

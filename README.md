@@ -2,7 +2,7 @@
 
 My personal website. There's a diary, a memories section for the people and things I like, and a school section that will have learning guides once I write them (it says coming soon for now).
 
-Live at https://blubird.pages.dev. It opens in Japanese, and the English version is at [/en](https://blubird.pages.dev/en).
+Live at https://blubird.pages.dev, in English by default. The Japanese version is at [/ja](https://blubird.pages.dev/ja).
 
 ## How it's put together
 

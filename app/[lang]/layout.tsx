@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import PageFrame from '@/components/layout/PageFrame'
-import { isLang, siteTitle } from '@/lib/lang'
+import { DEFAULT_LANG, isLang, siteTitle } from '@/lib/lang'
 
 type Props = {
 	params: Promise<{ lang: string }>
@@ -10,7 +10,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { lang } = await params
 	return {
-		title: siteTitle(isLang(lang) ? lang : 'ja'),
+		title: siteTitle(isLang(lang) ? lang : DEFAULT_LANG),
 	}
 }
 
