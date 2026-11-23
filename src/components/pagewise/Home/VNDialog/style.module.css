@@ -15,8 +15,8 @@
 }
 
 .dialogBox {
-  background: var(--rb-color-main);
-  border: 2px solid var(--rb-color-accent);
+  background: var(--pg-color-main);
+  border: 2px solid var(--pg-color-accent);
   padding: 2rem;
   position: relative;
   cursor: pointer;
@@ -26,7 +26,7 @@
 
 .text {
   font-family: var(--font-maru-monica);
-  color: var(--rb-color-bright);
+  color: var(--pg-color-bright);
   font-size: 1.2rem;
   line-height: 1.6;
   white-space: pre-wrap;
@@ -51,9 +51,9 @@
   bottom: 1rem;
   right: 1rem;
   font-size: 1.5rem;
-  color: var(--rb-color-bright);
+  color: var(--pg-color-bright);
   opacity: 0;
-  transition: opacity var(--rb-transition-base);
+  transition: opacity var(--pg-transition-base);
   display: inline-block;
   user-select: none;
 }
@@ -73,21 +73,21 @@
   position: absolute;
   top: -3.5rem;
   right: 0;
-  background: var(--rb-color-main);
-  border: 2px solid var(--rb-color-accent);
-  color: var(--rb-color-bright);
+  background: var(--pg-color-main);
+  border: 2px solid var(--pg-color-accent);
+  color: var(--pg-color-bright);
   padding: 0.5rem 1rem;
   font-family: var(--font-maru-monica);
   font-size: 1.2rem;
   cursor: pointer;
-  transition: background var(--rb-transition-base);
+  transition: background var(--pg-transition-base);
 }
 
 .dismissButton:hover {
-  background: var(--rb-color-accent);
+  background: var(--pg-color-accent);
 }
 
 .dismissButton:focus-visible {
-  outline: 2px solid var(--rb-color-bright);
+  outline: 2px solid var(--pg-color-bright);
   outline-offset: 3px;
 }

@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
-import { Tooltip } from 'ricebowl'
+import { Tooltip } from 'paiger'
 import Marquee from '@/components/special/Marquee'
 import type { Lang } from '@/lib/lang'
 import styles from './style.module.css'
@@ -77,7 +77,7 @@ export default function Footer({ lang }: FooterProps) {
 			}}
 		>
 			{FLAGS.map((flag) => (
-				<Tooltip key={flag.image} text={flag[lang]} above>
+				<Tooltip key={flag.image} content={flag[lang]} placement="top">
 					<a href={`https://en.wikipedia.org/wiki/${flag.wiki}`} target="_blank" rel="noopener noreferrer">
 						<img src={`/icons/flags/${flag.image}.png`} alt={flag.alt} style={FLAG_SIZE} className={styles.flagImg} />
 					</a>
@@ -89,7 +89,7 @@ export default function Footer({ lang }: FooterProps) {
 	const copyright = (lang === 'ja' ? `著作権 ${year} 理央 • ` : `COPYRIGHT ${year} RIO • `).repeat(3)
 
 	const marqueeBlock = (
-		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: isSmall ? 'relative' : 'absolute', left: isSmall ? 0 : '50%', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translate(-50%, -50%)', width: isSmall ? '100%' : '60%', height: isSmall ? 'auto' : '100%', color: 'var(--rb-color-bright)', fontSize: '1.2rem' }}>
+		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: isSmall ? 'relative' : 'absolute', left: isSmall ? 0 : '50%', top: isSmall ? 0 : '50%', transform: isSmall ? 'none' : 'translate(-50%, -50%)', width: isSmall ? '100%' : '60%', height: isSmall ? 'auto' : '100%', color: 'var(--pg-color-bright)', fontSize: '1.2rem' }}>
 			<Marquee text={copyright} speed={12} />
 		</div>
 	)
@@ -102,12 +102,12 @@ export default function Footer({ lang }: FooterProps) {
 					<span>{lang === 'ja' ? 'お願い!' : 'PLEASE!'}</span>
 				</div>
 				<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0' }}>
-					<Tooltip text={lang === 'ja' ? 'カード/銀行で' : 'VIA CARD/BANK'} above>
-						<a href={TIP_LINK} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--rb-color-bright)', textDecoration: 'none', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--rb-color-accent)', borderRight: 'none' }}>
+					<Tooltip content={lang === 'ja' ? 'カード/銀行で' : 'VIA CARD/BANK'} placement="top">
+						<a href={TIP_LINK} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--pg-color-bright)', textDecoration: 'none', fontSize: '1.2rem', fontFamily: 'var(--font-maru-monica)', userSelect: 'none', height: '80px', minWidth: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem', border: '2px solid var(--pg-color-accent)', borderRight: 'none' }}>
 							USD
 						</a>
 					</Tooltip>
-					<Tooltip text={tooltipText || scanText} above forceShow={copied}>
+					<Tooltip content={tooltipText || scanText} placement="top" open={copied || undefined}>
 						<button
 							type="button"
 							aria-label={lang === 'ja' ? 'リンクをコピー' : 'Copy link'}
@@ -116,7 +116,7 @@ export default function Footer({ lang }: FooterProps) {
 							onMouseLeave={handleQRLeave}
 							onFocus={handleQREnter}
 							onBlur={handleQRLeave}
-							style={{ ...buttonReset, height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--rb-color-accent)' }}
+							style={{ ...buttonReset, height: '80px', width: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '2px solid var(--pg-color-accent)' }}
 						>
 							<img src="/icons/qr/USD.png" alt={lang === 'ja' ? '支払いリンクのQRコード' : 'Payment link QR code'} style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { e.currentTarget.style.display = 'none' }} />
 						</button>
@@ -130,7 +130,7 @@ export default function Footer({ lang }: FooterProps) {
 		<div
 			style={{
 				width: '100%',
-				background: 'var(--rb-color-main)',
+				background: 'var(--pg-color-main)',
 				pointerEvents: 'auto',
 				scrollSnapAlign: 'start',
 				scrollSnapStop: 'always',

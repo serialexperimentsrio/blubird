@@ -1,6 +1,6 @@
 'use client'
 
-import { ModalBox } from 'ricebowl'
+import { ModalBox } from 'paiger'
 import type { Person } from '@/data/people'
 import type { Lang } from '@/lib/lang'
 import styles from './style.module.css'
@@ -13,7 +13,7 @@ type Props = {
 
 export default function PersonModal({ person, lang }: Props) {
 	return (
-		<ModalBox>
+		<ModalBox aria-label={person.nick}>
 			<div className={styles.modal}>
 				<div className={styles.modalHeader}>
 					<div className={styles.modalTitleRow}>

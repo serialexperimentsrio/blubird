@@ -9,8 +9,8 @@
 	align-items: center;
 	font-family: var(--font-maru-monica);
 	font-size: 1.2rem;
-	color: var(--rb-color-bright);
-	background-color: var(--rb-color-main);
+	color: var(--pg-color-bright);
+	background-color: var(--pg-color-main);
 	padding: 8px;
 	border: none;
 	animation: pulse 1.5s ease-in-out infinite;

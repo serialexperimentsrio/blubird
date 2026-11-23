@@ -1,7 +1,7 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 
-import { setModal } from 'ricebowl'
+import { setModal } from 'paiger'
 import people, { type Person } from '@/data/people'
 import type { Lang } from '@/lib/lang'
 import styles from './style.module.css'

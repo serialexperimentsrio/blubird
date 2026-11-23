@@ -11,7 +11,7 @@ export default function NotFound() {
 	return (
 		<div
 			style={{
-				color: 'var(--rb-color-bright)',
+				color: 'var(--pg-color-bright)',
 				fontFamily: 'var(--font-maru-monica)',
 				textAlign: 'center',
 			}}

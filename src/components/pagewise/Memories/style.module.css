@@ -18,7 +18,7 @@
 }
 
 .card:focus-visible {
-	outline: 2px solid var(--rb-color-bright);
+	outline: 2px solid var(--pg-color-bright);
 	outline-offset: 3px;
 }
 
@@ -39,9 +39,9 @@
 	gap: 10px;
 	padding: 16px;
 	border-radius: 0;
-	border: 2px solid var(--rb-color-accent);
-	background: var(--rb-color-main);
-	color: var(--rb-color-bright);
+	border: 2px solid var(--pg-color-accent);
+	background: var(--pg-color-main);
+	color: var(--pg-color-bright);
 }
 
 /* Two-step flip: the front turns edge-on, then the back turns in from
@@ -97,7 +97,7 @@
 }
 
 .soon .cardFront {
-	color: var(--rb-color-dim);
+	color: var(--pg-color-dim);
 }
 
 .soon .icon {
@@ -126,7 +126,7 @@
 		font-size: 0.9rem;
 		line-height: 1.3;
 		text-align: center;
-		color: var(--rb-color-dim);
+		color: var(--pg-color-dim);
 	}
 }
 

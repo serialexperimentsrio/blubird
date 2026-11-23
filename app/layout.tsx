@@ -1,7 +1,8 @@
-// globals.css first: it sets the cascade layer order that ricebowl's CSS slots into
+// globals.css first: it sets the cascade layer order that paiger's CSS slots into
 import './globals.css'
-import 'ricebowl/styles.css'
+import 'paiger/styles.css'
 import type { Metadata } from 'next'
+import { PaigerProvider } from 'paiger'
 import DitherBackground from '@/components/special/Dither/Background'
 
 export const metadata: Metadata = {
@@ -29,10 +30,13 @@ export default function RootLayout({
         {/* Dithering background (representing clouds under a blue sky!) */}
         <DitherBackground />
 
-        {/* Language-specific content with transitions */}
-        <div style={{ position: 'relative', zIndex: 1, pointerEvents: 'auto' }}>
-          {children}
-        </div>
+        {/* Language-specific content with transitions. The provider renders
+            paiger's modals and toasts inside the app, so they share its context. */}
+        <PaigerProvider>
+          <div style={{ position: 'relative', zIndex: 1, pointerEvents: 'auto' }}>
+            {children}
+          </div>
+        </PaigerProvider>
       </body>
     </html>
   )

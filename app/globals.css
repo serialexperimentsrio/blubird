@@ -1,6 +1,6 @@
-/* ricebowl goes above Tailwind's reset (base), so its padding and borders
+/* paiger goes above Tailwind's reset (base), so its padding and borders
    survive, and below components and utilities, so those can still restyle it */
-@layer theme, base, ricebowl, components, utilities;
+@layer theme, base, paiger, components, utilities;
 @import "tailwindcss";
 
 /* Custom Font */
@@ -13,14 +13,14 @@
 }
 
 :root {
-  /* Theme for both the site and ricebowl (its other tokens keep their defaults) */
-  --rb-color-main: #0021f5;
-  --rb-color-accent: #4d64f8;
-  --rb-color-bright: #ffffff;
-  --rb-color-dim: rgba(255, 255, 255, 0.5);
+  /* Theme for both the site and paiger (its other tokens keep their defaults) */
+  --pg-color-main: #0021f5;
+  --pg-color-accent: #4d64f8;
+  --pg-color-bright: #ffffff;
+  --pg-color-dim: rgba(255, 255, 255, 0.5);
 
-  --rb-transition-fast: 0.15s ease;
-  --rb-transition-base: 0.2s ease;
+  --pg-transition-fast: 0.15s ease;
+  --pg-transition-base: 0.2s ease;
 
   /* Layout */
   --header-height: 84px;
@@ -35,7 +35,7 @@ body {
   font-family: var(--font-maru-monica);
   margin: 0;
   padding: 0;
-  background: var(--rb-color-main);
+  background: var(--pg-color-main);
 }
 
 /* Page frame: scrolls the page and footer under the fixed header */
