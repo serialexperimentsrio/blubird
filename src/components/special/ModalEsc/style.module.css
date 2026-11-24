@@ -1,0 +1,40 @@
+/* Same look as VNDialog's ESC button */
+.esc {
+	position: fixed;
+	top: 0;
+	left: 0;
+	transform: translate(-100%, calc(-100% - 0.75rem));
+	z-index: calc(var(--pg-z-modal) + 1);
+	background: var(--pg-color-main);
+	border: 2px solid var(--pg-color-accent);
+	color: var(--pg-color-bright);
+	padding: 0.5rem 1rem;
+	font-family: var(--font-maru-monica);
+	font-size: 1.2rem;
+	cursor: pointer;
+	opacity: 0;
+	pointer-events: none;
+	transition:
+		opacity 0.2s ease,
+		background var(--pg-transition-base);
+}
+
+.esc.open {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.esc:hover {
+	background: var(--pg-color-accent);
+}
+
+.esc:focus-visible {
+	outline: 2px solid var(--pg-color-bright);
+	outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.esc {
+		transition: none;
+	}
+}
