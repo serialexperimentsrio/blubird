@@ -6,37 +6,42 @@ import styles from './style.module.css'
 
 const dialogStrings: Record<Lang, string[]> = {
   en: [
-    "HELLO USER.<pause> THIS IS RIO,<pause> AND WELCOME TO MY HUMBLE ABODE.",
-    "I'D OFFER YOU TEA,<pause> BUT THIS IS<pause> A DIGITAL INTERFACE.",
-    "AND IN THIS FORM,<pause> I'M JUST A TEXT BOX.<pause> I DON'T EVEN HAVE HANDS.",
-    "ALL I CAN DO IS TALK,<pause> ONE LINE AT A TIME.",
+    "HELLO DEAR USER.",
+    "MY NAME IS RIO,<pause> AND WELCOME TO MY HUMBLE ABODE.",
+    "I'D OFFER YOU SOME TEA,<pause> BUT THIS IS<pause> A DIGITAL INTERFACE<pause> (OBVIOUSLY).",
+    "AND AS YOU CAN SEE,<pause> I'M JUST A TEXT BOX RIGHT NOW.<pause> I DON'T EVEN HAVE HANDS!",
+    "BEST I CAN DO IS TALK,<pause> ONE LINE AT A TIME.",
     "AND ALL YOU CAN DO IS INTERACT.",
-    "SO FEEL FREE TO LOOK AROUND<pause> AND MAKE YOURSELF AT HOME.",
-    "IF I'M IN THE WAY,<pause> JUST PRESS ESC.<pause> I WON'T TAKE IT PERSONALLY.",
-    "I HAVE NOTHING MORE TO SAY.",
+    "SO PLEASE,<pause> I INSIST THAT YOU LOOK AROUND<pause> AND MAKE YOURSELF COMFORTABLE.",
+    "IF I SEEM TO BE IN YOUR WAY,<pause> JUST PRESS ESC.<pause> I WON'T TAKE IT PERSONALLY.",
+    "THANKS FOR STOPPING BY.",
     ".<pause>.<pause>.",
+    "I'M AFRAID THAT'S ALL I HAVE TO SAY.",
     "YES?",
-    "OH,<pause> YOU WANT TO SEE A MAGIC TRICK?",
-    "I CAN MAKE MYSELF DISAPPEAR.",
+    "WELL,<pause> THIS IS AWKWARD.",
+    "OH,<pause> WOULD YOU LIKE TO SEE A MAGIC TRICK?",
+    "I CAN MAKE MYSELF DISAPPEAR,<pause> YOU KNOW.",
     "READY?",
     // Last line: the box switches off by itself once it's typed out
-    "3,<pause><pause> 2,<pause><pause> 1."
+    "IN 3,<pause><pause> 2,<pause><pause> 1.<pause>.<pause>."
   ],
   ja: [
-    "こんにちは、<pause>ユーザーさん。<pause>理央です。<pause>狭いところだけど、<pause>ようこそ。",
-    "お茶でも出したいところだけど、<pause>ここは<pause>デジタルインターフェースだからね。",
-    "それに、<pause>この姿じゃただのテキストボックス。<pause>手すらないんだよね。",
-    "私にできるのは、<pause>一行ずつ話すことだけ。",
+    "ユーザーさん、<pause>どうも。",
+    "ようこそ、<pause>何もないところですが。<pause>私は理央です。",
+    "お茶でも出したいんですが、<pause>ここは<pause>デジタルインターフェースなので<pause>（当たり前ですけど）。",
+    "それに、<pause>今の私はただのテキストボックスで、<pause>手もないんです。",
+    "できるのは、<pause>一行ずつ話すことだけです。",
+    "あなたにできるのは、<pause>操作することだけです。",
+    "なので、<pause>自由に見て回って、<pause>ゆっくりしていってください。",
+    "邪魔だったら、<pause>ESCを押してください。<pause>気にしないので。",
+    "寄ってくれてありがとうございます。",
     "・<pause>・<pause>・",
-    "あなたにできるのは、<pause>操作することだけ。",
-    "だから、<pause>好きに見て回って<pause>ゆっくりしていってね。",
-    "邪魔だったら、<pause>ESCを押してね。<pause>気にしないから。",
-    "今のところ、<pause>話せるのはこれくらいかな。",
-    "・<pause>・<pause>・",
+    "もう言うことはないです。",
     "まだ何か？",
-    "あ、<pause>手品が見たいの？",
-    "自分が消える手品、<pause>できるんだよ。",
-    "準備はいい？",
+    "えっと、<pause>ちょっと気まずいですね。",
+    "あ、<pause>手品が見たいんですか？",
+    "自分が消える手品なら、<pause>できますよ。",
+    "いいですか？",
     "3、<pause><pause>2、<pause><pause>1。"
   ]
 }
@@ -129,7 +134,7 @@ export default function VNDialog({ lang }: { lang: Lang }) {
       sourcePosition++
       displayPosition++
 
-      timeoutId = setTimeout(typeNextChar, 40) // 40ms per character
+      timeoutId = setTimeout(typeNextChar, 33) // ~30 characters a second
     }
 
     typeNextChar()
