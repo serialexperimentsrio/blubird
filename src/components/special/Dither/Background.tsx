@@ -25,7 +25,7 @@ export default function Background() {
     >
       {/* Background is the site blue (--pg-color-main). The shader mixes in linear light,
           so the wave grey has to be this bright to match the old three.js version's strength */}
-      <Dither backgroundColor="#0021f5" waveColor="#c8c8c8" mouseRadius={0.4} pixelSize={width > 2200 ? 3 : 2} />
+      <Dither backgroundColor="#0021f5" waveColor="#c8c8c8" mouseRadius={0.4} clickRipple={false}pixelSize={width > 2200 ? 3 : 2} />
     </div>
   )
 }
