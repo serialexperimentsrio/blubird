@@ -22,3 +22,9 @@ Diary entries are plain text files in `public/diary/<lang>/`. Before each build,
 bun install
 bun dev
 ```
+
+## License
+
+Copyright 2025 Rio <engineer@disr.it>
+
+Licensed under the Apache License 2.0. See [LICENSE](LICENSE) for details.
