@@ -7,6 +7,7 @@ import DitherBackground from '@/components/special/Dither/Background'
 
 export const metadata: Metadata = {
   title: "理央の世界〜! • RIO'S WORLD!",
+  icons: '/icon.png',
 }
 
 export default function RootLayout({
