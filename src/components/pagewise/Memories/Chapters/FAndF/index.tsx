@@ -14,7 +14,7 @@ type Props = {
 
 const COLUMNS = {
 	en: ['NICK', 'RELATIONSHIP', 'MEMOIR', 'FROM'],
-	ja: ['名前', '関係', '思い出', '出身'],
+	ja: ['名前', '関係', 'ひとこと', '出身'],
 }
 
 export default function FAndF({ lang }: Props) {

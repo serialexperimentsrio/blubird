@@ -20,7 +20,7 @@ const people: Person[] = [
 		roles: ['SELF'],
 		memoir: {
 			en: "SOLE PROGRAMMER OF RIO'S WORLD.",
-			ja: '理央の世界の唯一のプログラマー。',
+			ja: 'このサイトを一人で作っています。',
 		},
 		from: ['SOUTH KOREA', 'BANGLADESH'],
 		notes: {
@@ -36,7 +36,7 @@ const people: Person[] = [
 			ja: '史上最高。',
 		},
 		from: 'BANGLADESH',
-		notes: { en: ['ADHD (CONFIRMED)', 'FAVORITE FOOD: HOT PATTIES'], ja: ['ADHDがある', '好きな食べ物: ホットパティ'] },
+		notes: { en: ['ADHD (CONFIRMED)', 'FAVORITE FOOD: HOT PATTIES'], ja: ['ADHD（診断済み）','好きな食べ物: ホットパティ'] },
 	},
 	{
 		nick: 'FAA',
@@ -50,7 +50,7 @@ const people: Person[] = [
 		roles: ['ALUMNI', 'FRIEND'],
 		memoir: { en: 'ASHEN ONE.', ja: '灰の方。' },
 		from: 'BANGLADESH',
-		notes: { en: ['STREAKY', 'FAVORITE FOOD: SOUP'], ja: ['ムラがある', '好きな食べ物: ソウプ'] },
+		notes: { en: ['STREAKY', 'FAVORITE FOOD: SOUP'], ja: ['ムラがある', '好きな食べ物: スープ'] },
 	},
 		{
 		nick: 'MEL',

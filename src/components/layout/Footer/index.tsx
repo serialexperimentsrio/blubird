@@ -16,10 +16,10 @@ type FooterProps = {
 const TIP_LINK = 'https://link.payoneer.com/Token?t=8F74BE500C8A4450A727C1DD9B442D15&src=pl'
 
 const FLAGS = [
-	{ image: 'south_korea', alt: 'South Korea', wiki: 'South_Korea', en: 'I WAS BORN HERE', ja: 'ここで生まれ' },
-	{ image: 'bangladesh', alt: 'Bangladesh', wiki: 'Bangladesh', en: 'I LIVE HERE', ja: 'ここに生き' },
-	{ image: 'japan', alt: 'Japan', wiki: 'Japan', en: 'I WANT TO BE HERE', ja: 'ここにいたい' },
-	{ image: 'palestine', alt: 'Palestine', wiki: 'Palestine', en: 'FREE PALESTINE', ja: 'パレスチナを解放せよ' },
+	{ image: 'south_korea', alt: 'South Korea', wiki: 'South_Korea', en: 'I WAS BORN HERE', ja: 'ここで生まれました' },
+	{ image: 'bangladesh', alt: 'Bangladesh', wiki: 'Bangladesh', en: 'I LIVE HERE', ja: '今ここに住んでいます' },
+	{ image: 'japan', alt: 'Japan', wiki: 'Japan', en: 'I WANT TO BE HERE', ja: 'いつかここに住みたいです' },
+	{ image: 'palestine', alt: 'Palestine', wiki: 'Palestine', en: 'FREE PALESTINE', ja: 'パレスチナに自由を' },
 	{ image: 'sudan', alt: 'Sudan', wiki: 'Sudan', en: 'EYES ON SUDAN', ja: 'スーダンに目を向けよう' },
 	{ image: 'peace_blue', alt: 'Peace', wiki: 'Give_Peace_a_Chance', en: '✌', ja: '✌' },
 ]
@@ -99,7 +99,7 @@ export default function Footer({ lang }: FooterProps) {
 			<div style={{ display: 'flex', flexDirection: isNarrow ? 'column' : 'row', alignItems: 'center', gap: isNarrow ? '8px' : '16px', position: 'relative' }}>
 				<div className={styles.tipMe} style={{ alignSelf: isNarrow ? 'center' : 'auto' }}>
 					<span>{lang === 'ja' ? 'チップ' : 'TIPS'}</span>
-					<span>{lang === 'ja' ? 'お願い!' : 'PLEASE!'}</span>
+					<span>{lang === 'ja' ? 'お願いします!' : 'PLEASE!'}</span>
 				</div>
 				<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0' }}>
 					<Tooltip content={lang === 'ja' ? 'カード/銀行で' : 'VIA CARD/BANK'} placement="top">
